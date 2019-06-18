@@ -71,25 +71,6 @@ bool Input::Ispressed(int plNo, std::string cmd) const
 	}
 	return false;
 	
-/*
-	auto range = _inputTable[plNo].equal_range(cmd);
-	if (range.first == range.second)
-	{
-		return false;
-	}
-	bool ispressed = false;
-	for (auto it = range.first; it != range.second; ++it)
-	{
-		if (it->second.periNo == 0)
-		{
-			ispressed = ispressed ||  _keystate[it->second.code];
-		}
-		else
-		{
-			ispressed = ispressed || _padstate[it->second.periNo - 1] & it->second.code;
-		}
-	}
-	return ispressed;*/
 }
 
 bool Input::IsTriggered(int plNo, std::string cmd) const

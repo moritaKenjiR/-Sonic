@@ -16,6 +16,5 @@ public:
 	void Update(const Input& input);
 private:
 	std::deque<std::unique_ptr<BaseScene>> _scene;
-	SceneMng& _mng;
 };
 

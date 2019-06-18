@@ -8,7 +8,6 @@ class Input;
 class BaseScene
 {
 public:
-	BaseScene();
 	BaseScene(SceneMng& mng);
 	virtual ~BaseScene();
 	virtual void Update(const Input& input) = 0;

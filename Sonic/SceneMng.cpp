@@ -5,9 +5,9 @@
 #include "GameScene.h"
 
 
-SceneMng::SceneMng() :_mng(*this)
+SceneMng::SceneMng() 
 {
-	_scene.push_front(std::make_unique<TitleScene>(_mng));
+	_scene.push_front(std::make_unique<TitleScene>((*this)));
 }
 
 
