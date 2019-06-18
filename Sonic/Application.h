@@ -31,7 +31,7 @@ private:
 	Application(const Application&);
 	void operator=(const Application&);
 
-	std::unique_ptr<SceneMng> _sceneMngPtr;
+	std::unique_ptr<SceneMng> _sceneMng;
 	std::unique_ptr<Input> _input;
 };
 

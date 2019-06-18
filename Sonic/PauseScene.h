@@ -1,11 +1,11 @@
 #pragma once
 #include "BaseScene.h"
-class TitleScene :
+class PauseScene :
 	public BaseScene
 {
 public:
-	~TitleScene();
-	void Update(const Input& input);
+	~PauseScene();
+	void Update(const Input& input)override;
 	void Draw()override;
 };
 

@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include <stack>
+#include <deque>
 class BaseScene;
 class Input;
 
@@ -10,10 +10,12 @@ public:
 	SceneMng();
 	~SceneMng();
 
-	void ChangeScene(BaseScene* nextscene);
-	void StackScene(BaseScene* nextscene);
-	void Update(Input& input);
+	void ChangeScene(std::unique_ptr<BaseScene> nextscene);
+	void PushScene(std::unique_ptr<BaseScene> nextscene);
+	void PopScene();
+	void Update(const Input& input);
 private:
-	std::stack<std::shared_ptr<BaseScene>> _scene;
+	std::deque<std::unique_ptr<BaseScene>> _scene;
+	SceneMng& _mng;
 };
 

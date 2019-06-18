@@ -1,10 +1,10 @@
 #pragma once
 #include "BaseScene.h"
-class TitleScene :
+class ResultScene :
 	public BaseScene
 {
 public:
-	~TitleScene();
+	~ResultScene();
 	void Update(const Input& input);
 	void Draw()override;
 };

@@ -50,9 +50,11 @@ public:
 private:
 	char _keystate[256];				//現在のキーボード状況
 	std::vector<int> _padstate;	//現在のﾊﾟｯﾄﾞ状況
+	
 
 	std::vector<std::multimap<std::string, PeripheralInfo>> _inputTable;//ﾌﾟﾚｲﾔｰ番号と入力対応ﾃｰﾌﾞﾙのｾｯﾄ
 	std::unordered_map < PeripheralInfo, std::pair<int, std::string>,PeripheralInfo::HashFunc> _inputMap;//入力情報と利用情報のｾｯﾄ 
 	std::vector<std::unordered_map<std::string, bool>> _currentState;
+	std::vector<std::unordered_map<std::string, bool>> _lastState;
 };
 

@@ -7,6 +7,7 @@ Input::Input()
 	_inputTable.resize(GetJoypadNum() + 1);
 	_padstate.resize(GetJoypadNum());
 	_currentState.resize(GetJoypadNum()+1);
+	_lastState.resize(GetJoypadNum() + 1);
 }
 
 
@@ -27,6 +28,7 @@ void Input::AddCommand(int plNo, std::string cmd, int periNo, int code)
 
 void Input::Update(void)
 {
+	copy(_currentState.begin(), _currentState.end(), _lastState.begin());
 	GetHitKeyStateAll(_keystate);
 	for (int i = 0; i < GetJoypadNum(); ++i)
 	{
@@ -88,6 +90,22 @@ bool Input::Ispressed(int plNo, std::string cmd) const
 		}
 	}
 	return ispressed;*/
+}
+
+bool Input::IsTriggered(int plNo, std::string cmd) const
+{
+	assert(plNo < _currentState.size());
+	auto& cur = _currentState[plNo];
+	auto& last = _lastState[plNo];
+	auto it = cur.find(cmd);
+	if (it != cur.end())
+	{
+		if (it->second) {
+			auto lit = last.find(cmd);
+			return lit->second;
+		}
+	}
+	return false;
 }
 
 

@@ -1,11 +1,8 @@
 #include "BaseScene.h"
 
-
-
-BaseScene::BaseScene()
+BaseScene::BaseScene(SceneMng& mng):_mng(mng)
 {
 }
-
 
 BaseScene::~BaseScene()
 {

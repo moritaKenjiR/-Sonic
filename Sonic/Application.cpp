@@ -25,7 +25,7 @@ bool Application::Initialize(void)
 	SetGraphMode(1024, 576, 16);
 	ChangeWindowMode(true);
 
-	_sceneMngPtr = std::make_unique<SceneMng>();
+	_sceneMng = std::make_unique<SceneMng>();
 	
 	InitializeInput();
 	return false;
@@ -38,6 +38,8 @@ void Application::InitializeInput()
 	_input->AddCommand(0, "right", 0, KEY_INPUT_RIGHT);
 	_input->AddCommand(0, "up", 0, KEY_INPUT_UP);
 	_input->AddCommand(0, "down", 0, KEY_INPUT_DOWN);
+	_input->AddCommand(0, "ok", 0, KEY_INPUT_RETURN);
+	_input->AddCommand(0, "pause", 0, KEY_INPUT_P);
 	for (int i = 0; i < _input->GetConnectedPadCount(); ++i)
 	{
 		_input->AddCommand(i, "left", 1 + i, PAD_INPUT_LEFT);
@@ -57,21 +59,22 @@ void Application::Run(void)
 	{
 		ClsDrawScreen();
 		_input->Update();
+		_sceneMng->Update(*_input);
 		for (int i = 0; i < GetJoypadNum() + 1; ++i)
 		{
-			if (_input->Ispressed(i, "left"))
+			if (_input->Ispressed(i, "left") && !_input->IsTriggered(i, "left"))
 			{
 				pos[i].x -= 5;
 			}
-			if (_input->Ispressed(i, "right"))
+			if (_input->Ispressed(i, "right") &&! _input->IsTriggered(i, "right"))
 			{
 				pos[i].x += 5;
 			}
-			if (_input->Ispressed(i, "up"))
+			if (_input->Ispressed(i, "up") && !_input->IsTriggered(i, "up"))
 			{
 				pos[i].y -= 5;
 			}
-			if (_input->Ispressed(i, "down"))
+			if (_input->Ispressed(i, "down") && !_input->IsTriggered(i, "down"))
 			{
 				pos[i].y += 5;
 			}

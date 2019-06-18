@@ -4,8 +4,8 @@ class GameScene :
 	public BaseScene
 {
 public:
-	GameScene();
 	~GameScene();
-
+	void Update(const Input& input);
+	void Draw()override;
 };
 
