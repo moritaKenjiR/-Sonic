@@ -1,7 +1,7 @@
 #include "Application.h"
 #include <DxLib.h>
-#include "SceneMng.h"
-#include "Input.h"
+#include "Scene/SceneMng.h"
+#include "Input/Input.h"
 #include "Geometry.h"
 
 
@@ -46,6 +46,8 @@ void Application::InitializeInput()
 		_input->AddCommand(i, "right", 1 + i, PAD_INPUT_RIGHT);
 		_input->AddCommand(i, "up", 1 + i, PAD_INPUT_UP);
 		_input->AddCommand(i, "down", 1 + i, PAD_INPUT_DOWN);
+		_input->AddCommand(i, "ok", 1 + i, PAD_INPUT_8);
+		_input->AddCommand(i, "pause", 1 + i, PAD_INPUT_7);
 	}
 }
 
@@ -60,31 +62,16 @@ void Application::Run(void)
 		ClsDrawScreen();
 		_input->Update();
 		_sceneMng->Update(*_input);
-		for (int i = 0; i < GetJoypadNum() + 1; ++i)
-		{
-			if (_input->Ispressed(i, "left") && !_input->IsTriggered(i, "left"))
-			{
-				pos[i].x -= 5;
-			}
-			if (_input->Ispressed(i, "right") &&! _input->IsTriggered(i, "right"))
-			{
-				pos[i].x += 5;
-			}
-			if (_input->Ispressed(i, "up") && !_input->IsTriggered(i, "up"))
-			{
-				pos[i].y -= 5;
-			}
-			if (_input->Ispressed(i, "down") && !_input->IsTriggered(i, "down"))
-			{
-				pos[i].y += 5;
-			}
-
-			DrawCircle(pos[i].x, pos[i].y, 40,0xff3030, true);
-		}
+		
 		ScreenFlip();
 	}
 }
 
 void Application::Terminate(void)
 {
+}
+
+Position2 Application::Configure::GetScreenSize() const
+{
+	return { 1024,576 };
 }

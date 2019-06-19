@@ -6,8 +6,8 @@
 struct  PeripheralInfo {
 	PeripheralInfo() {};
 	PeripheralInfo(int perin, int cd) :periNo(perin), code(cd) {};
-	int periNo;
-	int code;
+	int periNo;		// 周辺機器番号
+	int code;		//周辺機器の生ｺｰﾄﾞ
 	struct HashFunc 
 	{
 		size_t operator()(const PeripheralInfo& p)const
@@ -35,6 +35,9 @@ public:
 
 	//ｺﾏﾝﾄﾞの設定
 	//@param plNo ﾌﾟﾚｲﾔｰ番号
+	//@param cmd ｺﾏﾝﾄﾞ名
+	//@param periNo 周辺機器番号
+	//@param code 入力ｺｰﾄﾞ
 	void AddCommand(int plNo, std::string cmd, int periNo, int code);
 
 	//情報更新
@@ -54,7 +57,7 @@ private:
 
 	std::vector<std::multimap<std::string, PeripheralInfo>> _inputTable;//ﾌﾟﾚｲﾔｰ番号と入力対応ﾃｰﾌﾞﾙのｾｯﾄ
 	std::unordered_map < PeripheralInfo, std::pair<int, std::string>,PeripheralInfo::HashFunc> _inputMap;//入力情報と利用情報のｾｯﾄ 
-	std::vector<std::unordered_map<std::string, bool>> _currentState;
-	std::vector<std::unordered_map<std::string, bool>> _lastState;
+	std::vector<std::unordered_map<std::string, bool>> _currentState; //ﾎﾞﾀﾝが押下情報のﾘｽﾄ
+	std::vector<std::unordered_map<std::string, bool>> _lastState; //直前のﾎﾞﾀﾝ押下情報のﾘｽﾄ
 };
 

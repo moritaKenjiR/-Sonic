@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include "Geometry.h"
 class SceneMng;
 class Input;
 
@@ -14,6 +15,10 @@ public:
 		static Application Instance;
 		return Instance;
 	}
+	class Configure {
+	public:
+		Position2 GetScreenSize()const;
+	};
 
 	//ｱﾌﾟﾘｹｰｼｮﾝ初期化関数
 	bool Initialize(void);
@@ -25,6 +30,9 @@ public:
 
 	//終了処理
 	void Terminate(void);
+
+	Configure _config;
+	Configure& GetConfig() { return _config; }
 private:
 	//生成、コピー、代入禁止
 	Application();

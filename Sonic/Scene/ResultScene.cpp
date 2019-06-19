@@ -1,5 +1,5 @@
 #include "ResultScene.h"
-#include "Input.h"
+#include "../Input/Input.h"
 #include "TitleScene.h"
 
 
@@ -21,5 +21,5 @@ void ResultScene::Update(const Input & input)
 
 void ResultScene::Draw()
 {
-	DrawString(100, 100, "TitleScene", 0xffffff);
+	DrawString(100, 100, "ResultScene", 0xffffff);
 }
