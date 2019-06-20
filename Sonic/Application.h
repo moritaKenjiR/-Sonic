@@ -17,7 +17,7 @@ public:
 	}
 	class Configure {
 	public:
-		Position2 GetScreenSize()const;
+		Vector2 GetScreenSize()const;
 	};
 
 	//±ÌßØ¹°¼®İ‰Šú‰»ŠÖ”

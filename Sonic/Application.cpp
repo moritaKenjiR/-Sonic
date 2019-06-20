@@ -53,10 +53,6 @@ void Application::InitializeInput()
 
 void Application::Run(void)
 {
-	Position2 pos[2];
-	pos[0] = { 500,300 };
-	pos[1] = { 500,300 };
-
 	while (ProcessMessage() == 0)
 	{
 		ClsDrawScreen();
@@ -71,7 +67,7 @@ void Application::Terminate(void)
 {
 }
 
-Position2 Application::Configure::GetScreenSize() const
+Vector2 Application::Configure::GetScreenSize() const
 {
 	return { 1024,576 };
 }
