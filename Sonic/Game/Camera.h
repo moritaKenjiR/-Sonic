@@ -16,7 +16,13 @@ public:
 	//ŠÄ‹ÌßÚ²Ô°‚Ìíœ
 	void RemovePlayer(std::shared_ptr<Player> player);
 
+	void SetRange(const Size& stageSize);
 
+	void Update();
+
+	const Position2& GetPosition()const;
+
+	const Rect& GetViewRange()const;
 private:
 	Position2 _initPos;
 	Position2 _pos;

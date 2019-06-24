@@ -3,11 +3,18 @@
 #include "ResultScene.h"
 #include "PauseScene.h"
 #include "../Game/Player.h"
+#include "../Background.h"
+#include "../Game/Camera.h"
 
 
 GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 {
-	_actors.push_back(std::make_shared<Player>());
+	_camera = std::make_unique<Camera>();
+	_player = std::make_shared<Player>(*_camera);
+	_actors.push_back(_player);
+	_camera->AddPlayer(_player);
+	_stage = std::make_unique<Stage>(*_camera);
+	_bg = std::make_unique<Background>(*_camera);
 }
 
 GameScene::~GameScene()

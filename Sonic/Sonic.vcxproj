@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Background.cpp" />
     <ClCompile Include="Game\Actor.cpp" />
     <ClCompile Include="Game\Camera.cpp" />
     <ClCompile Include="Game\Player.cpp" />
@@ -139,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Background.h" />
     <ClInclude Include="Game\Actor.h" />
     <ClInclude Include="Game\Camera.h" />
     <ClInclude Include="Game\Player.h" />

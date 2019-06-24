@@ -67,7 +67,7 @@ void Application::Terminate(void)
 {
 }
 
-Vector2 Application::Configure::GetScreenSize() const
+Size Application::Configure::GetScreenSize() const
 {
 	return { 1024,576 };
 }
