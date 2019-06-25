@@ -2,6 +2,8 @@
 #include<DxLib.h>
 #include "Game/Camera.h"
 #include "Application.h"
+#include "Geometry.h"
+
 
 
 Stage::Stage(const Camera & cam):_camera(cam)
@@ -70,7 +72,7 @@ void Background::Update()
 
 void Background::DrawBg()
 {
-	auto offset = _camera.GetOffset();
+	auto offset = _camera.GetPosition();
 	for (auto& part : _bgparts) {
 		int w, h;
 		GetGraphSize(part.handle, &w, &h);

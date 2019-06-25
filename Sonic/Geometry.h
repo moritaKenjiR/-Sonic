@@ -1,7 +1,5 @@
 #pragma once
 
-using Position2 = Vector2;
-using Position2f = Vector2f;
 
 struct Size
 {
@@ -10,6 +8,8 @@ struct Size
 struct Position2
 {
 	int x, y;
+	Position2() {}
+	Position2(int inx, int iny) { x = inx; y = iny; }
 };
 
 struct Position2f
@@ -20,6 +20,8 @@ struct Position2f
 struct Vector2
 {
 	int x, y;
+	Vector2() {}
+	Vector2(int inx, int iny) { x = inx; y = iny; }
 };
 
 struct Vector2f
@@ -43,6 +45,11 @@ Vector2f operator+(const Vector2f& lval, const Vector2f& rval);
 Vector2f operator-(const Vector2f& lval, const Vector2f& rval);
 Vector2f operator*(const Vector2f& lval, const float scale);
 Vector2f operator/(const Vector2f& lval, const float scale);
+
+Position2 operator*(const Position2& lval, const float scale);
+Position2 operator-(const Position2& lval, const Position2& rval);
+bool operator!=(const Position2& lval, const Position2& rval);
+
 
 struct Rect
 {

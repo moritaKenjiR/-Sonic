@@ -1,14 +1,46 @@
 #include "Player.h"
 #include <DxLib.h>
+#include <string>
 #include "../Input/Input.h"
 #include "Camera.h"
+#include <casetup.h>
 
 constexpr int default_player_posx = 512;
 constexpr int default_player_posy = 500;
 
 Player::Player(const Camera cam):Actor(cam,Vector2f(default_player_posx,default_player_posy))
 {
-	_imgH = LoadGraph("Image/player.png", true);
+	_imgH = LoadGraph("img/player.png", true);
+
+	std::string actPath = "action/player.act";
+	int playerActPath = FileRead_open(actPath.c_str());
+	
+
+	float version;
+	FileRead_read(&version, sizeof(version),playerActPath);
+
+	int imgfilepathlen = 0;
+	FileRead_read(&imgfilepathlen, sizeof(imgfilepathlen), playerActPath);
+
+	std::string imgfilepath;
+	imgfilepath.resize(imgfilepathlen);
+	FileRead_read(&imgfilepath[0], imgfilepathlen, playerActPath);
+	
+	auto slash = actPath.find_last_of('/');
+	imgfilepath = actPath.substr(0, slash + 1) + imgfilepath;
+
+	int actioncnt = 0;
+	FileRead_read(&actioncnt, sizeof(actioncnt), playerActPath);
+	for (int i = 0; 0 < actioncnt; i++)
+	{
+		int actionnamesize = 0;
+		FileRead_read(&actionnamesize, sizeof(actionnamesize), playerActPath);
+		std::string actionname;
+		actionname.resize(actionnamesize);
+		FileRead_read(&actionname[0], actionnamesize, playerActPath);
+
+	}
+	FileRead_close(playerActPath);
 }
 
 

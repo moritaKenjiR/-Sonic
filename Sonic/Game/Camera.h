@@ -23,6 +23,7 @@ public:
 	const Position2& GetPosition()const;
 
 	const Rect& GetViewRange()const;
+	const Position2& GetOffset()const;
 private:
 	Position2 _initPos;
 	Position2 _pos;

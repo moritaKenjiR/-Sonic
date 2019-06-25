@@ -12,6 +12,15 @@ public:
 	virtual ~Actor();
 	virtual void Update(const Input&) = 0;
 	virtual void Draw() = 0;
+
+	virtual void Move(float x, float y);
+	virtual void Move(const Vector2f& vec);
+
+	virtual void SetPosition(float x, float y);
+	virtual void SetPosition(const Vector2f& vec);
+
+	virtual const Vector2f& GetPosition()const;
+
 private:
 
 protected:

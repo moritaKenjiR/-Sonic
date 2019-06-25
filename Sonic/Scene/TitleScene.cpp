@@ -62,7 +62,7 @@ void TitleScene::FadeDrawer()
 
 	auto blendval = _fadeCounter * 255 / fade_interval;
 	SetDrawBlendMode(DX_BLENDMODE_MULA, blendval);
-	DrawBox(0, 0,wsize.x,wsize.y,0x000000,true);
+	DrawBox(0, 0,wsize.w,wsize.h,0x000000,true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 

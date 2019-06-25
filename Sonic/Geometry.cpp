@@ -1,6 +1,7 @@
 #include "Geometry.h"
 #include <cmath>
 
+
 Vector2f Vector2f::operator-()
 {
 	return Vector2f(-x, -y);
@@ -66,6 +67,25 @@ Vector2f operator*(const Vector2f & lval, const float scale)
 Vector2f operator/(const Vector2f & lval, const float scale)
 {
 	return Vector2f(lval.x / scale, lval.y / scale);
+}
+
+Position2 operator*(const Position2 & lval, const float scale)
+{
+	return Position2((int)(lval.x * scale),(int)( lval.y * scale));
+}
+
+Position2 operator-(const Position2 & lval, const Position2 & rval)
+{
+	return Position2(lval.x - rval.x, lval.y - rval.y);
+}
+
+bool operator!=(const Position2 & lval, const Position2 & rval)
+{
+	if ((lval.x != rval.x) && (lval.y != rval.y))
+	{
+		return true;
+	}
+	return false;
 }
 
 

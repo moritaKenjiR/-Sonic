@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <string>
 #include "Actor.h"
 class Camera;
 
@@ -13,8 +14,22 @@ public:
 	void Draw()override final;
 	void Move(const Vector2f& move);
 private:
+	unsigned int _frame;
 	int _imgH;
 	bool _isLeft;
-	//std::unique_ptr<Camera> _camera;
+	std::string _currentActionName = "";
+
+	struct CutData {
+		Rect cutrect;
+		Position2 center;
+		int duration;
+		int actrccnt;
+	};
+
+	struct Action {
+		char isLoop;
+		std::vector<CutData> cutdata;
+		unsigned int totalDuration;
+	};
 };
 
