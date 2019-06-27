@@ -11,7 +11,7 @@ PauseScene::~PauseScene()
 {
 }
 
-void PauseScene::Update(const Input & input)
+void PauseScene::Update( Input & input)
 {
 	if (input.Ispressed(0, "pause") && !input.IsTriggered(0, "pause"))
 	{

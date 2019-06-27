@@ -4,17 +4,23 @@
 struct Size
 {
 	int w, h;
+	Size() {}
+	Size(int inw, int inh) { w = inw; h = inh; }
 };
 struct Position2
 {
 	int x, y;
 	Position2() {}
 	Position2(int inx, int iny) { x = inx; y = iny; }
+
+	Position2 operator-();
 };
 
 struct Position2f
 {
 	float x, y;
+	Position2f() {}
+	Position2f(float inx, float iny) { x = inx; y = iny; }
 };
 
 struct Vector2
@@ -55,7 +61,16 @@ struct Rect
 {
 	Position2 center;
 	Size size;
-	Rect();
+	Rect() {};
 	Rect(int x, int y, int w, int h);
 	Rect(Position2& pos, Size& sz);
+};
+
+struct Segment {
+	Position2f posa;
+	Position2f posb;
+	Segment() {}
+	Segment(const Position2f& a, const Position2f& b) { posa = a; posb = b; }
+	Segment(float ax, float ay, float bx, float by) { posa = Position2f(ax, ay); posb = Position2f(bx, by); };
+	void Draw(unsigned int color = 0xffffffff);
 };

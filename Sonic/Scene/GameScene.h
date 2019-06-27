@@ -7,6 +7,7 @@ class Player;
 class Camera;
 class Background;
 class Stage;
+class Ground;
 
 class GameScene :
 	public BaseScene
@@ -14,7 +15,7 @@ class GameScene :
 public:
 	GameScene(SceneMng& mng);
 	~GameScene();
-	void Update(const Input& input)override final;
+	void Update( Input& input)override final;
 	void Draw()override final;
 private:
 	std::shared_ptr<Player> _player;
@@ -22,5 +23,6 @@ private:
 	std::unique_ptr<Camera> _camera;
 	std::unique_ptr<Stage> _stage;
 	std::unique_ptr<Background> _bg;
+	std::unique_ptr<Ground> _ground;
 };
 

@@ -10,7 +10,7 @@ public:
 	Actor(const Camera cam);
 	Actor(const Camera cam, const Vector2f& pos);
 	virtual ~Actor();
-	virtual void Update(const Input&) = 0;
+	virtual void Update( Input&) = 0;
 	virtual void Draw() = 0;
 
 	virtual void Move(float x, float y);

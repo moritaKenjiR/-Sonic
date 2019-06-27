@@ -8,6 +8,7 @@ class Stage
 {
 private:
 	const Camera& _camera;
+	int _bgH;
 public:
 	Stage(const Camera& cam);
 	~Stage();
@@ -36,6 +37,7 @@ private:
 		LayoutType type;
 		int repeatX;
 		Size size;
+		Obj() {};
 		Obj(int h,const Position2& p,float r,LayoutType lt,int repX,Size s):
 			handle(h), initpos(p),rate(r),type(lt),repeatX(repX),size(s){}
 	};

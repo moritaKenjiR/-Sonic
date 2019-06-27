@@ -4,6 +4,7 @@
 
 Camera::Camera()
 {
+	_pos = { 0,0 };
 }
 
 
@@ -55,5 +56,5 @@ const Rect & Camera::GetViewRange() const
 
 const Position2 & Camera::GetOffset() const
 {
-	return _pos;
+	return  Position2(-_pos.x,-_pos.y);
 }

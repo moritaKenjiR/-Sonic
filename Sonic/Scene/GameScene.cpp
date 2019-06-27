@@ -2,9 +2,10 @@
 #include "../Input/Input.h"
 #include "ResultScene.h"
 #include "PauseScene.h"
+#include "../Game/Camera.h"
 #include "../Game/Player.h"
 #include "../Background.h"
-#include "../Game/Camera.h"
+#include "../Ground.h"
 
 
 GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
@@ -12,21 +13,29 @@ GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 	_camera = std::make_unique<Camera>();
 	_player = std::make_shared<Player>(*_camera);
 	_actors.push_back(_player);
-	_camera->AddPlayer(_player);
 	_stage = std::make_unique<Stage>(*_camera);
 	_bg = std::make_unique<Background>(*_camera);
+	_ground = std::make_unique<Ground>();
+	_camera->AddPlayer(_player);
+
+	_bg->AddParts("img/bg-clouds.png",Position2(0,-500),2.0f,true,Background::LayoutType::repeat,Size(160*5,208*5),-1);
+	_bg->AddParts("img/bg-mountains.png", Position2(0, -500), 3.0f, true, Background::LayoutType::repeat, Size(160*5, 208*5), -1);
+	_bg->AddParts("img/bg-trees.png", Position2(0,-500), 4.0f, true, Background::LayoutType::repeat, Size(160*5, 208*5), -1);
+	_stage->DataLoad("img/temp_bg.jpg");
 }
 
 GameScene::~GameScene()
 {
 }
 
-void GameScene::Update(const Input & input)
+void GameScene::Update( Input & input)
 {
+	
 	for (auto actor : _actors)
 	{
 		actor->Update(input);
 	}
+	_camera->Update();
 
 	if (input.Ispressed(0, "ok") && !input.IsTriggered(0, "ok"))
 	{
@@ -40,10 +49,13 @@ void GameScene::Update(const Input & input)
 
 void GameScene::Draw()
 {
-	DrawString(100, 100, "GameScene", 0xffffff);
+	_stage->Draw();
+	_bg->DrawBg();
+	_ground->Draw();
 	for (auto actor : _actors)
 	{
 		actor->Draw();
 	}
+	DrawString(100, 100, "GameScene", 0xffffff);
 }
 

@@ -13,7 +13,7 @@ public:
 	void ChangeScene(std::unique_ptr<BaseScene> nextscene);
 	void PushScene(std::unique_ptr<BaseScene> nextscene);
 	void PopScene();
-	void Update(const Input& input);
+	void Update( Input& input);
 private:
 	std::deque<std::unique_ptr<BaseScene>> _scene;
 };

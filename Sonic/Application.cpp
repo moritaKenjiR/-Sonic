@@ -38,6 +38,7 @@ void Application::InitializeInput()
 	_input->AddCommand(0, "right", 0, KEY_INPUT_RIGHT);
 	_input->AddCommand(0, "up", 0, KEY_INPUT_UP);
 	_input->AddCommand(0, "down", 0, KEY_INPUT_DOWN);
+	_input->AddCommand(0, "jump", 0, KEY_INPUT_SPACE);
 	_input->AddCommand(0, "ok", 0, KEY_INPUT_RETURN);
 	_input->AddCommand(0, "pause", 0, KEY_INPUT_P);
 	for (int i = 0; i < _input->GetConnectedPadCount(); ++i)

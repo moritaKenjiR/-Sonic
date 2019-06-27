@@ -16,6 +16,7 @@ Stage::~Stage()
 
 void Stage::DataLoad(const char * path)
 {
+	_bgH = LoadGraph(path,true);
 }
 
 void Stage::Update()
@@ -24,6 +25,7 @@ void Stage::Update()
 
 void Stage::Draw()
 {
+	DrawGraph(0, 0, _bgH, true);
 }
 
 Background::Background(const Camera & cam):_camera(cam)
@@ -63,7 +65,7 @@ void Background::AddParts(const char * filepath, const Position2 & pos, float ra
 	if (fromBottom) {
 		p.y = wsize.h - pos.y - h;
 	}
-
+	_bgparts.push_back(Obj(handle, p, rate, type, repeatX, Size(w,h)));
 }
 
 void Background::Update()
@@ -72,7 +74,7 @@ void Background::Update()
 
 void Background::DrawBg()
 {
-	auto offset = _camera.GetPosition();
+	auto offset = _camera.GetOffset();
 	for (auto& part : _bgparts) {
 		int w, h;
 		GetGraphSize(part.handle, &w, &h);

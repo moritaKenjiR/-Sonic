@@ -1,6 +1,6 @@
 #include "Geometry.h"
 #include <cmath>
-
+#include <DxLib.h>
 
 Vector2f Vector2f::operator-()
 {
@@ -81,7 +81,7 @@ Position2 operator-(const Position2 & lval, const Position2 & rval)
 
 bool operator!=(const Position2 & lval, const Position2 & rval)
 {
-	if ((lval.x != rval.x) && (lval.y != rval.y))
+	if ((lval.x != rval.x) || (lval.y != rval.y))
 	{
 		return true;
 	}
@@ -91,10 +91,6 @@ bool operator!=(const Position2 & lval, const Position2 & rval)
 
 
 ///ãÈå`ç\ë¢ëÃ
-Rect::Rect()
-{
-}
-
 Rect::Rect(int x, int y, int w, int h)
 {
 	center = { x,y };
@@ -105,4 +101,14 @@ Rect::Rect(Position2 & pos, Size & sz)
 {
 	center = pos;
 	size = sz;
+}
+
+void Segment::Draw(unsigned int color)
+{
+	DrawLine(posa.x, posa.y, posb.x, posb.y, color, true);
+}
+
+Position2 Position2::operator-()
+{
+	return Position2(-x,-y);
 }

@@ -11,7 +11,7 @@ ResultScene::~ResultScene()
 {
 }
 
-void ResultScene::Update(const Input & input)
+void ResultScene::Update( Input & input)
 {
 	if (input.Ispressed(0, "ok") && !input.IsTriggered(0, "ok"))
 	{
