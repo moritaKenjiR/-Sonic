@@ -9,24 +9,24 @@ class Player :
 	public Actor
 {
 public:
-	Player(const Camera cam);
+	Player(const Camera& cam);
 	~Player();
-	void Update( Input&)override final;
+	void Update(const Input&)override final;
 	void Draw()override final;
 	void Move(const Vector2f& move);
 	const Vector2f& GetPosition()const;
 
-	void NeutralUpdate(Input&);
-	void RunUpdate(Input&);
-	void JumpUpdate(Input&);
-	void GroundUpdate(Input&);
-	void DamageUpdate(Input&);
+	void NeutralUpdate(const Input&);
+	void RunUpdate(const Input&);
+	void JumpUpdate(const Input&);
+	void GroundUpdate(const Input&);
+	void DamageUpdate(const Input&);
 
 	void Jump();
 	void AdjustY(float grad,float adjustY);
 	void Aerial();
 private:
-	void (Player::*_updateFunc)(Input&);
+	void (Player::*_updateFunc)(const Input&);
 	unsigned int _frame;
 	int _imgH;
 	bool _isLeft;

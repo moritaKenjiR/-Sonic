@@ -21,7 +21,7 @@ void Ground::Draw()
 
 int Ground::GetCurrentGroundY() const
 {
-	posb.y - posa.y / posb.x - posa.x
-		return posa.y +grad *()
+	//posb.y - posa.y / posb.x - posa.x
+	//	return posa.y +grad *()
 	return 350;
 }

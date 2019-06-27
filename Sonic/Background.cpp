@@ -75,11 +75,12 @@ void Background::Update()
 void Background::DrawBg()
 {
 	auto offset = _camera.GetOffset();
-	for (auto& part : _bgparts) {
+	for (auto& part : _bgparts) 
+	{
 		int w, h;
 		GetGraphSize(part.handle, &w, &h);
 		auto poffset = offset * part.rate;
-		auto pos = part.initpos - Position2(poffset.x%part.repeatX, poffset.y);
+		auto pos = part.initpos - Position2(poffset.x%(part.repeatX), poffset.y);
 
 		DrawExtendGraph(
 			pos.x,
@@ -93,6 +94,14 @@ void Background::DrawBg()
 			pos.x + part.repeatX,
 			pos.y,
 			pos.x + part.repeatX + part.size.w,
+			pos.y + part.size.h,
+			part.handle,
+			true);
+
+		DrawExtendGraph(
+			pos.x + part.repeatX*2,
+			pos.y,
+			pos.x + part.repeatX*2 + part.size.w,
 			pos.y + part.size.h,
 			part.handle,
 			true);

@@ -31,7 +31,7 @@ void SceneMng::PopScene()
 	_scene.pop_front();
 }
 
-void SceneMng::Update( Input & input)
+void SceneMng::Update(const Input & input)
 {
 	_scene.front()->Update(input);
 	for (auto rit = _scene.rbegin(); rit != _scene.rend(); ++rit)

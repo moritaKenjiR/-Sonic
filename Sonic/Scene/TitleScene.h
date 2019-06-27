@@ -8,18 +8,18 @@ class TitleScene :
 public:
 	TitleScene(SceneMng& mng);
 	~TitleScene();
-	void Update( Input& input)override final;
+	void Update(const Input& input)override final;
 	void Draw()override final;
 private:
 	int _titleBackH;
-	void FadeinUpdate( Input&);
-	void WaitUpdate( Input&);
-	void FadeoutUpdate( Input&);
+	void FadeinUpdate(const Input&);
+	void WaitUpdate(const Input&);
+	void FadeoutUpdate(const Input&);
 
 	void FadeDrawer();
 	void NormalDrawer();
 
-	void (TitleScene::*_updater)( Input&);
+	void (TitleScene::*_updater)(const Input&);
 	void (TitleScene::*_drawer)();
 
 	int _fadeCounter;

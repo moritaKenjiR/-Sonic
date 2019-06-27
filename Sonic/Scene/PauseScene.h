@@ -6,7 +6,7 @@ class PauseScene :
 public:
 	PauseScene(SceneMng& mng);
 	~PauseScene();
-	void Update( Input& input)override final;
+	void Update(const Input& input)override final;
 	void Draw()override final;
 };
 

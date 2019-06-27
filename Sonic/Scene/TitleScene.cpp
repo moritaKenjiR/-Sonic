@@ -18,7 +18,7 @@ TitleScene::~TitleScene()
 {
 }
 
-void TitleScene::Update( Input & input)
+void TitleScene::Update(const Input & input)
 {
 	(this->*_updater)(input);
 }
@@ -28,7 +28,7 @@ void TitleScene::Draw()
 	(this->*_drawer)();
 }
 
-void TitleScene::FadeinUpdate( Input &)
+void TitleScene::FadeinUpdate(const Input &)
 {
 	if (--_fadeCounter <= 0)
 	{
@@ -37,7 +37,7 @@ void TitleScene::FadeinUpdate( Input &)
 	}
 }
 
-void TitleScene::WaitUpdate( Input & input)
+void TitleScene::WaitUpdate(const Input & input)
 {
 	if (input.Ispressed(0, "ok") && !input.IsTriggered(0, "ok"))
 	{
@@ -46,7 +46,7 @@ void TitleScene::WaitUpdate( Input & input)
 	}
 }
 
-void TitleScene::FadeoutUpdate( Input &)
+void TitleScene::FadeoutUpdate(const Input &)
 {
 	if (++_fadeCounter >= fade_interval)
 	{

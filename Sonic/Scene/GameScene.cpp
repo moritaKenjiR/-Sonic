@@ -18,9 +18,9 @@ GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 	_ground = std::make_unique<Ground>();
 	_camera->AddPlayer(_player);
 
-	_bg->AddParts("img/bg-clouds.png",Position2(0,-500),2.0f,true,Background::LayoutType::repeat,Size(160*5,208*5),-1);
-	_bg->AddParts("img/bg-mountains.png", Position2(0, -500), 3.0f, true, Background::LayoutType::repeat, Size(160*5, 208*5), -1);
-	_bg->AddParts("img/bg-trees.png", Position2(0,-500), 4.0f, true, Background::LayoutType::repeat, Size(160*5, 208*5), -1);
+	_bg->AddParts("img/bg-clouds.png",Position2(-300,0),1.0f,true,Background::LayoutType::repeat,Size(160*5,208*5),-1);
+	_bg->AddParts("img/bg-mountains.png", Position2(-300, 0), 1.5f, true, Background::LayoutType::repeat, Size(160*5, 208*5), -1);
+	_bg->AddParts("img/bg-trees.png", Position2(-300,0), 2.0f, true, Background::LayoutType::repeat, Size(160*5, 208*5), -1);
 	_stage->DataLoad("img/temp_bg.jpg");
 }
 
@@ -28,7 +28,7 @@ GameScene::~GameScene()
 {
 }
 
-void GameScene::Update( Input & input)
+void GameScene::Update(const Input & input)
 {
 	
 	for (auto actor : _actors)
