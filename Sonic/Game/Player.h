@@ -4,10 +4,13 @@
 #include <vector>
 #include "Actor.h"
 class Camera;
+class GameScene;
+class Ground;
 
 class Player :
 	public Actor
 {
+	friend GameScene;
 public:
 	Player(const Camera& cam);
 	~Player();
@@ -25,16 +28,21 @@ public:
 	void Jump();
 	void AdjustY(float grad,float adjustY);
 	void Aerial();
+	void GetGroundP(std::shared_ptr<Ground> gp);
 private:
 	void (Player::*_updateFunc)(const Input&);
 	unsigned int _frame;
 	int _imgH;
 	bool _isLeft;
 	std::string _currentActionName = "";
+	std::shared_ptr<Ground> _ground;
 
 	Vector2f _vel;
-	float accel;
-	float framerate;
+	float _accel;
+	float _framerate;
+	float _grad;
+	float _angel;
+	bool _isAerial;
 	struct CutData {
 		Rect cutrect;
 		Position2 center;

@@ -4,7 +4,8 @@
 #include <string>
 #include "../Input/Input.h"
 #include "Camera.h"
-#include <casetup.h>
+#include "../scene/GameScene.h"
+#include"../Ground.h"
 
 constexpr int default_player_posx = 512;
 constexpr int default_player_posy = 500;
@@ -47,6 +48,7 @@ Player::Player(const Camera& cam):Actor(cam,Vector2f(default_player_posx,default
 
 	_updateFunc = &Player::NeutralUpdate;
 	_vel = { 0,0 };
+	_isAerial = false;
 }
 
 
@@ -97,7 +99,6 @@ void Player::NeutralUpdate(const Input & input)
 	if (input.Ispressed(0, "up"))
 	{
 		Jump();
-		_updateFunc = &Player::JumpUpdate;
 	}
 }
 
@@ -121,10 +122,11 @@ void Player::RunUpdate(const Input & input)
 
 void Player::JumpUpdate(const Input & input)
 {
-	_vel.y += g;
-	if (_pos.y > 500)
+	Aerial();
+	if (_pos.y <= _ground->GetCurrentGroundY(_grad))
 	{
 		_vel.y = 0;
+		_isAerial = false;
 		_updateFunc = &Player::NeutralUpdate;
 	}
 }
@@ -140,7 +142,12 @@ void Player::DamageUpdate(const Input &input)
 
 void Player::Jump()
 {
-	_vel.y = jump_power;
+	if (!_isAerial)
+	{
+		_vel.y = jump_power;
+		_isAerial = true;
+		_updateFunc = &Player::JumpUpdate;
+	}
 }
 
 void Player::AdjustY(float grad, float adjustY)
@@ -149,10 +156,16 @@ void Player::AdjustY(float grad, float adjustY)
 	{
 		_pos.y = adjustY;
 	}
-	//_angel = atanf(grad);
+	_angel = atanf(grad);
 	//_gsin = _g*(grad/(1+grad * grad))
 }
 
 void Player::Aerial()
 {
+	_vel.y += g;
+}
+
+void Player::GetGroundP(std::shared_ptr<Ground> gp)
+{
+	_ground = gp;
 }

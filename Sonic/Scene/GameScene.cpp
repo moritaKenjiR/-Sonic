@@ -15,8 +15,9 @@ GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 	_actors.push_back(_player);
 	_stage = std::make_unique<Stage>(*_camera);
 	_bg = std::make_unique<Background>(*_camera);
-	_ground = std::make_unique<Ground>();
+	_ground = std::make_unique<Ground>(*_player,*_camera);
 	_camera->AddPlayer(_player);
+	_player->GetGroundP(_ground);
 
 	_bg->AddParts("img/bg-clouds.png",Position2(-300,0),1.0f,true,Background::LayoutType::repeat,Size(160*5,208*5),-1);
 	_bg->AddParts("img/bg-mountains.png", Position2(-300, 0), 1.5f, true, Background::LayoutType::repeat, Size(160*5, 208*5), -1);
