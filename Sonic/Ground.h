@@ -11,6 +11,7 @@ public:
 	~Ground();
 
 	void Draw();
+	void DrawBottomGround(const Position2f& posa, const Position2f& posb);
 	int GetCurrentGroundY(float& grad)const;
 	int GetCurrentDeadLine()const;
 private:
