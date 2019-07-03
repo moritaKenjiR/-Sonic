@@ -4,21 +4,6 @@
 #include "Geometry.h"
 class Camera;
 
-class Stage
-{
-private:
-	const Camera& _camera;
-	int _bgH;
-public:
-	Stage(const Camera& cam);
-	~Stage();
-
-	void DataLoad(const char* path);
-
-	void Update();
-
-	void Draw();
-};
 
 
 class Background

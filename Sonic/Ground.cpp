@@ -6,7 +6,7 @@
 
 Ground::Ground(Player& pl, const Camera& cam):_player(pl),_camera(cam)
 {
-	_seg.posa = Position2f(0, 200);
+	/*_seg.posa = Position2f(0, 200);
 	_seg.posb = Position2f(500, 100);
 
 	for (int i = 0; i < 800; ++i)
@@ -16,7 +16,7 @@ Ground::Ground(Player& pl, const Camera& cam):_player(pl),_camera(cam)
 		auto ay = 300 - 200 * sin(DX_PI*(float)i / 8.0f);
 		auto by = 300 - 200 * sin(DX_PI*(float)(i+1) / 8.0f);
 		_segments.emplace_back(ax, ay, bx, by);
-	}
+	}*/
 	_handle = LoadGraph("img/atlas0.png", true);
 }
 
@@ -39,9 +39,16 @@ void Ground::Draw()
 		_handle,true);
 
 	auto offset = _camera.GetOffset();
+	auto wsize = _camera.GetViewRange().size;
 	DrawLine(0+ offset.x, 500+offset.y, 5000+offset.x, 500 + offset.y, 0xa03030);
 	for (auto& seg : _segments)
 	{
+		auto segposa = seg.posa - offset.ToFloatVec();
+		auto segposb = seg.posb - offset.ToFloatVec();
+		if ((segposa.x < 0 && segposb.x < 0) || (segposa.x > wsize.w && segposb.x > wsize.w)) 
+		{
+			continue;
+		}
 		int count = (int)(seg.posb.x - seg.posa.x) / 64;
 		int mod = (int)(seg.posb.x - seg.posa.x)% 64;
 		float grad = (seg.posb.y - seg.posa.y) /(seg.posb.x - seg.posa.x);
@@ -141,4 +148,14 @@ int Ground::GetCurrentGroundY(float& grad) const
 int Ground::GetCurrentDeadLine() const
 {
 	return 1000;
+}
+
+void Ground::AddSegment(const Segment & seg)
+{
+	_segments.push_back(seg);
+}
+
+void Ground::AddSegment(const Position2f & posa, const Position2f & posb)
+{
+	_segments.emplace_back(posa, posb);
 }

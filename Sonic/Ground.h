@@ -14,6 +14,8 @@ public:
 	void DrawBottomGround(const Position2f& posa, const Position2f& posb);
 	int GetCurrentGroundY(float& grad)const;
 	int GetCurrentDeadLine()const;
+	void AddSegment(const Segment& seg);
+	void AddSegment(const Position2f& posa, const Position2f& posb);
 private:
 	Player& _player;
 	const Camera& _camera;

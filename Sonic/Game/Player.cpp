@@ -18,10 +18,10 @@ Player::Player(const Camera& cam):Actor(cam,Vector2f(default_player_posx,default
 
 	std::string actPath = "action/player.act";
 	int playerActPath = FileRead_open(actPath.c_str());
-	
+
 
 	float version;
-	FileRead_read(&version, sizeof(version),playerActPath);
+	FileRead_read(&version, sizeof(version), playerActPath);
 
 	int imgfilepathlen = 0;
 	FileRead_read(&imgfilepathlen, sizeof(imgfilepathlen), playerActPath);
@@ -29,7 +29,7 @@ Player::Player(const Camera& cam):Actor(cam,Vector2f(default_player_posx,default
 	std::string imgfilepath;
 	imgfilepath.resize(imgfilepathlen);
 	FileRead_read(&imgfilepath[0], imgfilepathlen, playerActPath);
-	
+
 	auto slash = actPath.find_last_of('/');
 	imgfilepath = actPath.substr(0, slash + 1) + imgfilepath;
 
@@ -42,7 +42,14 @@ Player::Player(const Camera& cam):Actor(cam,Vector2f(default_player_posx,default
 		std::string actionname;
 		actionname.resize(actionnamesize);
 		FileRead_read(&actionname[0], actionnamesize, playerActPath);
-		break;
+		actioncnt = 0;
+		FileRead_read(&actioncnt, sizeof(actioncnt), playerActPath);
+		std::vector<CutData> animcutinfoes(actioncnt);
+		for (int i = 0; i < actioncnt; ++i)
+		{
+			FileRead_read(&animcutinfoes[i], sizeof(animcutinfoes[i]), playerActPath);
+		}
+		_actionData[actionname].cutdata = animcutinfoes;
 	}
 	FileRead_close(playerActPath);
 

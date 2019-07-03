@@ -7,6 +7,15 @@ struct Size
 	Size() {}
 	Size(int inw, int inh) { w = inw; h = inh; }
 };
+
+
+struct Position2f
+{
+	float x, y;
+	Position2f() {}
+	Position2f(float inx, float iny) { x = inx; y = iny; }
+};
+
 struct Position2
 {
 	int x, y;
@@ -14,13 +23,7 @@ struct Position2
 	Position2(int inx, int iny) { x = inx; y = iny; }
 
 	Position2 operator-();
-};
-
-struct Position2f
-{
-	float x, y;
-	Position2f() {}
-	Position2f(float inx, float iny) { x = inx; y = iny; }
+	Position2f ToFloatVec()const;
 };
 
 struct Vector2
@@ -48,6 +51,7 @@ struct Vector2f
 };
 
 Vector2f operator+(const Vector2f& lval, const Vector2f& rval);
+Position2f operator-(const Position2f& lval, const Position2f& rval);
 Vector2f operator-(const Vector2f& lval, const Vector2f& rval);
 Vector2f operator*(const Vector2f& lval, const float scale);
 Vector2f operator/(const Vector2f& lval, const float scale);

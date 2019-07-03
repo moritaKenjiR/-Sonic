@@ -34,15 +34,7 @@ void Camera::Update()
 		pPos = p->GetPosition();
 	}
 	_initPos = Position2(pPos.ToIntVec().x,pPos.ToIntVec().y);
-	_pos.x = _initPos.x;
-	if (_initPos.y < 500)
-	{
-		_pos.y = _initPos.y -500;
-	}
-	else 
-	{
-		_pos.y =0;
-	}
+	_pos = _initPos;
 	
 }
 

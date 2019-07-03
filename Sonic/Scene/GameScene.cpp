@@ -6,7 +6,7 @@
 #include "../Game/Player.h"
 #include "../Background.h"
 #include "../Ground.h"
-
+#include "../Stage.h"
 
 GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 {
@@ -14,15 +14,17 @@ GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 	_player = std::make_shared<Player>(*_camera);
 	_actors.push_back(_player);
 	_stage = std::make_unique<Stage>(*_camera);
+	_stage->DataLoad("map/level11.fmf");
 	_bg = std::make_unique<Background>(*_camera);
 	_ground = std::make_unique<Ground>(*_player,*_camera);
+	_stage->BuildGround(*_ground);
 	_camera->AddPlayer(_player);
 	_player->GetGroundP(_ground);
 
 	_bg->AddParts("img/bg-clouds.png",Position2(-300,0),1.0f,true,Background::LayoutType::repeat,Size(160*5,208*5),-1);
 	_bg->AddParts("img/bg-mountains.png", Position2(-300, 0), 1.5f, true, Background::LayoutType::repeat, Size(160*5, 208*5), -1);
 	_bg->AddParts("img/bg-trees.png", Position2(-300,0), 2.0f, true, Background::LayoutType::repeat, Size(160*5, 208*5), -1);
-	_stage->DataLoad("img/temp_bg.jpg");
+	
 }
 
 GameScene::~GameScene()
@@ -58,5 +60,14 @@ void GameScene::Draw()
 		actor->Draw();
 	}
 	DrawString(100, 100, "GameScene", 0xffffff);
+
+#ifdef _DEBUG 
+	auto fps = GetFPS();
+	auto drawCallCount = GetDrawCallCount();
+	DrawFormatString(12, 12, 0x000000, "FPS=%f", fps);
+	DrawFormatString(10, 10, 0xffffff, "FPS=%f", fps);
+	DrawFormatString(12, 32, 0x000000, "DrawCall=%d", drawCallCount);
+	DrawFormatString(10, 30, 0xffffff, "DrawCall=%d", drawCallCount);
+#endif
 }
 

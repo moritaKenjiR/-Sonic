@@ -54,6 +54,11 @@ Vector2f operator+(const Vector2f & lval, const Vector2f & rval)
 	return Vector2f(lval.x + rval.x, lval.y + rval.y);
 }
 
+Position2f operator-(const Position2f & lval, const Position2f & rval)
+{
+	return Position2f(lval.x - rval.x, lval.y - rval.y);
+}
+
 Vector2f operator-(const Vector2f & lval, const Vector2f & rval)
 {
 	return Vector2f(lval.x - rval.x, lval.y - rval.y);
@@ -111,4 +116,10 @@ void Segment::Draw(unsigned int color)
 Position2 Position2::operator-()
 {
 	return Position2(-x,-y);
+}
+
+Position2f Position2::ToFloatVec() const
+{
+	Position2f fpos = { (float)x,(float)y };
+	return fpos;
 }

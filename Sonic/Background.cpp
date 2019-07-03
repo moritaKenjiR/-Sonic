@@ -5,29 +5,6 @@
 #include "Geometry.h"
 
 
-
-Stage::Stage(const Camera & cam):_camera(cam)
-{
-}
-
-Stage::~Stage()
-{
-}
-
-void Stage::DataLoad(const char * path)
-{
-	_bgH = LoadGraph(path,true);
-}
-
-void Stage::Update()
-{
-}
-
-void Stage::Draw()
-{
-	DrawGraph(0, 0, _bgH, true);
-}
-
 Background::Background(const Camera & cam):_camera(cam)
 {
 }

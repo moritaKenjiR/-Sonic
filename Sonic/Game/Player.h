@@ -2,6 +2,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <map>
 #include "Actor.h"
 class Camera;
 class GameScene;
@@ -55,5 +56,7 @@ private:
 		std::vector<CutData> cutdata;
 		unsigned int totalDuration;
 	};
+
+	std::map<std::string, Action> _actionData;
 };
 
