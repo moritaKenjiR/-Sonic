@@ -39,13 +39,13 @@ void Ground::Draw()
 		_handle,true);
 
 	auto offset = _camera.GetOffset();
-	auto wsize = _camera.GetViewRange().size;
+	auto wsize = _camera.GetViewRange().center.x + _camera.GetViewRange().size.w/2;
 	DrawLine(0+ offset.x, 500+offset.y, 5000+offset.x, 500 + offset.y, 0xa03030);
 	for (auto& seg : _segments)
 	{
 		auto segposa = seg.posa - offset.ToFloatVec();
 		auto segposb = seg.posb - offset.ToFloatVec();
-		if ((segposa.x < 0 && segposb.x < 0) || (segposa.x > wsize.w && segposb.x > wsize.w)) 
+		if ((segposa.x < 0 && segposb.x < 0) || (segposa.x > wsize && segposb.x > wsize)) 
 		{
 			continue;
 		}
@@ -106,11 +106,11 @@ void Ground::DrawBottomGround(const Position2f & posa, const Position2f & posb)
 int Ground::GetCurrentGroundY(float& grad) const
 {
 	auto pos = _player.GetPosition();
-
 	auto lambda = [pos](const Segment& s)
 	{
 		return s.posa.x <= pos.x && pos.x <= s.posb.x;
 	};
+
 	auto it = std::find_if(_segments.begin(), _segments.end(), lambda);
 	if (it == _segments.end()) return INT_MIN;
 	
@@ -147,7 +147,7 @@ int Ground::GetCurrentGroundY(float& grad) const
 
 int Ground::GetCurrentDeadLine() const
 {
-	return 1000;
+	return 1500;
 }
 
 void Ground::AddSegment(const Segment & seg)

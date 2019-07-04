@@ -59,6 +59,15 @@ void Application::Run(void)
 		ClsDrawScreen();
 		_input->Update();
 		_sceneMng->Update(*_input);
+
+#ifdef _DEBUG 
+		auto fps = GetFPS();
+		auto drawCallCount = GetDrawCallCount();
+		DrawFormatString(12, 12, 0x000000, "FPS=%f", fps);
+		DrawFormatString(10, 10, 0xffffff, "FPS=%f", fps);
+		DrawFormatString(12, 32, 0x000000, "DrawCall=%d", drawCallCount);
+		DrawFormatString(10, 30, 0xffffff, "DrawCall=%d", drawCallCount);
+#endif
 		
 		ScreenFlip();
 	}

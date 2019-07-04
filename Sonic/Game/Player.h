@@ -26,6 +26,7 @@ public:
 	void GroundUpdate(const Input&);
 	void DamageUpdate(const Input&);
 
+	void JumpCheck(const Input&);
 	void Jump();
 	void AdjustY(float grad,float adjustY);
 	void Aerial();
@@ -44,6 +45,7 @@ private:
 	float _grad;
 	float _angel;
 	bool _isAerial;
+	int _frameOfJumpButtonPressing;
 	struct CutData {
 		Rect cutrect;
 		Position2 center;

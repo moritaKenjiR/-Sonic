@@ -92,6 +92,7 @@ const Vector2f & Player::GetPosition() const
 
 void Player::NeutralUpdate(const Input & input)
 {
+	
 	_vel *= 0.95f;
 	if (input.Ispressed(0, "left"))
 	{
@@ -103,14 +104,15 @@ void Player::NeutralUpdate(const Input & input)
 		_isLeft = false;
 		_updateFunc = &Player::RunUpdate;
 	}
-	if (input.Ispressed(0, "up"))
-	{
-		Jump();
-	}
+	
 }
 
 void Player::RunUpdate(const Input & input)
 {
+	if (input.IsReleasd(0, "right"))
+	{
+		if (true);
+	}
 	if (input.Ispressed(0, "left"))
 	{
 		_isLeft = true;
@@ -145,6 +147,23 @@ void Player::GroundUpdate(const Input &input )
 void Player::DamageUpdate(const Input &input)
 {
 
+}
+
+void Player::JumpCheck(const Input & input)
+{
+	if (input.Ispressed(0, "up"))
+	{
+		_frameOfJumpButtonPressing = 1;
+	}
+	if (input.IsReleasd(0, "jump") || _frameOfJumpButtonPressing >= 5)
+	{
+		_updateFunc = &Player::JumpUpdate;
+		_frameOfJumpButtonPressing = 0;
+	}
+	if (_frameOfJumpButtonPressing > 0)
+	{
+		++_frameOfJumpButtonPressing;
+	}
 }
 
 void Player::Jump()

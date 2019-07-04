@@ -61,13 +61,6 @@ void GameScene::Draw()
 	}
 	DrawString(100, 100, "GameScene", 0xffffff);
 
-#ifdef _DEBUG 
-	auto fps = GetFPS();
-	auto drawCallCount = GetDrawCallCount();
-	DrawFormatString(12, 12, 0x000000, "FPS=%f", fps);
-	DrawFormatString(10, 10, 0xffffff, "FPS=%f", fps);
-	DrawFormatString(12, 32, 0x000000, "DrawCall=%d", drawCallCount);
-	DrawFormatString(10, 30, 0xffffff, "DrawCall=%d", drawCallCount);
-#endif
+
 }
 

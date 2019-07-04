@@ -50,6 +50,8 @@ public:
 	//押されたかの確認
 	bool IsTriggered(int plNo, std::string cmd)const;
 
+	bool IsReleasd(int plNo, std::string cmd)const;
+
 private:
 	char _keystate[256];				//現在のキーボード状況
 	std::vector<int> _padstate;	//現在のﾊﾟｯﾄﾞ状況

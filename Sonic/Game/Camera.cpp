@@ -19,7 +19,14 @@ void Camera::AddPlayer(std::shared_ptr<Player> player)
 
 void Camera::RemovePlayer(std::shared_ptr<Player> player)
 {
-
+	std::vector<std::shared_ptr<Player>>::iterator it = _players.begin();
+	for (; it != _players.end(); ++it)
+	{
+		if ((*it) == player)
+		{
+			_players.erase(it--);
+		}
+	}
 }
 
 void Camera::SetRange(const Size & stageSize)
