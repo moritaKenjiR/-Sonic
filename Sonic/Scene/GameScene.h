@@ -24,6 +24,5 @@ private:
 	std::unique_ptr<Camera> _camera;
 	std::unique_ptr<Stage> _stage;
 	std::unique_ptr<Background> _bg;
-	
 };
 

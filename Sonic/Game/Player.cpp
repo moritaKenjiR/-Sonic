@@ -109,10 +109,6 @@ void Player::NeutralUpdate(const Input & input)
 
 void Player::RunUpdate(const Input & input)
 {
-	if (input.IsReleasd(0, "right"))
-	{
-		if (true);
-	}
 	if (input.Ispressed(0, "left"))
 	{
 		_isLeft = true;
@@ -132,6 +128,18 @@ void Player::RunUpdate(const Input & input)
 void Player::JumpUpdate(const Input & input)
 {
 	Aerial();
+	if (_frameOfJumpButtonPressing > 0)
+	{
+		if (input.Ispressed(0, "jump"))
+		{
+			++_frameOfJumpButtonPressing;
+		}
+		if (input.IsReleasd(0, "jump") || _frameOfJumpButtonPressing >= 10)
+		{
+			_vel.y = jump_power * static_cast<float>(_frameOfJumpButtonPressing);
+				_frameOfJumpButtonPressing = 0;
+		}
+	}
 	if (_pos.y <= _ground->GetCurrentGroundY(_grad))
 	{
 		_vel.y = 0;
@@ -151,19 +159,12 @@ void Player::DamageUpdate(const Input &input)
 
 void Player::JumpCheck(const Input & input)
 {
-	if (input.Ispressed(0, "up"))
+	if (input.Ispressed(0, "jump"))
 	{
 		_frameOfJumpButtonPressing = 1;
-	}
-	if (input.IsReleasd(0, "jump") || _frameOfJumpButtonPressing >= 5)
-	{
 		_updateFunc = &Player::JumpUpdate;
-		_frameOfJumpButtonPressing = 0;
 	}
-	if (_frameOfJumpButtonPressing > 0)
-	{
-		++_frameOfJumpButtonPressing;
-	}
+	
 }
 
 void Player::Jump()

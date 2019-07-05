@@ -102,11 +102,6 @@ Rect::Rect(int x, int y, int w, int h)
 	size = { w,h };
 }
 
-Rect::Rect(Position2 & pos, Size & sz)
-{
-	center = pos;
-	size = sz;
-}
 
 void Segment::Draw(unsigned int color)
 {

@@ -14,7 +14,7 @@ GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 	_player = std::make_shared<Player>(*_camera);
 	_actors.push_back(_player);
 	_stage = std::make_unique<Stage>(*_camera);
-	_stage->DataLoad("map/level11.fmf");
+	_stage->DataLoad("map/level1.fmf");
 	_bg = std::make_unique<Background>(*_camera);
 	_ground = std::make_unique<Ground>(*_player,*_camera);
 	_stage->BuildGround(*_ground);

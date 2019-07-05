@@ -45,6 +45,7 @@ private:
 	float _grad;
 	float _angel;
 	bool _isAerial;
+	float _jumpPower;
 	int _frameOfJumpButtonPressing;
 	struct CutData {
 		Rect cutrect;

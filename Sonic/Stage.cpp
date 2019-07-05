@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include <algorithm>
 #include "Ground.h"
+#include "BlockFactory.h"
 
 constexpr int  block_size = 32;
 
@@ -27,6 +28,8 @@ void Stage::DataLoad(const char * path)
 		unsigned char bitCount;			//ÃÞ°À‚ÌËÞ¯Ä¶³ÝÄ(8or16)
 	};
 
+	BlockFactory _bf(_camera);
+
 	auto handle = FileRead_open(path);
 	StageHeader header = {};
 	FileRead_read(&header, sizeof(header), handle);
@@ -35,6 +38,18 @@ void Stage::DataLoad(const char * path)
 
 
 	FileRead_read(terrawdata.data(), terrawdata.size(), handle);
+	unsigned char tmp;
+	for (int y = 0; y < header.mapHeight; ++y)
+	{
+		for (int x = 0; x < header.mapWidth; ++x)
+		{
+			FileRead_read(&tmp, sizeof(tmp), handle);
+			if (tmp == 1)
+			{
+				_blocks.push_back(_bf.Create((BlockType)tmp,Position2(x*block_size,y*block_size)));
+			}
+		}
+	}
 
 	FileRead_close(handle);
 
@@ -78,4 +93,8 @@ void Stage::Update()
 
 void Stage::Draw()
 {
+	for (auto& block : _blocks)
+	{
+		block->Draw();
+	}
 }
