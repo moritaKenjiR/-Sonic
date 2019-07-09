@@ -12,7 +12,7 @@ enum class BlockType {
 };
 
 class Actor;
-class BlockCollider;
+class BoxCollider;
 class Camera;
 
 class Block
@@ -21,16 +21,16 @@ protected:
 	Rect _rect;
 	const Camera& _camera;
 	Block( Rect rect,const Camera& cam);
-	
+	std::unique_ptr<BoxCollider> _collider;
 public:
 	virtual void Update() = 0;
 
 	virtual void Draw() = 0;
 
 
-	virtual void OnCollision(Actor* actor, const BlockCollider& col) = 0;
+	virtual void OnCollision(Actor* actor, const BoxCollider& col) = 0;
 
-	const BlockCollider& GetCollider()const;
+	const BoxCollider& GetCollider()const;
 };
 
 

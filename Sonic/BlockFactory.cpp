@@ -1,6 +1,7 @@
 #include "BlockFactory.h"
 #include "Geometry.h"
 #include "Game/Camera.h"
+#include "Collision.h"
 #include <DxLib.h>
 
 Block::Block(Rect rect,const Camera& cam):_rect(rect),_camera(cam)
@@ -40,7 +41,7 @@ std::unique_ptr<Block> BlockFactory::Create(BlockType type, const Position2 pos)
 							,_rect.Right() - offset.x,_rect.Bottom() - offset.y,224,128,32,32,_blockH,true);
 		}
 
-		void OnCollision(Actor* actor, const BlockCollider& col)override
+		void OnCollision(Actor* actor, const BoxCollider& col)override
 		{
 
 		}
@@ -49,7 +50,9 @@ std::unique_ptr<Block> BlockFactory::Create(BlockType type, const Position2 pos)
 
 	if (type == BlockType::brick)
 	{
-		return std::make_unique<Brick>(pos);
+		std::unique_ptr<Block> ptr;
+		ptr = std::make_unique<Brick>(pos);
+		return ptr;
 	}
 }
 

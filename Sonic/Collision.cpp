@@ -2,11 +2,21 @@
 
 
 
-Collision::Collision()
+Collider::Collider()
 {
 }
 
 
-Collision::~Collision()
+Collider::~Collider()
 {
+}
+
+bool Collider::IsCollided(const BoxCollider & a, const BoxCollider & b)
+{
+	return false;
+}
+
+const Rect & BoxCollider::GetRect() const
+{
+	return _rect;
 }

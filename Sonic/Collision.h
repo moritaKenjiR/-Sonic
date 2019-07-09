@@ -1,16 +1,22 @@
 #pragma once
 #include "Geometry.h"
 
-class Collision
+class BoxCollider;
+
+class Collider
 {
 public:
-	Collision();
-	~Collision();
+	Collider();
+	~Collider();
+	static bool IsCollided(const BoxCollider& a, const BoxCollider& b);
 };
 
-class BlockCollosion : public Collision
+class BoxCollider : public Collider
 {
+private:
+	Rect _rect;
 public:
-
+	BoxCollider(const Rect& rc): _rect(rc) {}
+	const Rect& GetRect()const;
 };
 

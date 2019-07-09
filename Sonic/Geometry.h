@@ -67,7 +67,7 @@ struct Rect
 	Size size;
 	Rect() {};
 	Rect(int x, int y, int w, int h);
-	Rect(const Position2 pos, Size sz) :center(pos), size(sz) {};
+	Rect(Position2 pos, Size sz) :center(pos), size(sz) {};
 
 	const int Left()const { return center.x - size.w / 2; };
 	const int Right()const { return center.x + size.w / 2; };

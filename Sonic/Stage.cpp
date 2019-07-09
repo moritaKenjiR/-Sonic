@@ -3,7 +3,8 @@
 #include <algorithm>
 #include "Ground.h"
 #include "BlockFactory.h"
-
+#include "Geometry.h"
+#include "Collision.h"
 constexpr int  block_size = 32;
 
 Stage::Stage(const Camera & cam) :_camera(cam)
@@ -28,28 +29,17 @@ void Stage::DataLoad(const char * path)
 		unsigned char bitCount;			//ÃÞ°À‚ÌËÞ¯Ä¶³ÝÄ(8or16)
 	};
 
-	BlockFactory _bf(_camera);
+	BlockFactory bf(_camera);
 
 	auto handle = FileRead_open(path);
 	StageHeader header = {};
 	FileRead_read(&header, sizeof(header), handle);
 
 	std::vector<unsigned char> terrawdata(header.mapHeight*header.mapWidth);
-
-
 	FileRead_read(terrawdata.data(), terrawdata.size(), handle);
-	unsigned char tmp;
-	for (int y = 0; y < header.mapHeight; ++y)
-	{
-		for (int x = 0; x < header.mapWidth; ++x)
-		{
-			FileRead_read(&tmp, sizeof(tmp), handle);
-			if (tmp == 1)
-			{
-				_blocks.push_back(_bf.Create((BlockType)tmp,Position2(x*block_size,y*block_size)));
-			}
-		}
-	}
+
+	std::vector<unsigned char> blockdata(header.mapHeight*header.mapWidth);
+	FileRead_read(&blockdata,blockdata.size(), handle);
 
 	FileRead_close(handle);
 
@@ -71,6 +61,17 @@ void Stage::DataLoad(const char * path)
 		});
 	}
 	
+	for (int y = 0; y < header.mapHeight; ++y)
+	{
+		for (int x = 0; x < header.mapWidth; ++x)
+		{
+			if (blockdata[(y*header.mapWidth) + x] == 1)
+			{
+				Position2 pos = { x*block_size,y*block_size };
+				_blocks.push_back(bf.Create(BlockType::brick, pos));
+			}
+		}
+	}
 }
 
 void Stage::BuildGround(Ground & ground)
@@ -97,4 +98,9 @@ void Stage::Draw()
 	{
 		block->Draw();
 	}
+}
+
+std::vector<std::unique_ptr<Block>> Stage::Blocks()
+{
+	return _blocks;
 }

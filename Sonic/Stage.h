@@ -25,5 +25,6 @@ public:
 	void Update();
 
 	void Draw();
+	std::vector<std::unique_ptr<Block>> Blocks();
 };
 
