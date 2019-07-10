@@ -7,6 +7,7 @@
 class Camera;
 class GameScene;
 class Ground;
+class BoxCollider;
 
 class Player :
 	public Actor
@@ -16,6 +17,7 @@ public:
 	Player(const Camera& cam);
 	~Player();
 	void Update(const Input&)override final;
+	void OnDead()override final;
 	void Draw()override final;
 	void Move(const Vector2f& move);
 	const Vector2f& GetPosition()const;
@@ -31,6 +33,8 @@ public:
 	void AdjustY(float grad,float adjustY);
 	void Aerial();
 	void GetGroundP(std::shared_ptr<Ground> gp);
+
+	const BoxCollider& GetCollider()const;
 private:
 	void (Player::*_updateFunc)(const Input&);
 	unsigned int _frame;

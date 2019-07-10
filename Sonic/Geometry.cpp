@@ -102,6 +102,20 @@ Rect::Rect(int x, int y, int w, int h)
 	size = { w,h };
 }
 
+Size Rect::OverlapSize(const Rect & rcA, const Rect & rcB)
+{
+	Size ret;
+	ret.w = min(rcA.Right(), rcB.Right()) - max(rcA.Left(), rcB.Left());
+	ret.h = min(rcA.Bottom(), rcB.Bottom()) - max(rcA.Top(), rcB.Top());
+	return ret;
+}
+
+bool Rect::IsHit(const Rect & rcA, const Rect & rcB)
+{
+	return (rcA.center.y - rcB.center.y) < (rcA.size.h + rcB.size.h) &&
+							(rcA.center.x - rcB.center.x) < (rcA.size.w + rcB.size.w);
+}
+
 
 void Segment::Draw(unsigned int color)
 {

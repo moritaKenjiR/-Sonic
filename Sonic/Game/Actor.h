@@ -13,6 +13,8 @@ public:
 	virtual void Update(const Input&) = 0;
 	virtual void Draw() = 0;
 
+	virtual void OnDead() = 0;
+
 	virtual void Move(float x, float y);
 	virtual void Move(const Vector2f& vec);
 

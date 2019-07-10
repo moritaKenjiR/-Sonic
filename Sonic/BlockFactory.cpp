@@ -8,6 +8,12 @@ Block::Block(Rect rect,const Camera& cam):_rect(rect),_camera(cam)
 {
 }
 
+const BoxCollider & Block::GetCollider() const
+{
+	BoxCollider bc;
+	return bc;
+}
+
 BlockFactory::BlockFactory(const Camera& cam):_camera(cam)
 {
 	_blockH = LoadGraph("img/atlas0.png", true);
@@ -50,9 +56,7 @@ std::unique_ptr<Block> BlockFactory::Create(BlockType type, const Position2 pos)
 
 	if (type == BlockType::brick)
 	{
-		std::unique_ptr<Block> ptr;
-		ptr = std::make_unique<Brick>(pos);
-		return ptr;
+		return std::make_unique<Brick>(pos);
 	}
 }
 

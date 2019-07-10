@@ -73,6 +73,9 @@ struct Rect
 	const int Right()const { return center.x + size.w / 2; };
 	const int Top()const { return center.y - size.h / 2; };
 	const int Bottom()const { return center.y + size.h / 2; };
+
+	static Size OverlapSize(const Rect& rcA, const Rect& rcB);
+	static bool IsHit(const Rect& rcA, const Rect& rcB);
 };
 
 struct Segment {

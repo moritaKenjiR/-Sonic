@@ -73,11 +73,15 @@ void Player::Update(const Input & input)
 	Move(_vel);
 }
 
+void Player::OnDead()
+{
+}
+
 void Player::Draw()
 {
 	Position2 offset = _camera.GetOffset();
 	DrawCircle(_pos.x - offset.x,_pos.y - offset.y,20,0xffffff,true,true);
-	DrawRectRotaGraph(_pos.x, _pos.y, 0, 100, 27, 27, 2.0f, 0.0f, _imgH, true,_isLeft);
+	DrawRectRotaGraph(_pos.x, _pos.y, 0, 100, 27, 27, 1.0f, 0.0f, _imgH, true,_isLeft);
 }
 
 void Player::Move(const Vector2f& move)
@@ -195,4 +199,9 @@ void Player::Aerial()
 void Player::GetGroundP(std::shared_ptr<Ground> gp)
 {
 	_ground = gp;
+}
+
+const BoxCollider & Player::GetCollider() const
+{
+	// TODO: return ステートメントをここに挿入します
 }

@@ -7,6 +7,8 @@
 #include "../Background.h"
 #include "../Ground.h"
 #include "../Stage.h"
+#include "../BlockFactory.h"
+#include "../Collision.h"
 
 GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 {
@@ -48,13 +50,29 @@ void GameScene::Update(const Input & input)
 	{
 		_mng.PushScene(std::make_unique<PauseScene>(_mng));
 	}
+
+	auto viewrange = _camera->GetViewRange();
+	//ブロックとの当たり判定 
+	auto blocks = _stage->Blocks();
+	for (auto& b : blocks) {
+		auto& brect = b->GetCollider().GetRect();
+		//画面外は省く 
+		if (brect.Right() < viewrange.Left() || brect.Left() > viewrange.Right()) {
+			continue;
+		}
+		if (Collider::IsCollided(_player->GetCollider(), b->GetCollider())) {
+			_player->OnDead();
+			_camera->RemovePlayer(_player);
+		}
+	}
 }
 
 void GameScene::Draw()
 {
-	_stage->Draw();
+	
 	_bg->DrawBg();
 	_ground->Draw();
+	_stage->Draw();
 	for (auto actor : _actors)
 	{
 		actor->Draw();
