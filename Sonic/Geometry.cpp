@@ -112,8 +112,8 @@ Size Rect::OverlapSize(const Rect & rcA, const Rect & rcB)
 
 bool Rect::IsHit(const Rect & rcA, const Rect & rcB)
 {
-	return (rcA.center.y - rcB.center.y) < (rcA.size.h + rcB.size.h) &&
-							(rcA.center.x - rcB.center.x) < (rcA.size.w + rcB.size.w);
+	return abs(rcA.center.x - rcB.center.x) < (rcA.size.w + rcB.size.w) / 2 &&
+						abs(rcA.center.y - rcB.center.y) <= (rcA.size.h + rcB.size.h) / 2;
 }
 
 
