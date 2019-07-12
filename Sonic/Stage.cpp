@@ -104,3 +104,46 @@ std::vector<std::unique_ptr<Block>> Stage::Blocks()
 {
 	return _blocks;
 }
+
+
+class Pendulum : public Block
+{
+private:
+	static constexpr int fix_width = 5;
+	Position2f _pos;
+	Vector2f _vel;
+	Position2f _pivot;
+	float _g;
+	bool _isVisible;
+	int _frame = 0;
+	int _length;
+	void (Pendulum::*_updater)();
+public:
+	void NormalUpdate()
+	{
+	
+		auto tensionVec = _rect.center.ToFloatVec() - _pivot;
+		float theta = atan2f(tensionVec.y, tensionVec.x);
+		_vel.x = _g * cos(theta) * sin(theta);
+		_vel.y = _g * cos(theta) * cos(theta);
+
+		_pos += _vel;
+		tensionVec = _pos - _pivot;
+		_pos = _pivot + tensionVec.Normalize()*_length;
+
+		_rect.center = _pos.ToIntVec();
+	}
+	void FragileUpdate()
+	{
+
+	}
+
+	void Update()override
+	{
+		(_updater)
+	}
+	void Draw()override
+	{
+
+	}
+};
