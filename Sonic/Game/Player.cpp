@@ -37,13 +37,22 @@ Player::Player(const Camera& cam):Actor(cam,Vector2f(default_player_posx,default
 	FileRead_read(&actioncnt, sizeof(actioncnt), playerActPath);
 	for (int i = 0; 0 < actioncnt; i++)
 	{
+		CutData cd = {};
+		Rect cutrect;
+		Position2 center;
+		int duration;
+
 		int actionnamesize = 0;
 		FileRead_read(&actionnamesize, sizeof(actionnamesize), playerActPath);
 		std::string actionname;
 		actionname.resize(actionnamesize);
 		FileRead_read(&actionname[0], actionnamesize, playerActPath);
-		actioncnt = 0;
-		FileRead_read(&actioncnt, sizeof(actioncnt), playerActPath);
+		int cutdataCount = 0;
+		FileRead_read(&cutdataCount, sizeof(cutdataCount), playerActPath);
+		if (cutdataCount > 0)
+		{
+
+		}
 		std::vector<CutData> animcutinfoes(actioncnt);
 		for (int i = 0; i < actioncnt; ++i)
 		{

@@ -35,6 +35,13 @@ public:
 	void GetGroundP(std::shared_ptr<Ground> gp);
 
 	const BoxCollider& GetCollider()const;
+
+	enum class HitRectType {
+		none,
+		attack,
+		damage,
+		push,
+	};
 private:
 	void (Player::*_updateFunc)(const Input&);
 	unsigned int _frame;
@@ -51,11 +58,17 @@ private:
 	bool _isAerial;
 	float _jumpPower;
 	int _frameOfJumpButtonPressing;
+
+	struct ActionRect {
+		HitRectType type;
+		Rect rc;
+	};
+
 	struct CutData {
 		Rect cutrect;
 		Position2 center;
 		int duration;
-		int actrccnt;
+		std::vector<ActionRect> actrect;
 	};
 
 	struct Action {
