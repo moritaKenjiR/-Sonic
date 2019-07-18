@@ -136,6 +136,7 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mantis.cpp" />
     <ClCompile Include="Scene\BaseScene.cpp" />
     <ClCompile Include="Scene\GameScene.cpp" />
     <ClCompile Include="Scene\PauseScene.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Input\Input.h" />
+    <ClInclude Include="Mantis.h" />
     <ClInclude Include="Scene\BaseScene.h" />
     <ClInclude Include="Scene\GameScene.h" />
     <ClInclude Include="Scene\PauseScene.h" />

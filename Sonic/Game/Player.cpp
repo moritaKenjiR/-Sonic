@@ -90,7 +90,7 @@ void Player::Draw()
 {
 	Position2 offset = _camera.GetOffset();
 	DrawCircle(_pos.x - offset.x,_pos.y - offset.y,20,0xffffff,true,true);
-	DrawRectRotaGraph(_pos.x, _pos.y, 0, 100, 27, 27, 1.0f, 0.0f, _imgH, true,_isLeft);
+	DrawRectRotaGraph(_pos.x - offset.x, _pos.y - offset.y, 0, 100, 27, 27, 1.0f, 0.0f, _imgH, true,_isLeft);
 }
 
 void Player::Move(const Vector2f& move)

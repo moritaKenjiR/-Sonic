@@ -9,6 +9,7 @@
 #include "../Stage.h"
 #include "../BlockFactory.h"
 #include "../Collision.h"
+#include "../Ant.h"
 
 GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 {
@@ -22,6 +23,9 @@ GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 	_stage->BuildGround(*_ground);
 	_camera->AddPlayer(_player);
 	_player->GetGroundP(_ground);
+
+	_actors.push_back(std::make_shared<Ant>(*_camera,*_player,300,300));
+	_actors.push_back(std::make_shared<Ant>(*_camera, *_player, 1000, 200));
 
 	_bg->AddParts("img/bg-clouds.png",Position2(-300,0),1.0f,true,Background::LayoutType::repeat,Size(160*5,208*5),-1);
 	_bg->AddParts("img/bg-mountains.png", Position2(-300, 0), 1.5f, true, Background::LayoutType::repeat, Size(160*5, 208*5), -1);

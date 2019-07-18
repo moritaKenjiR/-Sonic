@@ -8,11 +8,12 @@ class Actor
 {
 public:
 	Actor(const Camera& cam);
-	Actor(const Camera& cam, const Vector2f& pos);
+	Actor(const Camera& cam, const Position2f& pos);
 	virtual ~Actor();
 	virtual void Update(const Input&) = 0;
 	virtual void Draw() = 0;
 
+	virtual void OnGround(float grad, float adjustY = -1.0f)= 0;
 	virtual void OnDead() = 0;
 
 	virtual void Move(float x, float y);
@@ -26,7 +27,7 @@ public:
 private:
 
 protected:
-	Vector2f _pos;
+	Position2f _pos;
 	const Camera& _camera;
 };
 
