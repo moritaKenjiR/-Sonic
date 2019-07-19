@@ -123,20 +123,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Ant.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BlockFactory.cpp" />
     <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game\Actor.cpp" />
+    <ClCompile Include="Game\Ant.cpp" />
     <ClCompile Include="Game\Camera.cpp" />
+    <ClCompile Include="Game\Enemy.cpp" />
+    <ClCompile Include="Game\Mantis.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mantis.cpp" />
     <ClCompile Include="Scene\BaseScene.cpp" />
     <ClCompile Include="Scene\GameScene.cpp" />
     <ClCompile Include="Scene\PauseScene.cpp" />
@@ -144,21 +144,25 @@
     <ClCompile Include="Scene\SceneMng.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="System\ActionLoader.cpp" />
+    <ClCompile Include="System\FileSystem.cpp" />
+    <ClCompile Include="System\ImageLoader.cpp" />
+    <ClCompile Include="System\Loader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Ant.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="BlockFactory.h" />
     <ClInclude Include="Collision.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game\Actor.h" />
+    <ClInclude Include="Game\Ant.h" />
     <ClInclude Include="Game\Camera.h" />
+    <ClInclude Include="Game\Enemy.h" />
+    <ClInclude Include="Game\Mantis.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Input\Input.h" />
-    <ClInclude Include="Mantis.h" />
     <ClInclude Include="Scene\BaseScene.h" />
     <ClInclude Include="Scene\GameScene.h" />
     <ClInclude Include="Scene\PauseScene.h" />
@@ -166,6 +170,10 @@
     <ClInclude Include="Scene\SceneMng.h" />
     <ClInclude Include="Scene\TitleScene.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="System\ActionLoader.h" />
+    <ClInclude Include="System\FileSystem.h" />
+    <ClInclude Include="System\ImageLoader.h" />
+    <ClInclude Include="System\Loader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

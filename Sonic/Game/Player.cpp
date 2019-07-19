@@ -12,7 +12,7 @@ constexpr int default_player_posy = 500;
 constexpr float jump_power = -10.0f;
 constexpr float g = 0.3f;
 
-Player::Player(const Camera& cam):Actor(cam,Vector2f(default_player_posx,default_player_posy))
+Player::Player(const Camera& cam):Actor(cam,Position2f(default_player_posx,default_player_posy))
 {
 	_imgH = LoadGraph("img/player.png", true);
 
@@ -67,6 +67,12 @@ Player::Player(const Camera& cam):Actor(cam,Vector2f(default_player_posx,default
 	_isAerial = false;
 }
 
+void ReadData(void* dst, size_t& bytenum, int& cursor, ActionData& act)
+{
+	std::copy(act.GetRawData()->begin() + cursor,
+		act.GetRawData()->begin() + cursor + bytenum, dst);
+	cursor += bytenum;
+}
 
 Player::~Player()
 {
