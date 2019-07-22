@@ -2,7 +2,7 @@
 #include <map>
 #include <vector>
 #include <string>
-#include "System/Loader.h"
+#include "Loader.h"
 class ActionLoader :
 	public Loader
 {
@@ -12,6 +12,8 @@ public:
 
 	bool Load(const char* path, Data& data)override;
 	void Unload(const char* path)override;
+
+	
 
 	using Bytes_t = std::vector<unsigned char>;
 private:
@@ -25,6 +27,8 @@ class ActionData : public Data
 	friend ActionLoader;
 public:
 	ActionLoader::Bytes_t* GetRawData();
+	static void Read(void* dst, size_t& bytenum, int& cursor, ActionData& act);
+	static void Bilied
 private:
 	ActionLoader::Bytes_t* _data;
 };

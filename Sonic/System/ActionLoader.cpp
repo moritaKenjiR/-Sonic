@@ -33,3 +33,16 @@ bool ActionLoader::Load(const char * path, Data & data)
 		return true;
 	}
 }
+
+ActionLoader::Bytes_t * ActionData::GetRawData()
+{
+	return nullptr;
+}
+
+void ActionData::Read(void * dst, size_t & bytenum, int & cursor, ActionData & act)
+{
+	char* tmpdst = (char*)dst;
+	std::copy(act.GetRawData()->begin() + cursor,
+		act.GetRawData()->begin() + cursor + bytenum, tmpdst);
+	cursor += bytenum;
+}

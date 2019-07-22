@@ -67,12 +67,6 @@ Player::Player(const Camera& cam):Actor(cam,Position2f(default_player_posx,defau
 	_isAerial = false;
 }
 
-void ReadData(void* dst, size_t& bytenum, int& cursor, ActionData& act)
-{
-	std::copy(act.GetRawData()->begin() + cursor,
-		act.GetRawData()->begin() + cursor + bytenum, dst);
-	cursor += bytenum;
-}
 
 Player::~Player()
 {
