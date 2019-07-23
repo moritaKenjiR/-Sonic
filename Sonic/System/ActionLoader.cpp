@@ -1,5 +1,5 @@
 #include "ActionLoader.h"
-
+#include <DxLib.h>
 
 
 ActionLoader::ActionLoader()
@@ -24,7 +24,7 @@ bool ActionLoader::Load(const char * path, Data & data)
 		}
 		_table[path].resize(size);
 		auto h = FileRead_open(path);
-		FileRead_read(_table[path],size,path)
+		FileRead_read(&_table[path],size,path)
 
 	}
 	else
@@ -36,7 +36,7 @@ bool ActionLoader::Load(const char * path, Data & data)
 
 ActionLoader::Bytes_t * ActionData::GetRawData()
 {
-	return nullptr;
+	return _data;
 }
 
 void ActionData::Read(void * dst, size_t & bytenum, int & cursor, ActionData & act)
@@ -45,4 +45,8 @@ void ActionData::Read(void * dst, size_t & bytenum, int & cursor, ActionData & a
 	std::copy(act.GetRawData()->begin() + cursor,
 		act.GetRawData()->begin() + cursor + bytenum, tmpdst);
 	cursor += bytenum;
+}
+
+void ActionData::BuildActionSet(const ActionData & actdata, ActionSet & actset, std::string & imgPath)
+{
 }

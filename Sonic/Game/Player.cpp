@@ -14,9 +14,24 @@ constexpr float g = 0.3f;
 
 Player::Player(const Camera& cam):Actor(cam,Position2f(default_player_posx,default_player_posy))
 {
+	_actionSet = std::make_unique<ActionSet>();
 	_imgH = LoadGraph("img/player.png", true);
 
 	std::string actPath = "action/player.act";
+	
+
+	_updateFunc = &Player::NeutralUpdate;
+	_vel = { 0,0 };
+	_isAerial = false;
+}
+
+
+Player::~Player()
+{
+}
+
+void Player::LoadAction(std::string & actPath)
+{
 	int playerActPath = FileRead_open(actPath.c_str());
 
 
@@ -30,8 +45,7 @@ Player::Player(const Camera& cam):Actor(cam,Position2f(default_player_posx,defau
 	imgfilepath.resize(imgfilepathlen);
 	FileRead_read(&imgfilepath[0], imgfilepathlen, playerActPath);
 
-	auto slash = actPath.find_last_of('/');
-	imgfilepath = actPath.substr(0, slash + 1) + imgfilepath;
+
 
 	int actioncnt = 0;
 	FileRead_read(&actioncnt, sizeof(actioncnt), playerActPath);
@@ -61,15 +75,6 @@ Player::Player(const Camera& cam):Actor(cam,Position2f(default_player_posx,defau
 		_actionData[actionname].cutdata = animcutinfoes;
 	}
 	FileRead_close(playerActPath);
-
-	_updateFunc = &Player::NeutralUpdate;
-	_vel = { 0,0 };
-	_isAerial = false;
-}
-
-
-Player::~Player()
-{
 }
 
 void Player::Update(const Input & input)

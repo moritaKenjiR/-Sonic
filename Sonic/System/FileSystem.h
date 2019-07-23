@@ -17,3 +17,4 @@ private:
 	std::map<std::string, std::shared_ptr<Loader>> _loaders;
 };
 
+extern std::string GetFolderPath(const std::string &path);

@@ -8,6 +8,11 @@ class Camera;
 class GameScene;
 class Ground;
 class BoxCollider;
+struct Action;
+
+struct ActionSet {
+	std::map<std::string, Action> actions;
+};
 
 class Player :
 	public Actor
@@ -16,6 +21,7 @@ class Player :
 public:
 	Player(const Camera& cam);
 	~Player();
+	void LoadAction(std::string& actPath);
 	void Update(const Input&)override final;
 	void OnDead()override final;
 	void Draw()override final;
@@ -49,6 +55,7 @@ private:
 	bool _isLeft;
 	std::string _currentActionName = "";
 	std::shared_ptr<Ground> _ground;
+	std::unique_ptr<ActionSet> _actionSet;
 
 	Vector2f _vel;
 	float _accel;
@@ -79,4 +86,5 @@ private:
 
 	std::map<std::string, Action> _actionData;
 };
+
 

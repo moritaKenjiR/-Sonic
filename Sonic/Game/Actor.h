@@ -16,6 +16,8 @@ public:
 	virtual void OnGround(float grad, float adjustY = -1.0f)= 0;
 	virtual void OnDead() = 0;
 
+	virtual void LoadAction(std::string& actPath);
+
 	virtual void Move(float x, float y);
 	virtual void Move(const Vector2f& vec);
 

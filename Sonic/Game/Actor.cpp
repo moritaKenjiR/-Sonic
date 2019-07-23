@@ -15,6 +15,10 @@ Actor::~Actor()
 {
 }
 
+void Actor::LoadAction(std::string & actPath)
+{
+}
+
 void Actor::Move(float x, float y)
 {
 }
