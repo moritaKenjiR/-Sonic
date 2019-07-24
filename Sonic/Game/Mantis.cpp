@@ -26,3 +26,8 @@ void Mantis::OnGround(float grad, float adjustY)
 void Mantis::OnDead()
 {
 }
+
+std::shared_ptr<Enemy> Mantis::MakeClone()
+{
+	return std::make_shared<Mantis>(*this);
+}

@@ -1,6 +1,6 @@
 #pragma once
 #include <map>
-#include "System/Loader.h"
+#include "Loader.h"
 
 class ImageLoader :
 	public Loader

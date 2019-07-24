@@ -2,38 +2,38 @@
 #include <cmath>
 #include <DxLib.h>
 
-Vector2f Vector2f::operator-()
+Position2f Position2f::operator-()
 {
-	return Vector2f(-x, -y);
+	return Position2f(-x, -y);
 }
 
-void Vector2f::operator+=(const Vector2f & in)
+void Position2f::operator+=(const Position2f & in)
 {
 	x += in.x;
 	y += in.y;
 }
 
-void Vector2f::operator-=(const Vector2f & in)
+void Position2f::operator-=(const Position2f & in)
 {
 	x -= in.x;
 	y -= in.y;
 }
 
-void Vector2f::operator*=(float scale)
+void Position2f::operator*=(float scale)
 {
 	x *= scale;
 	y *= scale;
 }
 
-void Vector2f::operator/=(float scale)
+void Position2f::operator/=(float scale)
 {
 	x /= scale;
 	y /= scale;
 }
 
-Vector2 Vector2f::ToIntVec() const
+Position2f Position2f::ToIntVec() const
 {
-	Vector2 v = { (int)x,(int)y };
+	Position2f v = { (int)x,(int)y };
 	return v;
 }
 
@@ -49,9 +49,9 @@ Vector2f Vector2f::Normalized() const
 }
 
 
-Vector2f operator+(const Vector2f & lval, const Vector2f & rval)
+Position2f operator+(const Position2f & lval, const Position2f & rval)
 {
-	return Vector2f(lval.x + rval.x, lval.y + rval.y);
+	return Position2f(lval.x + rval.x, lval.y + rval.y);
 }
 
 Position2f operator-(const Position2f & lval, const Position2f & rval)
@@ -59,19 +59,15 @@ Position2f operator-(const Position2f & lval, const Position2f & rval)
 	return Position2f(lval.x - rval.x, lval.y - rval.y);
 }
 
-Vector2f operator-(const Vector2f & lval, const Vector2f & rval)
+
+Position2f operator*(const Position2f & lval, const float scale)
 {
-	return Vector2f(lval.x - rval.x, lval.y - rval.y);
+	return Position2f(lval.x * scale, lval.y * scale);
 }
 
-Vector2f operator*(const Vector2f & lval, const float scale)
+Position2f operator/(const Position2f & lval, const float scale)
 {
-	return Vector2f(lval.x * scale, lval.y * scale);
-}
-
-Vector2f operator/(const Vector2f & lval, const float scale)
-{
-	return Vector2f(lval.x / scale, lval.y / scale);
+	return Position2f(lval.x / scale, lval.y / scale);
 }
 
 Position2 operator*(const Position2 & lval, const float scale)

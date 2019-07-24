@@ -25,7 +25,7 @@ public:
 	virtual void SetPosition(const Vector2f& vec);
 
 	virtual const Vector2f& GetPosition()const;
-
+	virtual const Vector2f& GetVelocity()const;
 private:
 
 protected:

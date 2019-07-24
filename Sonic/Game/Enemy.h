@@ -1,12 +1,16 @@
 #pragma once
-#include "Geometry.h"
-#include "Game/Actor.h"
-#include "Game/Camera.h"
+#include "../Geometry.h"
+#include "Actor.h"
+#include "Camera.h"
 class Player;
 class Camera;
+class Spawner;
 
 class Enemy : public Actor
 {
+	friend Spawner;
+private:
+	virtual std::shared_ptr<Enemy> MakeClone() = 0;
 protected:
 	const Player& _player;
 public:
@@ -18,6 +22,6 @@ public:
 
 	virtual void OnGround(float grad, float adjustY = -1.0f)override = 0;
 	virtual void OnDead()override = 0;
-
+	virtual void OnCollision(Actor& actor);
 };
 

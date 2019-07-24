@@ -27,3 +27,8 @@ void Ant::OnGround(float grad, float adjustY)
 void Ant::OnDead()
 {
 }
+
+std::shared_ptr<Enemy> Ant::MakeClone()
+{
+	return std::make_shared<Ant>(*this);
+}

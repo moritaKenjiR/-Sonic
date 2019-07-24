@@ -14,6 +14,16 @@ struct Position2f
 	float x, y;
 	Position2f() {}
 	Position2f(float inx, float iny) { x = inx; y = iny; }
+
+	Position2f operator-();
+	void operator+=(const Position2f& in);
+	void operator-=(const Position2f& in);
+	void operator*=(float scale);
+	void operator/=(float scale);
+
+	Position2f ToIntVec()const;
+	float Magnitude()const;
+	Position2f Normalized()const;
 };
 
 struct Position2
@@ -23,9 +33,14 @@ struct Position2
 	Position2(int inx, int iny) { x = inx; y = iny; }
 
 	Position2 operator-();
+
 	Position2f ToFloatVec()const;
 };
 
+using Vector2 = Position2;
+using Vector2f = Position2f;
+
+/*
 struct Vector2
 {
 	int x, y;
@@ -49,6 +64,7 @@ struct Vector2f
 	float Magnitude()const;
 	Vector2f Normalized()const;
 };
+*/
 
 Vector2f operator+(const Vector2f& lval, const Vector2f& rval);
 Position2f operator-(const Position2f& lval, const Position2f& rval);

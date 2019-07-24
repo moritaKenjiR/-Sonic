@@ -12,6 +12,8 @@ public:
 
 	void OnGround(float grad, float adjustY = -1.0f)override final;
 	void OnDead()override final;
+
+	std::shared_ptr<Enemy> MakeClone()override final;
 private:
 	Vector2f _vel;
 };
