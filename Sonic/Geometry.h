@@ -8,6 +8,7 @@ struct Size
 	Size(int inw, int inh) { w = inw; h = inh; }
 };
 
+struct Position2;
 
 struct Position2f
 {
@@ -21,7 +22,7 @@ struct Position2f
 	void operator*=(float scale);
 	void operator/=(float scale);
 
-	Position2f ToIntVec()const;
+	Position2 ToIntVec()const;
 	float Magnitude()const;
 	Position2f Normalized()const;
 };

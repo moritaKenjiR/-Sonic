@@ -1,4 +1,5 @@
 #include "Spawner.h"
+#include "Game/Enemy.h"
 
 using namespace std;
 
@@ -12,5 +13,5 @@ Spawner::~Spawner()
 
 std::shared_ptr<Enemy> Spawner::CreateClone()
 {
-	return std::shared_ptr<Enemy>();
+	return _original->MakeClone();
 }

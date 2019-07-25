@@ -1,7 +1,9 @@
 #pragma once
 #include <memory>
+#include <vector>
 #include "Geometry.h"
 class Enemy;
+class Actor;
 
 class Spawner
 {

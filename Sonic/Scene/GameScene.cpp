@@ -9,7 +9,7 @@
 #include "../Stage.h"
 #include "../BlockFactory.h"
 #include "../Collision.h"
-#include "../Ant.h"
+#include "../Game/Ant.h"
 
 GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 {

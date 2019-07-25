@@ -4,7 +4,7 @@ class Ant :
 	public Enemy
 {
 public:
-	Ant(const Camera& cam, const Player& player,int x, int y);
+	Ant(const Camera& cam, const Player& player,int x, int y,const float speed);
 	~Ant();
 
 	void Update(const Input&)override final;

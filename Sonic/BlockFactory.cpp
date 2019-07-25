@@ -4,6 +4,8 @@
 #include "Collision.h"
 #include <DxLib.h>
 
+constexpr int _handle = LoadGraph("img/atlas0.png", true);
+
 Block::Block(Rect rect,const Camera& cam):_rect(rect),_camera(cam)
 {
 }

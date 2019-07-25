@@ -1,7 +1,10 @@
 #pragma once
 #include "../Geometry.h"
+#include "action.h"
+#include <string>
 class Input;
 class Camera;
+class BoxCollider;
 
 //Åuπﬁ∞—íÜÇ…ìÆÇ≠Ç‡ÇÃÅväÓíÍ∏◊Ω
 class Actor
@@ -22,14 +25,22 @@ public:
 	virtual void Move(const Vector2f& vec);
 
 	virtual void SetPosition(float x, float y);
-	virtual void SetPosition(const Vector2f& vec);
+	virtual void SetPosition(const Position2f& vec);
+	virtual const Position2f& GetPosition()const;
 
-	virtual const Vector2f& GetPosition()const;
 	virtual const Vector2f& GetVelocity()const;
+	virtual void SetVelocity(const Vector2f& vel);
 private:
 
 protected:
+	ActionSet_t _actionSet;
+	void LoadAction(std::string &actpath);
 	Position2f _pos;
+	Vector2f _vel;
 	const Camera& _camera;
+	std::string _currentActionName = "";
+	int atlasImageH;
+	int _currentIndex = 0;
+	unsigned int _frame = 0;
 };
 

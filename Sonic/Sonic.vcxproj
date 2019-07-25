@@ -127,6 +127,7 @@
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BlockFactory.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Game\action.cpp" />
     <ClCompile Include="Game\Actor.cpp" />
     <ClCompile Include="Game\Ant.cpp" />
     <ClCompile Include="Game\Camera.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="BlockFactory.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Game\action.h" />
     <ClInclude Include="Game\Actor.h" />
     <ClInclude Include="Game\Ant.h" />
     <ClInclude Include="Game\Camera.h" />

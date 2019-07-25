@@ -31,21 +31,21 @@ void Position2f::operator/=(float scale)
 	y /= scale;
 }
 
-Position2f Position2f::ToIntVec() const
+Position2 Position2f::ToIntVec() const
 {
-	Position2f v = { (int)x,(int)y };
+	Position2 v = { (int)x,(int)y };
 	return v;
 }
 
-float Vector2f::Magnitude() const
+float Position2f::Magnitude() const
 {
 	return hypot(x, y);
 }
 
-Vector2f Vector2f::Normalized() const
+Position2f Position2f::Normalized() const
 {
 	auto len = Magnitude();
-	return Vector2f(x / len, y / len);
+	return Position2f(x / len, y / len);
 }
 
 

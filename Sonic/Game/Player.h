@@ -1,18 +1,14 @@
 #pragma once
 #include <memory>
 #include <string>
-#include <vector>
 #include <map>
 #include "Actor.h"
+#include "action.h"
 class Camera;
 class GameScene;
 class Ground;
 class BoxCollider;
-struct Action;
 
-struct ActionSet {
-	std::map<std::string, Action> actions;
-};
 
 class Player :
 	public Actor
@@ -42,22 +38,16 @@ public:
 
 	const BoxCollider& GetCollider()const;
 
-	enum class HitRectType {
-		none,
-		attack,
-		damage,
-		push,
-	};
+	
 private:
 	void (Player::*_updateFunc)(const Input&);
 	unsigned int _frame;
 	int _imgH;
 	bool _isLeft;
-	std::string _currentActionName = "";
+	
 	std::shared_ptr<Ground> _ground;
-	std::unique_ptr<ActionSet> _actionSet;
+	std::unique_ptr<ActionSet_t> _actionSet;
 
-	Vector2f _vel;
 	float _accel;
 	float _framerate;
 	float _grad;
@@ -65,24 +55,6 @@ private:
 	bool _isAerial;
 	float _jumpPower;
 	int _frameOfJumpButtonPressing;
-
-	struct ActionRect {
-		HitRectType type;
-		Rect rc;
-	};
-
-	struct CutData {
-		Rect cutrect;
-		Position2 center;
-		int duration;
-		std::vector<ActionRect> actrect;
-	};
-
-	struct Action {
-		char isLoop;
-		std::vector<CutData> cutdata;
-		unsigned int totalDuration;
-	};
 
 	std::map<std::string, Action> _actionData;
 };

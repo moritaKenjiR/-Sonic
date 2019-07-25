@@ -129,7 +129,7 @@ public:
 
 		_pos += _vel;
 		tensionVec = _pos - _pivot;
-		_pos = _pivot + tensionVec.Normalize()*_length;
+		_pos = _pivot + tensionVec.Normalized() *_length;
 
 		_rect.center = _pos.ToIntVec();
 	}
@@ -140,7 +140,7 @@ public:
 
 	void Update()override
 	{
-		(_updater)
+		(_updater)();
 	}
 	void Draw()override
 	{
