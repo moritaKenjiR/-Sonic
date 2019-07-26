@@ -56,7 +56,7 @@ private:
 	float _jumpPower;
 	int _frameOfJumpButtonPressing;
 
-	std::map<std::string, Action> _actionData;
+	//std::map<std::string, Action> _actionData;
 };
 
 

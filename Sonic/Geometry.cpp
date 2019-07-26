@@ -89,6 +89,16 @@ bool operator!=(const Position2 & lval, const Position2 & rval)
 	return false;
 }
 
+float Dot(const Vector2f & lval, const Vector2f & rval)
+{
+	return lval.x*rval.x + lval.y*rval.y;
+}
+
+float Cross(const Vector2f & lval, const Vector2f & rval)
+{
+	return lval.x*rval.y - lval.y*rval.x;
+}
+
 
 
 ///ãÈå`ç\ë¢ëÃ

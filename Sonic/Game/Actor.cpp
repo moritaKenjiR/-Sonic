@@ -51,3 +51,8 @@ void Actor::SetVelocity(const Vector2f & vel)
 {
 	_vel = vel;
 }
+
+const Rect & Actor::GetCollider() const
+{
+	return _collider;
+}

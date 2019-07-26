@@ -5,9 +5,15 @@
 #include "BlockFactory.h"
 #include "Geometry.h"
 #include "Collision.h"
+#include "Game/Camera.h"
+#include "Game/Spawner.h"
+#include "Game/OnetimeSpawner.h"
+#include "Game/SideEdgeSpawner.h"
+#include "Game/Ant.h"
+#include "Game/Mantis.h"
 constexpr int  block_size = 32;
 
-Stage::Stage(const Camera & cam) :_camera(cam)
+Stage::Stage(const Camera & cam, const Player& pl) :_camera(cam),_player(pl)
 {
 }
 
@@ -17,19 +23,9 @@ Stage::~Stage()
 
 void Stage::DataLoad(const char * path)
 {
-	//½Ã°¼ŞÃŞ°À‚ÌÍ¯ÀŞ°\‘¢‘Ì
-	struct StageHeader {
-		unsigned char identifier[4];		//Ì§²Ù¯•Êq
-		unsigned int size;					//Í¯ÀŞ‚ğœ‚¢‚½ÃŞ°À»²½Ş
-		unsigned int mapWidth;			//Ï¯Ìß‚Ì‰¡•
-		unsigned int mapHeight;			//Ï¯Ìß‚Ìc•
-		unsigned char chipWidth;		//Á¯Ìß‚Ì‰¡•
-		unsigned char chipHeight;		//Á¯Ìß‚Ìc•
-		unsigned char layerCount;		//Ú²Ô°”
-		unsigned char bitCount;			//ÃŞ°À‚ÌËŞ¯Ä¶³İÄ(8or16)
-	};
+	
 
-	BlockFactory bf(_camera);
+	
 
 	auto handle = FileRead_open(path);
 	StageHeader header = {};
@@ -38,9 +34,8 @@ void Stage::DataLoad(const char * path)
 	std::vector<unsigned char> terrawdata(header.mapHeight*header.mapWidth);
 	FileRead_read(terrawdata.data(), terrawdata.size(), handle);
 
-	std::vector<unsigned char> blockdata(header.mapHeight*header.mapWidth);
-	FileRead_read(&blockdata,blockdata.size(), handle);
-
+	BuildBlockLayer(header,handle);
+	BuildSpawnerLayer(header, handle);
 	FileRead_close(handle);
 
 
@@ -61,17 +56,7 @@ void Stage::DataLoad(const char * path)
 		});
 	}
 	
-	for (int y = 0; y < header.mapHeight; ++y)
-	{
-		for (int x = 0; x < header.mapWidth; ++x)
-		{
-			if (blockdata[(y*header.mapWidth) + x] == 1)
-			{
-				Position2 pos = { x*block_size,y*block_size };
-				_blocks.push_back(bf.Create(BlockType::brick, pos));
-			}
-		}
-	}
+	
 }
 
 void Stage::BuildGround(Ground & ground)
@@ -86,6 +71,56 @@ void Stage::BuildGround(Ground & ground)
 		terra.second.clear();
 	}
 	_terraPositions.clear();
+}
+
+void Stage::BuildBlockLayer(StageHeader & stgheader, int handle)
+{
+	BlockFactory bf(_camera);
+	std::vector<unsigned char> blockdata(stgheader.mapHeight*stgheader.mapWidth);
+	FileRead_read(&blockdata, blockdata.size(), handle);
+
+	for (int y = 0; y < stgheader.mapHeight; ++y)
+	{
+		for (int x = 0; x < stgheader.mapWidth; ++x)
+		{
+			if (blockdata[(y*stgheader.mapWidth) + x] == 1)
+			{
+				Position2 pos = { x*block_size,y*block_size };
+				_blocks.push_back(bf.Create(BlockType::brick, pos));
+			}
+		}
+	}
+}
+
+void Stage::BuildSpawnerLayer(StageHeader & stgheader, int handle)
+{
+	std::vector<unsigned char> spawnerdata(stgheader.mapHeight*stgheader.mapWidth);
+	FileRead_read(&spawnerdata, spawnerdata.size(), handle);
+	//ÌßÛÄÀ²Ìßì¬
+	auto ant = std::make_shared<Ant>(_camera, _player, 0, 0);
+	auto mantis = std::make_shared<Mantis>(_camera, _player, 0, 0);
+
+	for (int y = 0; y < stgheader.mapHeight; ++y)
+	{
+		for (int x = 0; x < stgheader.mapWidth; ++x)
+		{
+			Position2f pos = { (float)(x*block_size),(float)(y*block_size) };
+			switch (spawnerdata[(y*stgheader.mapWidth) + x])
+			{
+			case 1:
+				_spawners.push_back(std::make_shared<OnetimeSpawner>(_camera,pos,ant));
+				break;
+			case 2:
+				_spawners.push_back(std::make_shared<OnetimeSpawner>(_camera, pos, mantis));
+				break;
+			case 5:
+				_spawners.push_back(std::make_shared<SideEdgeSpawner>(_camera, pos, ant));
+				break;
+			case 6:
+				_spawners.push_back(std::make_shared<SideEdgeSpawner>(_camera, pos, mantis));
+			}
+		}
+	}
 }
 
 void Stage::Update()
@@ -103,6 +138,11 @@ void Stage::Draw()
 std::vector<std::unique_ptr<Block>> Stage::Blocks()
 {
 	return _blocks;
+}
+
+std::vector<std::shared_ptr<Spawner>>& Stage::GetSpawners()
+{
+	return _spawners;
 }
 
 

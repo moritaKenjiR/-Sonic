@@ -77,6 +77,8 @@ Position2 operator*(const Position2& lval, const float scale);
 Position2 operator-(const Position2& lval, const Position2& rval);
 bool operator!=(const Position2& lval, const Position2& rval);
 
+float Dot(const Vector2f& lval, const Vector2f& rval);
+float Cross(const Vector2f& lval, const Vector2f& rval);
 
 struct Rect
 {

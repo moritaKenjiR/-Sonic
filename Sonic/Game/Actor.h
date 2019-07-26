@@ -19,8 +19,6 @@ public:
 	virtual void OnGround(float grad, float adjustY = -1.0f)= 0;
 	virtual void OnDead() = 0;
 
-	virtual void LoadAction(std::string& actPath);
-
 	virtual void Move(float x, float y);
 	virtual void Move(const Vector2f& vec);
 
@@ -30,11 +28,14 @@ public:
 
 	virtual const Vector2f& GetVelocity()const;
 	virtual void SetVelocity(const Vector2f& vel);
+
+	virtual const Rect& GetCollider()const;
 private:
 
 protected:
 	ActionSet_t _actionSet;
-	void LoadAction(std::string &actpath);
+	Rect _collider;
+	virtual void LoadAction(std::string &actpath);
 	Position2f _pos;
 	Vector2f _vel;
 	const Camera& _camera;

@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "../scene/GameScene.h"
 #include"../Ground.h"
+#include "action.h"
 
 constexpr int default_player_posx = 512;
 constexpr int default_player_posy = 500;
@@ -14,7 +15,7 @@ constexpr float g = 0.3f;
 
 Player::Player(const Camera& cam):Actor(cam,Position2f(default_player_posx,default_player_posy))
 {
-	_actionSet = std::make_unique<ActionSet>();
+	_actionSet = std::make_unique<ActionSet_t>();
 	_imgH = LoadGraph("img/player.png", true);
 
 	std::string actPath = "action/player.act";
@@ -72,7 +73,7 @@ void Player::LoadAction(std::string & actPath)
 		{
 			FileRead_read(&animcutinfoes[i], sizeof(animcutinfoes[i]), playerActPath);
 		}
-		_actionData[actionname].cutdata = animcutinfoes;
+		_actionSet[actionname] = animcutinfoes;
 	}
 	FileRead_close(playerActPath);
 }

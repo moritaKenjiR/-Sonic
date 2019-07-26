@@ -1,8 +1,8 @@
 #include "Mantis.h"
 
+constexpr int mantisspeed = 3;
 
-
-Mantis::Mantis(const Camera& cam, const Player& player, int x, int y) :Enemy(cam, player, Position2f(x, y))
+Mantis::Mantis(const Camera& cam, const Player& player, int x, int y) :Enemy(cam, player, Position2f(x, y), mantisspeed)
 {
 }
 

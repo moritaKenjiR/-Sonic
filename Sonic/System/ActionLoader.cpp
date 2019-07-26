@@ -24,7 +24,7 @@ bool ActionLoader::Load(const char * path, Data & data)
 		}
 		_table[path].resize(size);
 		auto h = FileRead_open(path);
-		FileRead_read(&_table[path],size,path)
+		FileRead_read(&_table[path], size, h);
 
 	}
 	else
@@ -47,6 +47,6 @@ void ActionData::Read(void * dst, size_t & bytenum, int & cursor, ActionData & a
 	cursor += bytenum;
 }
 
-void ActionData::BuildActionSet(const ActionData & actdata, ActionSet & actset, std::string & imgPath)
+void ActionData::BuildActionSet(const ActionData & actdata, ActionSet_t & actset, std::string & imgPath)
 {
 }

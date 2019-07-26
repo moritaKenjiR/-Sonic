@@ -15,6 +15,7 @@ private:
 protected:
 	const Player& _player;
 	const float _speed;
+	bool _isAvailable = false;
 public:
 	Enemy(const Camera& cam, const Player& player,const Position2f& pos,const float speed);
 	virtual ~Enemy();

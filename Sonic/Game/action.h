@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <map>
-#include "Geometry.h"
+#include "../Geometry.h"
 
 enum class HitRectType {
 	none,

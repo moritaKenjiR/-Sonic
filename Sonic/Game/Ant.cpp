@@ -1,12 +1,13 @@
 #include "Ant.h"
 
+constexpr int antspeed = 4;
 
-Ant::Ant(const Camera& cam,const Player & player,int  x,int y, const float speed):Enemy(cam,player,Position2f(x,y),speed)
+Ant::Ant(const Camera& cam,const Player & player,int  x,int y):Enemy(cam,player,Position2f(x,y),antspeed)
 {
 	AimPlayer();
 	_currentActionName = "idle";
 	_currentIndex = 0;
-	_collider.reset(new BoxCollider(_actionSet["idle"].cutdata[0].cutrect));
+	_collider = _actionSet["idle"].cutdata[0].cutrect;
 	_updater = &Ant::NormalUpdate;
 }
 
@@ -28,6 +29,10 @@ void Ant::OnGround(float grad, float adjustY)
 }
 
 void Ant::OnDead()
+{
+}
+
+void Ant::NormalUpdate()
 {
 }
 

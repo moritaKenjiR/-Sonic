@@ -8,6 +8,8 @@ class Camera;
 class Background;
 class Stage;
 class Ground;
+class Ant;
+class Mantis;
 
 class GameScene :
 	public BaseScene
