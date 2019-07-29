@@ -135,6 +135,7 @@
     <ClCompile Include="Game\Mantis.cpp" />
     <ClCompile Include="Game\OnetimeSpawner.cpp" />
     <ClCompile Include="Game\Player.cpp" />
+    <ClCompile Include="Game\PortalSpawner.cpp" />
     <ClCompile Include="Game\SideEdgeSpawner.cpp" />
     <ClCompile Include="Game\Spawner.cpp" />
     <ClCompile Include="Geometry.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Game\Mantis.h" />
     <ClInclude Include="Game\OnetimeSpawner.h" />
     <ClInclude Include="Game\Player.h" />
+    <ClInclude Include="Game\PortalSpawner.h" />
     <ClInclude Include="Game\SideEdgeSpawner.h" />
     <ClInclude Include="Game\Spawner.h" />
     <ClInclude Include="Geometry.h" />

@@ -16,5 +16,6 @@ private:
 	const Camera& _camera;
 	Position2f _pos;
 	unsigned int _frame;
+	bool _spawndir;
 };
 

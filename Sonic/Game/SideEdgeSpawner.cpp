@@ -16,16 +16,25 @@ SideEdgeSpawner::~SideEdgeSpawner()
 std::shared_ptr<Enemy> SideEdgeSpawner::Spawn()
 {
 	auto ret = CreateClone();
-	ret->SetPosition(_pos);
+	auto range = _camera.GetViewRange();
+
+	auto spawnOffset = 0;
+	if (_spawndir) spawnOffset = -_camera.GetViewRange().size.w;
+	else spawnOffset = _camera.GetViewRange().size.w;
+
+	ret->SetPosition(Position2f(range.center.x + spawnOffset, _pos.y));
 	return ret;
 }
 
 void SideEdgeSpawner::Update(std::vector<std::shared_ptr<Actor>>& actors)
 {
 	auto range = _camera.GetViewRange();
+	
 	if (range.Left() < _pos.x && _pos.x < range.Right() && _frame <= 0)
 	{
 		actors.push_back(Spawn());
+		if (_spawndir) _spawndir = false;
+		else _spawndir = true;
 		_frame = spawn_interval;
 	}
 	_frame--;

@@ -29,5 +29,7 @@ void Mantis::OnDead()
 
 std::shared_ptr<Enemy> Mantis::MakeClone()
 {
-	return std::make_shared<Mantis>(*this);
+	auto ret =  std::make_shared<Mantis>(*this);
+	ret->_isAvailable = true;
+	return ret;
 }

@@ -38,5 +38,7 @@ void Ant::NormalUpdate()
 
 std::shared_ptr<Enemy> Ant::MakeClone()
 {
-	return std::make_shared<Ant>(*this);
+	auto ret = std::make_shared<Ant>(*this);
+	ret->_isAvailable = true;
+	return ret;
 }

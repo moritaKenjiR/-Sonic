@@ -19,6 +19,8 @@ public:
 	class Configure {
 	public:
 		Size GetScreenSize()const;
+		float GetGravity()const;
+		float GetJupmPower()const;
 	};
 
 	//±ÌßØ¹°¼®İ‰Šú‰»ŠÖ”

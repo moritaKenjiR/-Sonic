@@ -4,6 +4,11 @@
 #include "Input/Input.h"
 #include "Geometry.h"
 
+constexpr auto default_window_width = 1024;
+constexpr auto default_window_height = 576;
+
+constexpr float gravity = 0.98f;
+constexpr float jump_power = -2.5f;
 
 Application::Application()
 {
@@ -79,5 +84,15 @@ void Application::Terminate(void)
 
 Size Application::Configure::GetScreenSize() const
 {
-	return { 1024,576 };
+	return { default_window_width,default_window_height };
+}
+
+float Application::Configure::GetGravity() const
+{
+	return gravity;
+}
+
+float Application::Configure::GetJupmPower() const
+{
+	return jump_power;
 }
