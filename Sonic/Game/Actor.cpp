@@ -18,6 +18,11 @@ void Actor::LoadAction(std::string & actPath)
 {
 }
 
+bool Actor::IsDie()
+{
+	return !_isAvailable;
+}
+
 void Actor::Move(float x, float y)
 {
 }

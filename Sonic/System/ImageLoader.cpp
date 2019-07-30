@@ -40,3 +40,8 @@ int ImageData::GetHandle() const
 {
 	return _handle;
 }
+
+bool ImageData::IsAvaillable()
+{
+	return false;
+}

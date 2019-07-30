@@ -19,6 +19,8 @@ public:
 	virtual void OnGround(float grad, float adjustY = -1.0f)= 0;
 	virtual void OnDead() = 0;
 
+	virtual bool IsDie();
+
 	virtual void Move(float x, float y);
 	virtual void Move(const Vector2f& vec);
 
@@ -43,5 +45,6 @@ protected:
 	int atlasImageH;
 	int _currentIndex = 0;
 	unsigned int _frame = 0;
+	bool _isAvailable;
 };
 

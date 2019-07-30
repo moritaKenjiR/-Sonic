@@ -1,9 +1,9 @@
 #pragma once
 #include <memory>
 #include "Geometry.h"
+#include "System/FileSystem.h"
 class SceneMng;
 class Input;
-class FileSystem;
 
 ///ｱﾌﾟﾘｹｰｼｮﾝ全体を制御する
 ///ｼﾝｸﾞﾙﾄﾝｸﾗｽ
@@ -35,8 +35,9 @@ public:
 	void Terminate(void);
 
 	Configure _config;
+	FileSystem _fileSystem;
 	Configure& GetConfig() { return _config; }
-	std::shared_ptr<FileSystem> GetFileSystem() { return _fileSystem; }
+	FileSystem& GetFileSystem() { return _fileSystem; }
 private:
 	//生成、コピー、代入禁止
 	Application();
@@ -45,6 +46,6 @@ private:
 
 	std::unique_ptr<SceneMng> _sceneMng;
 	std::unique_ptr<Input> _input;
-	std::shared_ptr<FileSystem> _fileSystem;
+	
 };
 

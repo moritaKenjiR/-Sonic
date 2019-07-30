@@ -20,8 +20,9 @@ std::shared_ptr<Enemy> OnetimeSpawner::Spawn()
 
 void OnetimeSpawner::Update(std::vector<std::shared_ptr<Actor>>& actors)
 {
+	if (_isSpawned) return;
 	auto range = _camera.GetViewRange();
-	if (range.Left() < _pos.x && _pos.x <range.Right() && !_isSpawned)
+	if (range.Left() < _pos.x && _pos.x <range.Right())
 	{
 		actors.push_back(Spawn());
 		_isSpawned = true;

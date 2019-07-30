@@ -18,5 +18,6 @@ private:
 public:
 	BoxCollider(const Rect& rc): _rect(rc) {}
 	const Rect& GetRect()const;
+	void SetRect(const Rect& rc);
 };
 

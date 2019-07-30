@@ -20,3 +20,8 @@ const Rect & BoxCollider::GetRect() const
 {
 	return _rect;
 }
+
+void BoxCollider::SetRect(const Rect & rc)
+{
+	_rect = rc;
+}

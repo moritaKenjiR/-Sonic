@@ -131,7 +131,12 @@
     <ClCompile Include="Game\Actor.cpp" />
     <ClCompile Include="Game\Ant.cpp" />
     <ClCompile Include="Game\Camera.cpp" />
+    <ClCompile Include="Game\Coin.cpp" />
     <ClCompile Include="Game\Enemy.cpp" />
+    <ClCompile Include="Game\Event.cpp" />
+    <ClCompile Include="Game\EventObserver.cpp" />
+    <ClCompile Include="Game\EventQueue.cpp" />
+    <ClCompile Include="Game\HUD.cpp" />
     <ClCompile Include="Game\Mantis.cpp" />
     <ClCompile Include="Game\OnetimeSpawner.cpp" />
     <ClCompile Include="Game\Player.cpp" />
@@ -163,7 +168,12 @@
     <ClInclude Include="Game\Actor.h" />
     <ClInclude Include="Game\Ant.h" />
     <ClInclude Include="Game\Camera.h" />
+    <ClInclude Include="Game\Coin.h" />
     <ClInclude Include="Game\Enemy.h" />
+    <ClInclude Include="Game\Event.h" />
+    <ClInclude Include="Game\EventObserver.h" />
+    <ClInclude Include="Game\EventQueue.h" />
+    <ClInclude Include="Game\HUD.h" />
     <ClInclude Include="Game\Mantis.h" />
     <ClInclude Include="Game\OnetimeSpawner.h" />
     <ClInclude Include="Game\Player.h" />

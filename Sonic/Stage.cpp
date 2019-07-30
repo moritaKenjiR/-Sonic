@@ -34,8 +34,11 @@ void Stage::DataLoad(const char * path)
 	std::vector<unsigned char> terrawdata(header.mapHeight*header.mapWidth);
 	FileRead_read(terrawdata.data(), terrawdata.size(), handle);
 
+	if(header.layerCount >= 2)
 	BuildBlockLayer(header,handle);
 	BuildSpawnerLayer(header, handle);
+	BuildEventLayer(header, handle);
+
 	FileRead_close(handle);
 
 
@@ -123,6 +126,38 @@ void Stage::BuildSpawnerLayer(StageHeader & stgheader, int handle)
 	}
 }
 
+void Stage::BuildEventLayer(StageHeader & stgheader, int handle)
+{
+
+	std::vector<unsigned char> eventdata(stgheader.mapHeight*stgheader.mapWidth);
+	FileRead_read(&eventdata, eventdata.size(), handle);
+	//ÌßÛÄÀ²Ìßì¬
+	auto ant = std::make_shared<Ant>(_camera, _player, 0, 0);
+	auto mantis = std::make_shared<Mantis>(_camera, _player, 0, 0);
+
+	for (int y = 0; y < stgheader.mapHeight; ++y)
+	{
+		for (int x = 0; x < stgheader.mapWidth; ++x)
+		{
+			Position2f pos = { (float)(x*block_size),(float)(y*block_size) };
+			switch (eventdata[(y*stgheader.mapWidth) + x])
+			{
+			case 1:
+				_spawners.push_back(std::make_shared<OnetimeSpawner>(_camera, pos, ant));
+				break;
+			case 2:
+				_spawners.push_back(std::make_shared<OnetimeSpawner>(_camera, pos, mantis));
+				break;
+			case 5:
+				_spawners.push_back(std::make_shared<SideEdgeSpawner>(_camera, pos, ant));
+				break;
+			case 6:
+				_spawners.push_back(std::make_shared<SideEdgeSpawner>(_camera, pos, mantis));
+			}
+		}
+	}
+}
+
 void Stage::Update()
 {
 }
@@ -135,7 +170,7 @@ void Stage::Draw()
 	}
 }
 
-std::vector<std::unique_ptr<Block>> Stage::Blocks()
+std::vector<std::shared_ptr<Block>>& Stage::GetBlocks()
 {
 	return _blocks;
 }
@@ -143,6 +178,11 @@ std::vector<std::unique_ptr<Block>> Stage::Blocks()
 std::vector<std::shared_ptr<Spawner>>& Stage::GetSpawners()
 {
 	return _spawners;
+}
+
+std::vector<std::shared_ptr<Event>>& Stage::GetEvents()
+{
+	return _events;
 }
 
 

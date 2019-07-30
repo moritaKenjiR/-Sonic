@@ -20,6 +20,7 @@ class ImageData : public Data{
 	friend ImageLoader;
 public:
 	int GetHandle()const;
+	bool IsAvaillable();
 private:
 	int _handle;
 };

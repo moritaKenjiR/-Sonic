@@ -13,6 +13,8 @@
 #include "../Game/Ant.h"
 #include "../Game/OnetimeSpawner.h"
 #include "../Game/Spawner.h"
+#include "../Game/HUD.h"
+#include "../Game/Event.h"
 
 
 GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
@@ -24,6 +26,7 @@ GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 	_stage->DataLoad("map/level1.fmf");
 	_bg = std::make_unique<Background>(*_camera);
 	_ground = std::make_unique<Ground>(*_player,*_camera);
+	_hud = std::make_shared<HUD>();
 	_stage->BuildGround(*_ground);
 	_camera->AddPlayer(_player);
 	_player->GetGroundP(_ground);
@@ -34,7 +37,6 @@ GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 	_actors.push_back(mantisOrg);
 
 	auto spawner = std::make_shared<OnetimeSpawner>(*_camera, Position2f(300, 300), antOrg);
-	//OnetimeSpawner spawner1(*_camera, Position2f(300, 300), antOrg);
 	_actors.push_back(spawner->Spawn());
 
 	_bg->AddParts("img/bg-clouds.png",Position2(-300,0),1.0f,true,Background::LayoutType::repeat,Size(160*5,208*5),-1);
@@ -67,8 +69,8 @@ void GameScene::Update(const Input & input)
 
 	auto viewrange = _camera->GetViewRange();
 	//ブロックとの当たり判定 
-	auto blocks = _stage->Blocks();
-	for (auto& b : blocks) {
+	_blocks = _stage->GetBlocks();
+	for (auto& b : _blocks) {
 		auto& brect = b->GetCollider().GetRect();
 		//画面外は省く 
 		if (brect.Right() < viewrange.Left() || brect.Left() > viewrange.Right()) {
@@ -93,6 +95,29 @@ void GameScene::Draw()
 	}
 	DrawString(100, 100, "GameScene", 0xffffff);
 
+
+	for (auto block : _blocks)
+	{
+		block->Draw();
+	}
+	for (auto event : _events)
+	{
+		event->Draw();
+	}
+
+}
+
+void GameScene::CheckPlayerAndBlock(bool& isOn)
+{
+}
+
+void GameScene::CheckPlayerAndActor()
+{
+}
+
+void GameScene::CheckPlayerAndEvent()
+{
+	if (_player->IsDie())return;
 
 }
 

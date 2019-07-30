@@ -9,6 +9,7 @@ class Block;
 class BlockFactory;
 class Spawner;
 class Player;
+class Event;
 
 enum class EnemyType {
 	ant = 1,
@@ -39,8 +40,9 @@ private:
 	const Player& _player;
 	int _bgH;
 	std::map<unsigned char, std::vector<Position2f>> _terraPositions;
-	std::vector<std::unique_ptr<Block>> _blocks;
+	std::vector<std::shared_ptr<Block>> _blocks;
 	std::vector<std::shared_ptr<Spawner>> _spawners;
+	std::vector<std::shared_ptr<Event>> _events;
 public:
 	Stage(const Camera& cam,const Player& pl);
 	~Stage();
@@ -49,12 +51,15 @@ public:
 	void BuildGround(Ground& ground);
 	void BuildBlockLayer(StageHeader &stgheader, int handle);
 	void BuildSpawnerLayer(StageHeader &stgheader, int handle);
+	void BuildEventLayer(StageHeader &stgheader, int handle);
 
 	void Update();
 
 	void Draw();
 
-	std::vector<std::unique_ptr<Block>> Blocks();
+	std::vector<std::shared_ptr<Block>>& GetBlocks();
 	std::vector<std::shared_ptr<Spawner>>& GetSpawners();
+	std::vector<std::shared_ptr<Event>>& GetEvents();
+
 };
 
