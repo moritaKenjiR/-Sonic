@@ -1,9 +1,10 @@
 #pragma once
+#include <memory>
 class EventObserver
 {
 public:
 	EventObserver();
 	virtual ~EventObserver();
-	virtual bool OnNotify(Event * e) = 0;
+	virtual bool OnNotify(const Event*) = 0;
 };
 

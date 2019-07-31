@@ -3,10 +3,13 @@
 #include "../System/ImageLoader.h"
 #include "../Application.h"
 #include "Camera.h"
+#include "EventQueue.h"
 #include <DxLib.h>
+#include "ScoreUpper.h"
 
 
-Coin::Coin(const Camera& cam, const Position2& pos) :_bc(Rect(pos,Size(32,32))),_camera(cam)
+Coin::Coin(const Camera& cam, const Position2& pos, EventQueue& eventq) 
+	:_bc(Rect(pos,Size(32,32))),_camera(cam),_eventQueue(eventq)
 {
 	ImageData data;
 	Application::Instance().GetFileSystem().Load("img/atlas.jpg", data);
@@ -45,4 +48,6 @@ void Coin::OnCollision(Actor & actor, const BoxCollider & col)
 {
 	_isAvailable = false;
 	PlaySoundMem(_coinSE,DX_PLAYTYPE_BACK);
+	_eventQueue.AddEvent(this);
+	_eventQueue.AddEvent(new ScoreUpper(_eventQueue,));
 }

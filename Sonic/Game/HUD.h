@@ -9,9 +9,10 @@ public:
 
 	void Update();
 	void Draw();
-	bool OnNotify(Event * e)override final;
+	bool OnNotify(const Event* e)override final;
 private:
-	int _coinH;
+	int _coinH = 0;
+	int _score = 0;
 	unsigned int _coinNum;
 };
 

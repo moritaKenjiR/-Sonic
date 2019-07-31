@@ -2,7 +2,7 @@
 
 constexpr int antspeed = 4;
 
-Ant::Ant(const Camera& cam,const Player & player,int  x,int y):Enemy(cam,player,Position2f(x,y),antspeed)
+Ant::Ant(const Camera& cam,const Player & player, const Ground& ground, EventQueue& eventq,int  x,int y):Enemy(cam,player,Position2f(x,y),antspeed)
 {
 	AimPlayer();
 	_currentActionName = "idle";

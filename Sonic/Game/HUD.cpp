@@ -27,13 +27,20 @@ void HUD::Draw()
 	DrawRectRotaGraph(50,50,
 		16, 2, 10, 13, 3.0f, 0.0f, _coinH, true);
 	DrawFormatString(70, 45, 0xffffff, "~%d", _coinNum);
+
+	DrawFormatString(150, 45, 0xffffff, "~%d", _score);
 }
 
-bool HUD::OnNotify(Event * e)
+bool HUD::OnNotify(const Event* e)
 {
 	if (e->GetType() == EventType::coin)
 	{
-		++_coinNum;
+		_coinNum++;
+		return true;
+	}
+	if (e->GetType() == EventType::score)
+	{
+		_score += e->GetValue();
 		return true;
 	}
 	return false;

@@ -10,6 +10,7 @@ class BlockFactory;
 class Spawner;
 class Player;
 class Event;
+class EventQueue;
 
 enum class EnemyType {
 	ant = 1,
@@ -38,13 +39,14 @@ class Stage
 private:
 	const Camera& _camera;
 	const Player& _player;
+	EventQueue& _eventQueue;
 	int _bgH;
 	std::map<unsigned char, std::vector<Position2f>> _terraPositions;
 	std::vector<std::shared_ptr<Block>> _blocks;
 	std::vector<std::shared_ptr<Spawner>> _spawners;
 	std::vector<std::shared_ptr<Event>> _events;
 public:
-	Stage(const Camera& cam,const Player& pl);
+	Stage(const Camera& cam,const Player& pl, EventQueue& eventq);
 	~Stage();
 
 	void DataLoad(const char* path);

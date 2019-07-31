@@ -5,6 +5,8 @@
 class Player;
 class Camera;
 class Spawner;
+class Ground;
+class EventQueue;
 
 class Enemy : public Actor
 {
@@ -14,10 +16,12 @@ private:
 	int _deathSE;
 protected:
 	const Player& _player;
+	const Ground& _ground;
+	const EventQueue& _eventQueue;
 	const float _speed;
 	bool _isAvailable = false;
 public:
-	Enemy(const Camera& cam, const Player& player,const Position2f& pos,const float speed);
+	Enemy(const Camera& cam, const Player& player,const Ground& ground, EventQueue& eventq,const Position2f& pos,const float speed);
 	virtual ~Enemy();
 
 	virtual void Update(const Input&) override = 0;

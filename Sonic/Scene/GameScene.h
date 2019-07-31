@@ -12,6 +12,8 @@ class Block;
 class Ant;
 class Mantis;
 class HUD;
+class EventQueue;
+class Event;
 
 class GameScene :
 	public BaseScene
@@ -36,5 +38,6 @@ private:
 	std::unique_ptr<Stage> _stage;
 	std::unique_ptr<Background> _bg;
 	std::shared_ptr<HUD> _hud;
+	std::shared_ptr<EventQueue> _
 };
 

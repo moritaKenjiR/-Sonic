@@ -13,7 +13,7 @@
 #include "Game/Mantis.h"
 constexpr int  block_size = 32;
 
-Stage::Stage(const Camera & cam, const Player& pl) :_camera(cam),_player(pl)
+Stage::Stage(const Camera & cam, const Player& pl, EventQueue& eventq) :_camera(cam),_player(pl),_eventQueue(eventq)
 {
 }
 

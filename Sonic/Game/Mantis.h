@@ -4,7 +4,7 @@ class Mantis :
 	public Enemy
 {
 public:
-	Mantis(const Camera& cam, const Player& player, int x, int y);
+	Mantis(const Camera& cam, const Player& player, const Ground& ground, EventQueue& eventq, int x, int y);
 	~Mantis();
 
 	void Update(const Input&)override final;

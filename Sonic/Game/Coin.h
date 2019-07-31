@@ -8,7 +8,7 @@ class Coin :
 	public Event
 {
 public:
-	Coin(const Camera& cam, const Position2& pos);
+	Coin(const Camera& cam,const Position2& pos, EventQueue& eventq);
 	~Coin();
 	EventType GetType()const override final;
 	void Update()override final;
