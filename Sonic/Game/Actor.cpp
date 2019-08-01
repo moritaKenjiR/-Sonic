@@ -2,11 +2,11 @@
 #include "Camera.h"
 
 
-Actor::Actor(const Camera& cam):_camera(cam)
+Actor::Actor(const Camera& cam):_camera(cam), _pos(0,0), _collider(Rect(Position2(0,0), Size(32, 32)))
 {
 }
 
-Actor::Actor(const Camera& cam,const Vector2f & pos):_camera(cam),_pos(pos)
+Actor::Actor(const Camera& cam,const Position2f & pos):_camera(cam),_pos(pos),_collider(Rect(pos.ToIntVec(),Size(32,32)))
 {
 }
 
@@ -57,7 +57,7 @@ void Actor::SetVelocity(const Vector2f & vel)
 	_vel = vel;
 }
 
-const Rect & Actor::GetCollider() const
+const BoxCollider & Actor::GetCollider() const
 {
 	return _collider;
 }

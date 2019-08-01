@@ -43,7 +43,7 @@ private:
 	void (Player::*_updateFunc)(const Input&);
 	unsigned int _frame;
 	int _imgH;
-	bool _isLeft;
+	
 	
 	std::shared_ptr<Ground> _ground;
 	std::unique_ptr<ActionSet_t> _actionSet;

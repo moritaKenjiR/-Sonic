@@ -16,5 +16,6 @@ public:
 	std::shared_ptr<Enemy> MakeClone()override final;
 private:
 	Vector2f _vel;
+	void (Mantis::*_updater)();
 };
 

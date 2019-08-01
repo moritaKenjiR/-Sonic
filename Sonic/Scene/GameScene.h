@@ -14,6 +14,7 @@ class Mantis;
 class HUD;
 class EventQueue;
 class Event;
+class Spawner;
 
 class GameScene :
 	public BaseScene
@@ -38,6 +39,6 @@ private:
 	std::unique_ptr<Stage> _stage;
 	std::unique_ptr<Background> _bg;
 	std::shared_ptr<HUD> _hud;
-	std::shared_ptr<EventQueue> _
+	std::shared_ptr<EventQueue> _eventQueue;
 };
 

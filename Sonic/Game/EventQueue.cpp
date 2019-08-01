@@ -18,12 +18,12 @@ void EventQueue::Notify()
 {
 	std::vector<Event*> availableEvents;
 	auto inserter = back_inserter(availableEvents);
-	copy_if(_events.begin(), _events.end(), inserter, [](Event*& e) {
-		return e->EventAvailable();
+	copy_if(_events.begin(), _events.end(), inserter, [](Event*& event) {
+		return event->EventAvailable();
 	});
 	for (auto& ob : _observers) 
 	{
-		for (auto& event : availableEvents) 
+		for (auto event : availableEvents) 
 		{
 			if (ob->OnNotify(event)) 
 			{
@@ -36,7 +36,7 @@ void EventQueue::Notify()
 	auto itCpy = it;
 	for (; itCpy != _events.end(); ++itCpy)
 	{
-		if ((*itCpy)->_deleteByQueue == true)
+		if ((*itCpy)._deleteByQueue == true)
 		{
 			delete (*itCpy);
 		}
@@ -44,9 +44,9 @@ void EventQueue::Notify()
 	_events.erase(it, _events.end());
 }
 
-void EventQueue::AddEvent(std::shared_ptr<Event> e)
+void EventQueue::AddEvent(Event* e)
 {
-	_events.push_back(e);
+	_events.push_back(*e);
 }
 
 void EventQueue::AddObserver(std::shared_ptr<EventObserver> ob)

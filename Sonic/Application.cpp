@@ -43,9 +43,13 @@ void Application::InitializeInput()
 	_input->AddCommand(0, "right", 0, KEY_INPUT_RIGHT);
 	_input->AddCommand(0, "up", 0, KEY_INPUT_UP);
 	_input->AddCommand(0, "down", 0, KEY_INPUT_DOWN);
-	_input->AddCommand(0, "jump", 0, KEY_INPUT_SPACE);
+	_input->AddCommand(0, "jump", 0, KEY_INPUT_Z);
 	_input->AddCommand(0, "ok", 0, KEY_INPUT_RETURN);
 	_input->AddCommand(0, "pause", 0, KEY_INPUT_P);
+	_input->AddCommand(0, "forward", 0, KEY_INPUT_Q);
+	_input->AddCommand(0, "back", 0, KEY_INPUT_E);
+	_input->AddCommand(0, "rotate", 0, KEY_INPUT_R);
+	
 	for (int i = 0; i < _input->GetConnectedPadCount(); ++i)
 	{
 		_input->AddCommand(i, "left", 1 + i, PAD_INPUT_LEFT);
@@ -54,6 +58,7 @@ void Application::InitializeInput()
 		_input->AddCommand(i, "down", 1 + i, PAD_INPUT_DOWN);
 		_input->AddCommand(i, "ok", 1 + i, PAD_INPUT_8);
 		_input->AddCommand(i, "pause", 1 + i, PAD_INPUT_7);
+		_input->AddCommand(i, "jump", 1 + i, PAD_INPUT_1);
 	}
 }
 

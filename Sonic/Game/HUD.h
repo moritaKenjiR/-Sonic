@@ -1,6 +1,8 @@
 #pragma once
 #include "EventObserver.h"
 
+class Event;
+
 class HUD : public EventObserver
 {
 public:

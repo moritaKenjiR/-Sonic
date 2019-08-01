@@ -5,6 +5,6 @@ class EventObserver
 public:
 	EventObserver();
 	virtual ~EventObserver();
-	virtual bool OnNotify(const Event*) = 0;
+	virtual bool OnNotify(const Event* e) = 0;
 };
 

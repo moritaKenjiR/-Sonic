@@ -2,6 +2,7 @@
 #include "../Geometry.h"
 #include "action.h"
 #include <string>
+#include "../Collision.h"
 class Input;
 class Camera;
 class BoxCollider;
@@ -31,12 +32,12 @@ public:
 	virtual const Vector2f& GetVelocity()const;
 	virtual void SetVelocity(const Vector2f& vel);
 
-	virtual const Rect& GetCollider()const;
+	virtual const BoxCollider& GetCollider()const;
 private:
 
 protected:
 	ActionSet_t _actionSet;
-	Rect _collider;
+	BoxCollider _collider;
 	virtual void LoadAction(std::string &actpath);
 	Position2f _pos;
 	Vector2f _vel;
@@ -46,5 +47,6 @@ protected:
 	int _currentIndex = 0;
 	unsigned int _frame = 0;
 	bool _isAvailable;
+	bool _isLeft;
 };
 

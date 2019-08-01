@@ -11,11 +11,11 @@ public:
 	EventQueue();
 	~EventQueue();
 	void Notify();
-	void AddEvent(std::shared_ptr<Event> e);
+	void AddEvent(Event* e);
 	void AddObserver(std::shared_ptr<EventObserver> ob);
 private:
 
 	std::vector<std::shared_ptr<EventObserver>> _observers;
-	std::vector<std::shared_ptr<Event>> _events;
+	std::vector<Event> _events;
 };
 

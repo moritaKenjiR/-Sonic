@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include <DxLib.h>
 #include "../Game/Camera.h"
+#include "Player.h"
 
 
 Enemy::Enemy(const Camera& cam, const Player& player, const Ground& ground, EventQueue& eventq, const Position2f& pos, const float speed) :_player(player),Actor(cam,pos),_speed(speed)
@@ -24,10 +25,18 @@ void Enemy::OnCollision(Actor & actor)
 	}
 	else
 	{
-		
+		actor.OnDead();
 	}
 }
 
 void Enemy::AimPlayer()
 {
+	if (_pos.x < _player.GetPosition().x)
+	{
+		_isLeft = false;
+	}
+	else
+	{
+		_isLeft = true;
+	}
 }
