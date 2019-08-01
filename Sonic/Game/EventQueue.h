@@ -16,6 +16,6 @@ public:
 private:
 
 	std::vector<std::shared_ptr<EventObserver>> _observers;
-	std::vector<Event> _events;
+	std::vector<Event*> _events;
 };
 

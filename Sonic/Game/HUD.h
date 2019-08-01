@@ -11,7 +11,7 @@ public:
 
 	void Update();
 	void Draw();
-	bool OnNotify(const Event* e)override final;
+	bool OnNotify(Event* e)override final;
 private:
 	int _coinH = 0;
 	int _score = 0;

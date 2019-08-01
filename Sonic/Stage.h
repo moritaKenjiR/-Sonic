@@ -40,13 +40,14 @@ private:
 	const Camera& _camera;
 	const Player& _player;
 	EventQueue& _eventQueue;
+	Ground& _ground;
 	int _bgH;
 	std::map<unsigned char, std::vector<Position2f>> _terraPositions;
 	std::vector<std::shared_ptr<Block>> _blocks;
 	std::vector<std::shared_ptr<Spawner>> _spawners;
 	std::vector<std::shared_ptr<Event>> _events;
 public:
-	Stage(const Camera& cam,const Player& pl, EventQueue& eventq);
+	Stage(const Camera& cam,const Player& pl,Ground& ground, EventQueue& eventq);
 	~Stage();
 
 	void DataLoad(const char* path);

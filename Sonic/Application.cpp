@@ -31,6 +31,7 @@ bool Application::Initialize(void)
 	ChangeWindowMode(true);
 
 	_sceneMng = std::make_unique<SceneMng>();
+	_fileSystem = std::make_shared<FileSystem>();
 	
 	InitializeInput();
 	return false;
@@ -71,7 +72,7 @@ void Application::Run(void)
 		_sceneMng->Update(*_input);
 
 #ifdef _DEBUG 
-		auto fps = GetFPS();
+		auto fps = DxLib::GetFPS();
 		auto drawCallCount = GetDrawCallCount();
 		DrawFormatString(12, 12, 0x000000, "FPS=%f", fps);
 		DrawFormatString(10, 10, 0xffffff, "FPS=%f", fps);

@@ -31,7 +31,7 @@ void HUD::Draw()
 	DrawFormatString(150, 45, 0xffffff, "~%d", _score);
 }
 
-bool HUD::OnNotify(const Event* e)
+bool HUD::OnNotify(Event* e)
 {
 	if (e->GetType() == EventType::coin)
 	{

@@ -1,6 +1,6 @@
+#include "Event.h"
 #include "EventQueue.h"
 #include "EventObserver.h"
-#include "Event.h"
 #include "Coin.h"
 #include "ScoreUpper.h"
 #include <algorithm>
@@ -23,7 +23,7 @@ void EventQueue::Notify()
 	});
 	for (auto& ob : _observers) 
 	{
-		for (auto event : availableEvents) 
+		for (auto& event : availableEvents) 
 		{
 			if (ob->OnNotify(event)) 
 			{
@@ -36,7 +36,7 @@ void EventQueue::Notify()
 	auto itCpy = it;
 	for (; itCpy != _events.end(); ++itCpy)
 	{
-		if ((*itCpy)._deleteByQueue == true)
+		if ((*itCpy)->_deleteByQueue == true)
 		{
 			delete (*itCpy);
 		}
@@ -46,7 +46,7 @@ void EventQueue::Notify()
 
 void EventQueue::AddEvent(Event* e)
 {
-	_events.push_back(*e);
+	_events.push_back(e);
 }
 
 void EventQueue::AddObserver(std::shared_ptr<EventObserver> ob)

@@ -26,16 +26,17 @@ private:
 class ActionData : public Data
 {
 	friend ActionLoader;
+private:
+	ActionLoader::Bytes_t* _data;
 public:
 	ActionLoader::Bytes_t* GetRawData();
-	static void Read(void* dst, size_t& bytenum, int& cursor, ActionData& act);
+	static void Read(void* dst, size_t bytenum, size_t& cursor, ActionData& act);
 	bool IsAvaillable();
 	//@param actdata ±¸¼®ÝÃÞ°À[in]
 	//@param actset ±¸¼®Ý¾¯Ä[out]
 	//@param imgPath ‚»‚Ì±¸¼®Ý‚É•K—v‚È‰æ‘œÌ§²Ù‚ÌÊß½[out]
 	static void BuildActionSet(const ActionData& actdata, ActionSet_t& actset, std::string& imgPath);
-private:
-	ActionLoader::Bytes_t* _data;
+
 };
 
 

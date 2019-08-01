@@ -22,6 +22,7 @@ protected:
 	const Camera& _camera;
 	Block( Rect rect,const Camera& cam);
 	std::unique_ptr<BoxCollider> _collider;
+	int _blockH;
 	
 public:
 	virtual void Update() = 0;
@@ -45,4 +46,5 @@ public:
 private:
 	const Camera& _camera;
 };
+
 

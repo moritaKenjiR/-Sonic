@@ -20,6 +20,7 @@ public:
 	void LoadAction(std::string& actPath);
 	void Update(const Input&)override final;
 	void OnDead()override final;
+	void OnGround(float grad, float adjustY = -1.0f)override final;
 	void Draw()override final;
 	void Move(const Vector2f& move);
 	const Vector2f& GetPosition()const;

@@ -39,12 +39,17 @@ ActionLoader::Bytes_t * ActionData::GetRawData()
 	return _data;
 }
 
-void ActionData::Read(void * dst, size_t & bytenum, int & cursor, ActionData & act)
+void ActionData::Read(void * dst, size_t bytenum, size_t & cursor, ActionData & act)
 {
 	char* tmpdst = (char*)dst;
-	std::copy(act.GetRawData()->begin() + cursor,
-		act.GetRawData()->begin() + cursor + bytenum, tmpdst);
+	/*std::copy(act.GetRawData()->begin() + cursor,
+		act.GetRawData()->begin() + cursor + bytenum, tmpdst);*/
 	cursor += bytenum;
+}
+
+bool ActionData::IsAvaillable()
+{
+	return false;
 }
 
 void ActionData::BuildActionSet(const ActionData & actdata, ActionSet_t & actset, std::string & imgPath)

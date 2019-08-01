@@ -4,7 +4,8 @@
 #include "Player.h"
 
 
-Enemy::Enemy(const Camera& cam, const Player& player, const Ground& ground, EventQueue& eventq, const Position2f& pos, const float speed) :_player(player),Actor(cam,pos),_speed(speed)
+Enemy::Enemy(const Camera& cam, const Player& player, const Ground& ground, EventQueue& eventq, const Position2f& pos, const float speed) :
+	_player(player),Actor(cam,pos),_speed(speed),_ground(ground),_eventQueue(eventq)
 {
 	
 }

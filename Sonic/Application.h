@@ -9,6 +9,15 @@ class Input;
 ///ｼﾝｸﾞﾙﾄﾝｸﾗｽ
 class Application
 {
+private:
+	//生成、コピー、代入禁止
+	Application();
+	Application(const Application&);
+	void operator=(const Application&);
+
+	std::unique_ptr<SceneMng> _sceneMng;
+	std::unique_ptr<Input> _input;
+	std::shared_ptr<FileSystem> _fileSystem;
 public:
 	~Application();
 	static Application& Instance()
@@ -35,17 +44,8 @@ public:
 	void Terminate(void);
 
 	Configure _config;
-	FileSystem _fileSystem;
 	Configure& GetConfig() { return _config; }
-	FileSystem& GetFileSystem() { return _fileSystem; }
-private:
-	//生成、コピー、代入禁止
-	Application();
-	Application(const Application&);
-	void operator=(const Application&);
+	std::shared_ptr<FileSystem> GetFileSystem() { return _fileSystem; }
 
-	std::unique_ptr<SceneMng> _sceneMng;
-	std::unique_ptr<Input> _input;
-	
 };
 

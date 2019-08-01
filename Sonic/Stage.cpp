@@ -2,6 +2,9 @@
 #include <DxLib.h>
 #include <algorithm>
 #include "Ground.h"
+#include "Game/Player.h"
+#include "Game/Event.h"
+#include "Game/EventQueue.h"
 #include "BlockFactory.h"
 #include "Geometry.h"
 #include "Collision.h"
@@ -13,7 +16,7 @@
 #include "Game/Mantis.h"
 constexpr int  block_size = 32;
 
-Stage::Stage(const Camera & cam, const Player& pl, EventQueue& eventq) :_camera(cam),_player(pl),_eventQueue(eventq)
+Stage::Stage(const Camera & cam, const Player& pl, Ground& ground, EventQueue& eventq) :_camera(cam),_player(pl),_ground(ground),_eventQueue(eventq)
 {
 }
 
@@ -100,8 +103,8 @@ void Stage::BuildSpawnerLayer(StageHeader & stgheader, int handle)
 	std::vector<unsigned char> spawnerdata(stgheader.mapHeight*stgheader.mapWidth);
 	FileRead_read(&spawnerdata, spawnerdata.size(), handle);
 	//Ãﬂ€ƒ¿≤ÃﬂçÏê¨
-	auto ant = std::make_shared<Ant>(_camera, _player, 0, 0);
-	auto mantis = std::make_shared<Mantis>(_camera, _player, 0, 0);
+	auto ant = std::make_shared<Ant>(_camera, _player,_ground,_eventQueue,0, 0);
+	auto mantis = std::make_shared<Mantis>(_camera, _player, _ground, _eventQueue, 0, 0);
 
 	for (int y = 0; y < stgheader.mapHeight; ++y)
 	{
@@ -131,9 +134,6 @@ void Stage::BuildEventLayer(StageHeader & stgheader, int handle)
 
 	std::vector<unsigned char> eventdata(stgheader.mapHeight*stgheader.mapWidth);
 	FileRead_read(&eventdata, eventdata.size(), handle);
-	//Ãﬂ€ƒ¿≤ÃﬂçÏê¨
-	auto ant = std::make_shared<Ant>(_camera, _player, 0, 0);
-	auto mantis = std::make_shared<Mantis>(_camera, _player, 0, 0);
 
 	for (int y = 0; y < stgheader.mapHeight; ++y)
 	{
@@ -143,16 +143,13 @@ void Stage::BuildEventLayer(StageHeader & stgheader, int handle)
 			switch (eventdata[(y*stgheader.mapWidth) + x])
 			{
 			case 1:
-				_spawners.push_back(std::make_shared<OnetimeSpawner>(_camera, pos, ant));
 				break;
 			case 2:
-				_spawners.push_back(std::make_shared<OnetimeSpawner>(_camera, pos, mantis));
 				break;
 			case 5:
-				_spawners.push_back(std::make_shared<SideEdgeSpawner>(_camera, pos, ant));
 				break;
 			case 6:
-				_spawners.push_back(std::make_shared<SideEdgeSpawner>(_camera, pos, mantis));
+				break;
 			}
 		}
 	}
@@ -184,46 +181,3 @@ std::vector<std::shared_ptr<Event>>& Stage::GetEvents()
 {
 	return _events;
 }
-
-
-class Pendulum : public Block
-{
-private:
-	static constexpr int fix_width = 5;
-	Position2f _pos;
-	Vector2f _vel;
-	Position2f _pivot;
-	float _g;
-	bool _isVisible;
-	int _frame = 0;
-	int _length;
-	void (Pendulum::*_updater)();
-public:
-	void NormalUpdate()
-	{
-	
-		auto tensionVec = _rect.center.ToFloatVec() - _pivot;
-		float theta = atan2f(tensionVec.y, tensionVec.x);
-		_vel.x = _g * cos(theta) * sin(theta);
-		_vel.y = _g * cos(theta) * cos(theta);
-
-		_pos += _vel;
-		tensionVec = _pos - _pivot;
-		_pos = _pivot + tensionVec.Normalized() *_length;
-
-		_rect.center = _pos.ToIntVec();
-	}
-	void FragileUpdate()
-	{
-
-	}
-
-	void Update()override
-	{
-		(_updater)();
-	}
-	void Draw()override
-	{
-
-	}
-};

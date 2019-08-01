@@ -4,15 +4,16 @@
 #include "Collision.h"
 #include <DxLib.h>
 
-constexpr int _handle = LoadGraph("img/atlas0.png", true);
+static constexpr int fix_width = 5;
 
 Block::Block(Rect rect,const Camera& cam):_rect(rect),_camera(cam)
 {
+	_blockH = LoadGraph("img/atlas0.png", true);
 }
 
 const BoxCollider & Block::GetCollider() const
 {
-	BoxCollider bc;
+	BoxCollider bc(_rect);
 	return bc;
 }
 
@@ -28,11 +29,12 @@ BlockFactory::~BlockFactory()
 
 std::unique_ptr<Block> BlockFactory::Create(BlockType type, const Position2 pos)
 {
+
 	class Brick : public Block
 	{
 	public:
 		int _blockH;
-		Brick(const Position2& pos) : Block(Rect(pos, Size(48, 48)),_camera)
+		Brick(const Position2& pos) : Block(Rect(pos, Size(48, 48)), _camera)
 		{
 			_blockH = LoadGraph("img/atlas0.png", true);
 		}
@@ -45,8 +47,8 @@ std::unique_ptr<Block> BlockFactory::Create(BlockType type, const Position2 pos)
 		void Draw()override
 		{
 			auto offset = _camera.GetOffset();
-			DrawRectExtendGraph(_rect.Left() - offset.x,_rect.Top() - offset.y
-							,_rect.Right() - offset.x,_rect.Bottom() - offset.y,224,128,32,32,_blockH,true);
+			DrawRectExtendGraph(_rect.Left() - offset.x, _rect.Top() - offset.y
+				, _rect.Right() - offset.x, _rect.Bottom() - offset.y, 224, 128, 32, 32, _blockH, true);
 		}
 
 		void OnCollision(Actor* actor, const BoxCollider& col)override
@@ -56,12 +58,12 @@ std::unique_ptr<Block> BlockFactory::Create(BlockType type, const Position2 pos)
 	};
 
 
-	class Slide  : public Block
+	class Slide : public Block
 	{
 		const int  _speed;
 	public:
 		Slide(const Position2& pos, const Camera& cam, unsigned int runLength = 1) :
-			Block(Rect(pos, Size(48, 48)), cam),_speed((int)runLength)
+			Block(Rect(pos, Size(48, 48)), cam), _speed((int)runLength)
 		{
 
 		};
@@ -82,6 +84,49 @@ std::unique_ptr<Block> BlockFactory::Create(BlockType type, const Position2 pos)
 
 		}
 	};
+
+
+	class Pendulum : public Block
+	{
+	private:
+		//static constexpr int fix_width = 5;
+		Position2f _pos;
+		Vector2f _vel;
+		Position2f _pivot;
+		float _g;
+		bool _isVisible;
+		int _frame = 0;
+		int _length;
+		void (Pendulum::*_updater)();
+	public:
+		void NormalUpdate()
+		{
+			auto tensionVec = _rect.center.ToFloatVec() - _pivot;
+			float theta = atan2f(tensionVec.y, tensionVec.x);
+			_vel.x = _g * cos(theta) * sin(theta);
+			_vel.y = _g * cos(theta) * cos(theta);
+
+			_pos += _vel;
+			tensionVec = _pos - _pivot;
+			_pos = _pivot + tensionVec.Normalized() *_length;
+
+			_rect.center = _pos.ToIntVec();
+		}
+		void FragileUpdate()
+		{
+
+		}
+
+		void Update()override
+		{
+			(this->*_updater)();
+		}
+		void Draw()override
+		{
+
+		}
+	};
+
 
 	if (type == BlockType::brick)
 	{

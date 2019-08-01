@@ -7,6 +7,7 @@
 #include "../scene/GameScene.h"
 #include"../Ground.h"
 #include "action.h"
+#include "../System/FileSystem.h"
 
 constexpr int default_player_posx = 512;
 constexpr int default_player_posy = 500;
@@ -42,11 +43,11 @@ void Player::LoadAction(std::string & actPath)
 	int imgfilepathlen = 0;
 	FileRead_read(&imgfilepathlen, sizeof(imgfilepathlen), playerActPath);
 
-	std::string imgfilepath;
-	imgfilepath.resize(imgfilepathlen);
-	FileRead_read(&imgfilepath[0], imgfilepathlen, playerActPath);
+	std::string imgloadpath;
+	imgloadpath.resize(imgfilepathlen);
+	FileRead_read(&imgloadpath[0], imgfilepathlen, playerActPath);
 
-
+	auto imgfilepath = GetFolderPath(imgloadpath);
 
 	int actioncnt = 0;
 	FileRead_read(&actioncnt, sizeof(actioncnt), playerActPath);
@@ -73,7 +74,7 @@ void Player::LoadAction(std::string & actPath)
 		{
 			FileRead_read(&animcutinfoes[i], sizeof(animcutinfoes[i]), playerActPath);
 		}
-		_actionSet[actionname] = animcutinfoes;
+		//_actionSet[actionname] = animcutinfoes;
 	}
 	FileRead_close(playerActPath);
 }
@@ -89,6 +90,11 @@ void Player::Update(const Input & input)
 }
 
 void Player::OnDead()
+{
+
+}
+
+void Player::OnGround(float grad, float adjustY)
 {
 }
 
@@ -218,5 +224,5 @@ void Player::GetGroundP(std::shared_ptr<Ground> gp)
 
 const BoxCollider & Player::GetCollider() const
 {
-	// TODO: return ステートメントをここに挿入します
+	return _collider;
 }
