@@ -54,8 +54,8 @@ void TitleScene::FadeoutUpdate(const Input &)
 {
 	if (++_fadeCounter >= fade_interval)
 	{
-		//_mng.ChangeScene(std::make_unique<GameScene>(_mng));
-		_mng.ChangeScene(std::make_unique<Playing3DScene>(_mng));
+		_mng.ChangeScene(std::make_unique<GameScene>(_mng));
+		//_mng.ChangeScene(std::make_unique<Playing3DScene>(_mng));
 	}
 }
 

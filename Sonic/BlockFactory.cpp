@@ -39,7 +39,7 @@ std::unique_ptr<Block> BlockFactory::Create(BlockType type, const Position2 pos)
 	class Brick : public Block
 	{
 	public:
-		Brick(const Position2& pos) : Block(Rect(pos, Size(48, 48)), _camera)
+		Brick(const Position2& pos, const Camera& cam) : Block(Rect(pos, Size(48, 48)),cam)
 		{
 		}
 
@@ -103,6 +103,11 @@ std::unique_ptr<Block> BlockFactory::Create(BlockType type, const Position2 pos)
 		int _length;
 		void (Pendulum::*_updater)();
 	public:
+		Pendulum(const Position2& pos, const Camera& cam):
+			Block(Rect(pos, Size(48, 48)), cam)
+		{
+
+		}
 		void NormalUpdate()
 		{
 			auto tensionVec = _rect.center.ToFloatVec() - _pivot;
@@ -134,7 +139,15 @@ std::unique_ptr<Block> BlockFactory::Create(BlockType type, const Position2 pos)
 
 	if (type == BlockType::brick)
 	{
-		return std::make_unique<Brick>(pos);
+		return std::make_unique<Brick>(pos,_camera);
+	}
+	if (type == BlockType::brick)
+	{
+		return std::make_unique<Brick>(pos, _camera);
+	}
+	if (type == BlockType::brick)
+	{
+		return std::make_unique<Brick>(pos, _camera);
 	}
 }
 

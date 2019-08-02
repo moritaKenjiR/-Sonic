@@ -37,10 +37,10 @@ void Stage::DataLoad(const char * path)
 	std::vector<unsigned char> terrawdata(header.mapHeight*header.mapWidth);
 	FileRead_read(terrawdata.data(), terrawdata.size(), handle);
 
-	if(header.layerCount >= 2)
-	BuildBlockLayer(header,handle);
-	BuildSpawnerLayer(header, handle);
-	BuildEventLayer(header, handle);
+	if (header.layerCount >= 2);
+	//BuildBlockLayer(header,handle);
+	//BuildSpawnerLayer(header, handle);
+	//BuildEventLayer(header, handle);
 
 	FileRead_close(handle);
 
@@ -83,7 +83,7 @@ void Stage::BuildBlockLayer(StageHeader & stgheader, int handle)
 {
 	BlockFactory bf(_camera);
 	std::vector<unsigned char> blockdata(stgheader.mapHeight*stgheader.mapWidth);
-	FileRead_read(&blockdata, blockdata.size(), handle);
+	FileRead_read(blockdata.data(), blockdata.size(), handle);
 
 	for (int y = 0; y < stgheader.mapHeight; ++y)
 	{
@@ -101,7 +101,7 @@ void Stage::BuildBlockLayer(StageHeader & stgheader, int handle)
 void Stage::BuildSpawnerLayer(StageHeader & stgheader, int handle)
 {
 	std::vector<unsigned char> spawnerdata(stgheader.mapHeight*stgheader.mapWidth);
-	FileRead_read(&spawnerdata, spawnerdata.size(), handle);
+	FileRead_read(spawnerdata.data(), spawnerdata.size(), handle);
 	//ÌßÛÄÀ²Ìßì¬
 	auto ant = std::make_shared<Ant>(_camera, _player,_ground,_eventQueue,0, 0);
 	auto mantis = std::make_shared<Mantis>(_camera, _player, _ground, _eventQueue, 0, 0);
@@ -133,7 +133,7 @@ void Stage::BuildEventLayer(StageHeader & stgheader, int handle)
 {
 
 	std::vector<unsigned char> eventdata(stgheader.mapHeight*stgheader.mapWidth);
-	FileRead_read(&eventdata, eventdata.size(), handle);
+	FileRead_read(eventdata.data(), eventdata.size(), handle);
 
 	for (int y = 0; y < stgheader.mapHeight; ++y)
 	{

@@ -1,5 +1,6 @@
 #include "ActionLoader.h"
 #include <DxLib.h>
+#include <algorithm>
 
 
 ActionLoader::ActionLoader()

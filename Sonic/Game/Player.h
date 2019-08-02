@@ -47,7 +47,7 @@ private:
 	
 	
 	std::shared_ptr<Ground> _ground;
-	std::unique_ptr<ActionSet_t> _actionSet;
+	ActionSet_t _actionSet;
 
 	float _accel;
 	float _framerate;

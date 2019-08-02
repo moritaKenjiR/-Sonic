@@ -8,6 +8,9 @@
 #include"../Ground.h"
 #include "action.h"
 #include "../System/FileSystem.h"
+#include "../System/ActionLoader.h"
+#include "../System/ImageLoader.h"
+#include "../Application.h"
 
 constexpr int default_player_posx = 512;
 constexpr int default_player_posy = 500;
@@ -16,14 +19,17 @@ constexpr float g = 0.3f;
 
 Player::Player(const Camera& cam):Actor(cam,Position2f(default_player_posx,default_player_posy))
 {
-	_actionSet = std::make_unique<ActionSet_t>();
+	//_actionSet = std::make_unique<ActionSet_t>();
 
 	std::string actPath = "action/player.act";
+	LoadAction(actPath);
 	
 
 	_updateFunc = &Player::NeutralUpdate;
 	_vel = { 0,0 };
 	_isAerial = false;
+	_currentActionName = "idle";
+	_frame = 0;
 }
 
 
@@ -33,23 +39,61 @@ Player::~Player()
 
 void Player::LoadAction(std::string & actPath)
 {
-	int playerActPath = FileRead_open(actPath.c_str());
+	/*ActionData act;
+	bool result = Application::Instance().GetFileSystem()->Load(actPath.c_str(), act);
+	auto actdata = act.GetRawData();
+
+	std::string imgFilePath = "";
+	ActionData::BuildActionSet(act, *_actionSet, imgFilePath);
+	imgFilePath = GetFolderPath(actPath) + imgFilePath;
+
+	ImageData data;
+	Application::Instance().GetFileSystem()->Load(imgFilePath.c_str(), data);
+	_imgH = data.GetHandle();
+*/
+
+	int ActPath = FileRead_open(actPath.c_str());
 
 
 	float version;
-	FileRead_read(&version, sizeof(version), playerActPath);
+	FileRead_read(&version, sizeof(version), ActPath);
 
 	int imgfilepathlen = 0;
-	FileRead_read(&imgfilepathlen, sizeof(imgfilepathlen), playerActPath);
+	FileRead_read(&imgfilepathlen, sizeof(imgfilepathlen), ActPath);
 
-	std::string imgloadpath;
-	imgloadpath.resize(imgfilepathlen);
-	FileRead_read(&imgloadpath[0], imgfilepathlen, playerActPath);
+	std::string imgFilePath;
+	imgFilePath.resize(imgfilepathlen);
+	FileRead_read(&imgFilePath[0], imgfilepathlen, ActPath);
 
-	auto imgfilepath = GetFolderPath(imgloadpath);
+	imgFilePath = GetFolderPath(actPath) + imgFilePath;
+	ImageData data;
+	Application::Instance().GetFileSystem()->Load(imgFilePath.c_str(), data);
+	_imgH = data.GetHandle();
 
-	int actioncnt = 0;
-	FileRead_read(&actioncnt, sizeof(actioncnt), playerActPath);
+	int totalloop = 0;
+	int actionCount = 0;
+	FileRead_read(&actionCount, sizeof(actionCount), ActPath);
+	for (int i = 0; i < actionCount; ++i) {
+		int actionnamesize = 0;
+		FileRead_read(&actionnamesize, sizeof(actionnamesize), ActPath);
+		std::string actionname;
+		actionname.resize(actionnamesize);
+		FileRead_read(&actionname[0], actionnamesize, ActPath);
+
+		FileRead_read(&totalloop, sizeof(totalloop), ActPath);
+		int animcount = 0;
+		FileRead_read(&animcount, sizeof(animcount), ActPath);
+		std::vector<CutData> animcutinfoes(animcount);
+		for (int i = 0; i < animcount; ++i) {
+			FileRead_read(&animcutinfoes[i], sizeof(animcutinfoes[i]), ActPath);
+		}
+		_actionSet[actionname].cutdata = animcutinfoes;
+	}
+	FileRead_close(ActPath);
+
+
+	/*int actioncnt = 0;
+	FileRead_read(&actioncnt, sizeof(actioncnt), ActPath);
 	for (int i = 0; 0 < actioncnt; i++)
 	{
 		CutData cd = {};
@@ -58,12 +102,12 @@ void Player::LoadAction(std::string & actPath)
 		int duration;
 
 		int actionnamesize = 0;
-		FileRead_read(&actionnamesize, sizeof(actionnamesize), playerActPath);
+		FileRead_read(&actionnamesize, sizeof(actionnamesize), ActPath);
 		std::string actionname;
 		actionname.resize(actionnamesize);
-		FileRead_read(&actionname[0], actionnamesize, playerActPath);
+		FileRead_read(&actionname[0], actionnamesize, ActPath);
 		int cutdataCount = 0;
-		FileRead_read(&cutdataCount, sizeof(cutdataCount), playerActPath);
+		FileRead_read(&cutdataCount, sizeof(cutdataCount), ActPath);
 		if (cutdataCount > 0)
 		{
 
@@ -71,15 +115,16 @@ void Player::LoadAction(std::string & actPath)
 		std::vector<CutData> animcutinfoes(actioncnt);
 		for (int i = 0; i < actioncnt; ++i)
 		{
-			FileRead_read(&animcutinfoes[i], sizeof(animcutinfoes[i]), playerActPath);
+			FileRead_read(&animcutinfoes[i], sizeof(animcutinfoes[i]), ActPath);
 		}
-		//_actionSet[actionname] = animcutinfoes;
+		_actionSet[actionname].cutdata = animcutinfoes;
 	}
-	FileRead_close(playerActPath);
+	FileRead_close(ActPath);*/
 }
 
 void Player::Update(const Input & input)
 {
+	++_frame;
 	(this->*_updateFunc)(input);
 	for (int i = 0; i < GetJoypadNum() + 1; ++i)
 	{
@@ -101,7 +146,14 @@ void Player::Draw()
 {
 	Position2 offset = _camera.GetOffset();
 	DrawCircle(_pos.x - offset.x,_pos.y - offset.y,20,0xffffff,true,true);
-	DrawRectRotaGraph(_pos.x - offset.x, _pos.y - offset.y, 0, 100, 27, 27, 1.0f, 0.0f, _imgH, true,_isLeft);
+	DrawRectRotaGraph2(_pos.x - offset.x, _pos.y - offset.y,
+		_actionSet[_currentActionName].cutdata[_frame].cutrect.Left(),
+		_actionSet[_currentActionName].cutdata[_frame].cutrect.Top(),
+		_actionSet[_currentActionName].cutdata[_frame].cutrect.size.w,
+		_actionSet[_currentActionName].cutdata[_frame].cutrect.size.h,
+		_isLeft? 12:0,
+		0,
+		1.0f, 0.0f, _imgH, true,_isLeft);
 }
 
 void Player::Move(const Vector2f& move)
