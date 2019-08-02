@@ -3,21 +3,14 @@
 #include <algorithm>
 #include "Game/Player.h"
 #include "Game/Camera.h"
+#include "Application.h"
+#include "System/ImageLoader.h"
 
 Ground::Ground(Player& pl, const Camera& cam):_player(pl),_camera(cam)
 {
-	/*_seg.posa = Position2f(0, 200);
-	_seg.posb = Position2f(500, 100);
-
-	for (int i = 0; i < 800; ++i)
-	{
-		auto ax = i * 100;
-		auto bx = (i + 1) * 100;
-		auto ay = 300 - 200 * sin(DX_PI*(float)i / 8.0f);
-		auto by = 300 - 200 * sin(DX_PI*(float)(i+1) / 8.0f);
-		_segments.emplace_back(ax, ay, bx, by);
-	}*/
-	_handle = LoadGraph("img/atlas0.png", true);
+	ImageData data;
+	Application::Instance().GetFileSystem()->Load("img/atlas0.png", data);
+	_handle = data.GetHandle();
 }
 
 

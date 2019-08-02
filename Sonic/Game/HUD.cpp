@@ -14,7 +14,7 @@ HUD::HUD()
 HUD::~HUD()
 {
 	ImageData data;
-	Application::Instance().GetFileSystem().Load("img/atlas.jpg", data);
+	Application::Instance().GetFileSystem()->Load("img/atlas.jpg", data);
 	_coinH = data.GetHandle();
 }
 

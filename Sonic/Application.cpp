@@ -30,8 +30,9 @@ bool Application::Initialize(void)
 	SetGraphMode(1024, 576, 16);
 	ChangeWindowMode(true);
 
-	_sceneMng = std::make_unique<SceneMng>();
 	_fileSystem = std::make_shared<FileSystem>();
+	_sceneMng = std::make_unique<SceneMng>();
+	
 	
 	InitializeInput();
 	return false;

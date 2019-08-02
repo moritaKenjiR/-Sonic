@@ -3,6 +3,8 @@
 #include "Game/Camera.h"
 #include "Application.h"
 #include "Geometry.h"
+#include "Application.h"
+#include "System/ImageLoader.h"
 
 
 Background::Background(const Camera & cam):_camera(cam)
@@ -20,7 +22,9 @@ void Background::Init()
 void Background::AddParts(const char * filepath, const Position2 & pos, float rate, bool fromBottom, LayoutType type,Size size, int repeatX)
 {
 	auto wsize = Application::Instance().GetConfig().GetScreenSize();
-	auto handle = LoadGraph(filepath);
+	ImageData data;
+	Application::Instance().GetFileSystem()->Load(filepath, data);
+	auto handle = data.GetHandle();
 	int w, h;
 	GetGraphSize(handle, &w, &h);
 	float scale = 1.0f;

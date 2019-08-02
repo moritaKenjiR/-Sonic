@@ -36,6 +36,19 @@ bool ImageLoader::Load(const char * path, Data & data)
 	}
 }
 
+void ImageLoader::Unload(const char * path)
+{
+	auto it = _table.find(path);
+	if (it == _table.end())
+	{
+		return;
+	}
+	else
+	{
+		_table.erase(it);
+	}
+}
+
 int ImageData::GetHandle() const
 {
 	return _handle;

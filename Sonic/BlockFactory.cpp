@@ -3,12 +3,16 @@
 #include "Game/Camera.h"
 #include "Collision.h"
 #include <DxLib.h>
+#include "Application.h"
+#include "System/ImageLoader.h"
 
 static constexpr int fix_width = 5;
 
 Block::Block(Rect rect,const Camera& cam):_rect(rect),_camera(cam)
 {
-	_blockH = LoadGraph("img/atlas0.png", true);
+	ImageData data;
+	Application::Instance().GetFileSystem()->Load("img/atlas0.png", data);
+	_blockH = data.GetHandle();
 }
 
 const BoxCollider & Block::GetCollider() const
@@ -19,7 +23,9 @@ const BoxCollider & Block::GetCollider() const
 
 BlockFactory::BlockFactory(const Camera& cam):_camera(cam)
 {
-	_blockH = LoadGraph("img/atlas0.png", true);
+	ImageData data;
+	Application::Instance().GetFileSystem()->Load("img/atlas0.png", data);
+	_blockH = data.GetHandle();
 }
 
 
@@ -33,10 +39,8 @@ std::unique_ptr<Block> BlockFactory::Create(BlockType type, const Position2 pos)
 	class Brick : public Block
 	{
 	public:
-		int _blockH;
 		Brick(const Position2& pos) : Block(Rect(pos, Size(48, 48)), _camera)
 		{
-			_blockH = LoadGraph("img/atlas0.png", true);
 		}
 
 		void Update()override

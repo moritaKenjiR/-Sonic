@@ -17,7 +17,7 @@
 #include "../Game/HUD.h"
 #include "../Game/Event.h"
 #include "../Game/EventQueue.h"
-
+#include "Playing3DScene.h"
 
 GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 {
@@ -57,7 +57,7 @@ void GameScene::Update(const Input & input)
 
 	if (input.Ispressed(0, "ok") && !input.IsTriggered(0, "ok"))
 	{
-		_mng.ChangeScene(std::make_unique<ResultScene>(_mng));
+		_mng.ChangeScene(std::make_unique<Playing3DScene>(_mng));
 	}
 	if (input.Ispressed(0, "pause") && !input.IsTriggered(0, "pause"))
 	{

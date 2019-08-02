@@ -17,7 +17,6 @@ constexpr float g = 0.3f;
 Player::Player(const Camera& cam):Actor(cam,Position2f(default_player_posx,default_player_posy))
 {
 	_actionSet = std::make_unique<ActionSet_t>();
-	_imgH = LoadGraph("img/player.png", true);
 
 	std::string actPath = "action/player.act";
 	

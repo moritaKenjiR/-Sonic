@@ -1,5 +1,7 @@
 #pragma once
 #include "BaseScene.h"
+class Camera3D;
+
 class Playing3DScene :
 	public BaseScene
 {
@@ -12,6 +14,8 @@ public:
 private:
 	int _modelH;
 	int _attachH;
-	int _animTime;
+	float _animTime;
+	float _radian;
+	std::shared_ptr<Camera3D> _camera;
 };
 

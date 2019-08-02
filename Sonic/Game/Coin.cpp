@@ -13,7 +13,7 @@ Coin::Coin(const Camera& cam, const Position2& pos, EventQueue& eventq)
 	:_bc(Rect(pos,Size(32,32))),_camera(cam),Event(eventq)
 {
 	ImageData data;
-	Application::Instance().GetFileSystem().Load("img/atlas.jpg", data);
+	Application::Instance().GetFileSystem()->Load("img/atlas.jpg", data);
 	_imgH = data.GetHandle();
 	_coinSE = LoadSoundMem("se/coin.wav");
 }

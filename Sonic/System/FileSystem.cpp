@@ -16,6 +16,7 @@ FileSystem::FileSystem()
 	auto imgLoader = std::make_shared<ImageLoader>();
 	auto actLoader = std::make_shared<ActionLoader>();
 
+
 	_loaders["bmp"] = _loaders["jpg"] = _loaders["png"] = imgLoader;
 	_loaders["act"] = actLoader;
 }

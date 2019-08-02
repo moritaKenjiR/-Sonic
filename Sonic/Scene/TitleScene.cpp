@@ -2,14 +2,18 @@
 #include "../Input/Input.h"
 #include "GameScene.h"
 #include "SceneMng.h"
+#include "Playing3DScene.h"
 #include "../Application.h"
+#include "../System/ImageLoader.h"
 
 constexpr int fade_interval = 60;
 
 TitleScene::TitleScene(SceneMng& mng) :BaseScene(mng)
 {
 	_fadeCounter = 60;
-	_titleBackH = LoadGraph("Image/title.png", true);
+	ImageData data;
+	Application::Instance().GetFileSystem()->Load("img/title/back.png", data);
+	_titleBackH = data.GetHandle();
 	_updater = &TitleScene::FadeinUpdate;
 	_drawer = &TitleScene::FadeDrawer;
 }
@@ -50,7 +54,8 @@ void TitleScene::FadeoutUpdate(const Input &)
 {
 	if (++_fadeCounter >= fade_interval)
 	{
-		_mng.ChangeScene(std::make_unique<GameScene>(_mng));
+		//_mng.ChangeScene(std::make_unique<GameScene>(_mng));
+		_mng.ChangeScene(std::make_unique<Playing3DScene>(_mng));
 	}
 }
 

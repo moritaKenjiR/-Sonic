@@ -34,6 +34,19 @@ bool ActionLoader::Load(const char * path, Data & data)
 	}
 }
 
+void ActionLoader::Unload(const char * path)
+{
+	auto it = _table.find(path);
+	if (it == _table.end())
+	{
+		return;
+	}
+	else
+	{
+		_table.erase(it);
+	}
+}
+
 ActionLoader::Bytes_t * ActionData::GetRawData()
 {
 	return _data;
