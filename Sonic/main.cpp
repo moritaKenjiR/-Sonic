@@ -1,11 +1,11 @@
 #include<windows.h>
 #include "Application.h"
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+void main()
 {
 	auto &app = Application::Instance();
 	app.Initialize();
 	app.Run();
 	app.Terminate();
-	return 0;				// èIóπ 
+	return;				// èIóπ 
 }

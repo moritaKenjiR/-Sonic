@@ -7,6 +7,7 @@ public:
 	Ant(const Camera& cam, const Player& player, const Ground& ground, EventQueue& eventq,int x, int y);
 	~Ant();
 
+	void LoadAction(std::string& actPath);
 	void Update(const Input&)override final;
 	void Draw()override final;
 
@@ -14,6 +15,7 @@ public:
 	void OnDead()override final;
 
 	void NormalUpdate();
+	void FallUpdate();
 	std::shared_ptr<Enemy> MakeClone()override final;
 private:
 	Vector2f _vel;

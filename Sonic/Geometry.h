@@ -38,6 +38,8 @@ struct Position2
 	Position2f ToFloatVec()const;
 };
 
+Position2 operator+(const Position2& lval, const Position2& rval);
+
 using Vector2 = Position2;
 using Vector2f = Position2f;
 

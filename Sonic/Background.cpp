@@ -46,6 +46,7 @@ void Background::AddParts(const char * filepath, const Position2 & pos, float ra
 	if (fromBottom) {
 		p.y = wsize.h - pos.y - h;
 	}
+	p.y = -100;
 	_bgparts.push_back(Obj(handle, p, rate, type, repeatX, Size(w,h)));
 }
 
@@ -60,14 +61,15 @@ void Background::DrawBg()
 	{
 		int w, h;
 		GetGraphSize(part.handle, &w, &h);
-		auto poffset = offset * part.rate;
+		auto poffset = offset;
+		poffset.x *= part.rate;
 		auto pos = part.initpos - Position2(poffset.x%(part.repeatX), poffset.y);
 
 		DrawExtendGraph(
 			pos.x,
 			pos.y,
 			pos.x + part.size.w,
-			pos.y + part.size.h,
+			pos.y + part.size.h + part.size.h,
 			part.handle,
 			true);
 
@@ -75,7 +77,7 @@ void Background::DrawBg()
 			pos.x + part.repeatX,
 			pos.y,
 			pos.x + part.repeatX + part.size.w,
-			pos.y + part.size.h,
+			pos.y + part.size.h + part.size.h,
 			part.handle,
 			true);
 
@@ -83,7 +85,7 @@ void Background::DrawBg()
 			pos.x + part.repeatX*2,
 			pos.y,
 			pos.x + part.repeatX*2 + part.size.w,
-			pos.y + part.size.h,
+			pos.y + part.size.h + part.size.h,
 			part.handle,
 			true);
 	}

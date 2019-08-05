@@ -34,10 +34,10 @@ void Enemy::AimPlayer()
 {
 	if (_pos.x < _player.GetPosition().x)
 	{
-		_isLeft = false;
+		_isLeft = true;
 	}
 	else
 	{
-		_isLeft = true;
+		_isLeft = false;
 	}
 }

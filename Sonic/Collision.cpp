@@ -1,5 +1,5 @@
 #include "Collision.h"
-
+#include <cmath>
 
 
 Collider::Collider()
@@ -11,12 +11,21 @@ Collider::~Collider()
 {
 }
 
-bool Collider::IsCollided(const BoxCollider & a, const BoxCollider & b)
+bool Collider::IsCollided(BoxCollider & a, BoxCollider & b)
 {
+	auto acol = a.GetRect();
+	auto bcol = b.GetRect();
+
+	
+	if ((abs(acol.center.x - bcol.center.x) < (acol.size.w + bcol.size.w)) &&
+		(abs(acol.center.y - bcol.center.y) < (acol.size.h + bcol.size.h)))
+	{
+		return true;
+	}
 	return false;
 }
 
-const Rect & BoxCollider::GetRect() const
+ Rect & BoxCollider::GetRect() 
 {
 	return _rect;
 }

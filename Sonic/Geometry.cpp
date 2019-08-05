@@ -54,6 +54,11 @@ Position2f operator+(const Position2f & lval, const Position2f & rval)
 	return Position2f(lval.x + rval.x, lval.y + rval.y);
 }
 
+Position2 operator+(const Position2 & lval, const Position2 & rval)
+{
+	return Position2(lval.x+rval.x,lval.y+rval.y);
+}
+
 Position2f operator-(const Position2f & lval, const Position2f & rval)
 {
 	return Position2f(lval.x - rval.x, lval.y - rval.y);

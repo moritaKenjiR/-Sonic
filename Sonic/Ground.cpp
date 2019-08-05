@@ -20,20 +20,8 @@ Ground::~Ground()
 
 void Ground::Draw()
 {
-	DrawRectModiGraphF(
-		0, 0,
-		128, 128,
-		128, 256,
-		0, 128,
-		64,
-		32,
-		32,
-		32,
-		_handle,true);
-
 	auto offset = _camera.GetOffset();
 	auto wsize = _camera.GetViewRange().center.x + _camera.GetViewRange().size.w/2;
-	DrawLine(0+ offset.x, 500+offset.y, 5000+offset.x, 500 + offset.y, 0xa03030);
 	for (auto& seg : _segments)
 	{
 		auto segposa = seg.posa - offset.ToFloatVec();
@@ -107,9 +95,10 @@ int Ground::GetCurrentGroundY(float& grad) const
 	auto it = std::find_if(_segments.begin(), _segments.end(), lambda);
 	if (it == _segments.end()) return INT_MIN;
 	
+	grad = (it->posb.y - it->posa.y) / (it->posb.x - it->posa.x);
 	auto y = it->posa.y + grad * (pos.x - it->posa.x);
 	do {
-		grad = it->posb.y - it->posa.y / it->posb.x - it->posa.x;
+		grad = (it->posb.y - it->posa.y) / (it->posb.x - it->posa.x);
 		y = it->posa.y + grad * (pos.x - it->posa.x);
 		it = find_if(it, _segments.end(), lambda);
 

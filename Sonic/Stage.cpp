@@ -14,7 +14,9 @@
 #include "Game/SideEdgeSpawner.h"
 #include "Game/Ant.h"
 #include "Game/Mantis.h"
-constexpr int  block_size = 32;
+#include "Game/Event.h"
+#include "Game/Coin.h"
+constexpr int  block_size = 64;
 
 Stage::Stage(const Camera & cam, const Player& pl, Ground& ground, EventQueue& eventq) :_camera(cam),_player(pl),_ground(ground),_eventQueue(eventq)
 {
@@ -26,9 +28,6 @@ Stage::~Stage()
 
 void Stage::DataLoad(const char * path)
 {
-	
-
-	
 
 	auto handle = FileRead_open(path);
 	StageHeader header = {};
@@ -37,10 +36,9 @@ void Stage::DataLoad(const char * path)
 	std::vector<unsigned char> terrawdata(header.mapHeight*header.mapWidth);
 	FileRead_read(terrawdata.data(), terrawdata.size(), handle);
 
-	if (header.layerCount >= 2);
-	//BuildBlockLayer(header,handle);
-	//BuildSpawnerLayer(header, handle);
-	//BuildEventLayer(header, handle);
+	BuildBlockLayer(header,handle);
+	BuildSpawnerLayer(header, handle);
+	BuildEventLayer(header, handle);
 
 	FileRead_close(handle);
 
@@ -104,7 +102,9 @@ void Stage::BuildSpawnerLayer(StageHeader & stgheader, int handle)
 	FileRead_read(spawnerdata.data(), spawnerdata.size(), handle);
 	//ÌßÛÄÀ²Ìßì¬
 	auto ant = std::make_shared<Ant>(_camera, _player,_ground,_eventQueue,0, 0);
+	ant->OnDead();
 	auto mantis = std::make_shared<Mantis>(_camera, _player, _ground, _eventQueue, 0, 0);
+	mantis->OnDead();
 
 	for (int y = 0; y < stgheader.mapHeight; ++y)
 	{
@@ -139,16 +139,11 @@ void Stage::BuildEventLayer(StageHeader & stgheader, int handle)
 	{
 		for (int x = 0; x < stgheader.mapWidth; ++x)
 		{
-			Position2f pos = { (float)(x*block_size),(float)(y*block_size) };
+			Position2 pos = { (x*block_size),(y*block_size) };
 			switch (eventdata[(y*stgheader.mapWidth) + x])
 			{
 			case 1:
-				break;
-			case 2:
-				break;
-			case 5:
-				break;
-			case 6:
+				_events.push_back(std::make_shared<Coin>(_camera,pos,_eventQueue));
 				break;
 			}
 		}

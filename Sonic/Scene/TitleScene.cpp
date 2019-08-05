@@ -12,8 +12,13 @@ TitleScene::TitleScene(SceneMng& mng) :BaseScene(mng)
 {
 	_fadeCounter = 60;
 	ImageData data;
-	Application::Instance().GetFileSystem()->Load("img/title/back.png", data);
-	_titleBackH = data.GetHandle();
+	Application::Instance().GetFileSystem()->Load("img/title/sonic_logo.png", data);
+	_logoH = data.GetHandle();
+
+	ImageData a;
+	Application::Instance().GetFileSystem()->Load("img/title/title_gate.png", a);
+	_oH = a.GetHandle();
+
 	_updater = &TitleScene::FadeinUpdate;
 	_drawer = &TitleScene::FadeDrawer;
 }
@@ -24,6 +29,7 @@ TitleScene::~TitleScene()
 
 void TitleScene::Update(const Input & input)
 {
+	++_frame;
 	(this->*_updater)(input);
 }
 
@@ -54,15 +60,16 @@ void TitleScene::FadeoutUpdate(const Input &)
 {
 	if (++_fadeCounter >= fade_interval)
 	{
-		//_mng.ChangeScene(std::make_unique<GameScene>(_mng));
-		_mng.ChangeScene(std::make_unique<Playing3DScene>(_mng));
+		_mng.ChangeScene(std::make_unique<GameScene>(_mng));
+		//_mng.ChangeScene(std::make_unique<Playing3DScene>(_mng));
 	}
 }
 
 void TitleScene::FadeDrawer()
 {
 	auto wsize = Application::Instance().GetConfig().GetScreenSize();
-	DrawGraph(256, 100, _titleBackH, true);
+	DrawGraph(256, 100, _logoH, true);
+	DrawRectGraph(294, 90, 0, 0, 48, 96, _oH, true);
 	DrawString(100, 100, "TitleScene", 0xffffff);
 
 	auto blendval = _fadeCounter * 255 / fade_interval;
@@ -73,6 +80,7 @@ void TitleScene::FadeDrawer()
 
 void TitleScene::NormalDrawer()
 {
-	DrawGraph(256, 100, _titleBackH, true);
+	DrawGraph(256, 100, _logoH, true);
+	DrawRectGraph(294, 90,0,0,48,96, _oH, true);
 	DrawString(100, 100, "TitleScene", 0xffffff);
 }

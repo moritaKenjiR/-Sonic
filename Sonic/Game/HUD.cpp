@@ -8,14 +8,18 @@
 
 HUD::HUD()
 {
+	ImageData data;
+	Application::Instance().GetFileSystem()->Load("img/atlas.png", data);
+	_coinH = data.GetHandle();
+
+	_score = 0;
+	_coinNum = 0;
 }
 
 
 HUD::~HUD()
 {
-	ImageData data;
-	Application::Instance().GetFileSystem()->Load("img/atlas.jpg", data);
-	_coinH = data.GetHandle();
+	
 }
 
 void HUD::Update()
@@ -28,7 +32,7 @@ void HUD::Draw()
 		16, 2, 10, 13, 3.0f, 0.0f, _coinH, true);
 	DrawFormatString(70, 45, 0xffffff, "Å~%d", _coinNum);
 
-	DrawFormatString(150, 45, 0xffffff, "Å~%d", _score);
+	DrawFormatString(150, 45, 0xffffff, "score:%d", _score);
 }
 
 bool HUD::OnNotify(Event* e)

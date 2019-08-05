@@ -11,7 +11,7 @@ public:
 	EventType GetType()const;
 	void Update() {};
 	void Draw() {};
-	const BoxCollider& GetCollider()const;
+	BoxCollider& GetCollider();
 	void OnCollision(Actor* actor, const BoxCollider& col) {};
 private:
 	int _score;

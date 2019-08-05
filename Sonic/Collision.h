@@ -8,7 +8,7 @@ class Collider
 public:
 	Collider();
 	~Collider();
-	static bool IsCollided(const BoxCollider& a, const BoxCollider& b);
+	static bool IsCollided( BoxCollider& a,  BoxCollider& b);
 };
 
 class BoxCollider : public Collider
@@ -17,7 +17,7 @@ private:
 	Rect _rect;
 public:
 	BoxCollider(const Rect& rc): _rect(rc) {}
-	const Rect& GetRect()const;
+	Rect& GetRect();
 	void SetRect(const Rect& rc);
 };
 

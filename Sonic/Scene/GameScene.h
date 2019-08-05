@@ -40,5 +40,7 @@ private:
 	std::unique_ptr<Background> _bg;
 	std::shared_ptr<HUD> _hud;
 	std::shared_ptr<EventQueue> _eventQueue;
+
+	int _BgmH;
 };
 

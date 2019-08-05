@@ -23,7 +23,7 @@ public:
 	virtual EventType GetType()const = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
-	virtual const BoxCollider& GetCollider()const = 0;
+	virtual  BoxCollider& GetCollider() = 0;
 	virtual void OnCollision(Actor* actor, const BoxCollider& col) = 0;
 protected:
 	bool _isAvailable = true;

@@ -28,7 +28,6 @@ public:
 	void NeutralUpdate(const Input&);
 	void RunUpdate(const Input&);
 	void JumpUpdate(const Input&);
-	void GroundUpdate(const Input&);
 	void DamageUpdate(const Input&);
 
 	void JumpCheck(const Input&);
@@ -37,7 +36,7 @@ public:
 	void Aerial();
 	void GetGroundP(std::shared_ptr<Ground> gp);
 
-	const BoxCollider& GetCollider()const;
+	 BoxCollider& GetCollider();
 
 	
 private:
@@ -47,7 +46,6 @@ private:
 	
 	
 	std::shared_ptr<Ground> _ground;
-	ActionSet_t _actionSet;
 
 	float _accel;
 	float _framerate;
@@ -56,6 +54,7 @@ private:
 	bool _isAerial;
 	float _jumpPower;
 	int _frameOfJumpButtonPressing;
+	int _jumpSE;
 
 	//std::map<std::string, Action> _actionData;
 };

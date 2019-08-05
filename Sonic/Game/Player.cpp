@@ -12,8 +12,8 @@
 #include "../System/ImageLoader.h"
 #include "../Application.h"
 
-constexpr int default_player_posx = 512;
-constexpr int default_player_posy = 500;
+constexpr int default_player_posx = 100;
+constexpr int default_player_posy = 100;
 constexpr float jump_power = -10.0f;
 constexpr float g = 0.3f;
 
@@ -29,6 +29,7 @@ Player::Player(const Camera& cam):Actor(cam,Position2f(default_player_posx,defau
 	_vel = { 0,0 };
 	_isAerial = false;
 	_currentActionName = "idle";
+	_jumpSE = LoadSoundMem("se/jump.wav");
 	_frame = 0;
 }
 
@@ -39,21 +40,7 @@ Player::~Player()
 
 void Player::LoadAction(std::string & actPath)
 {
-	/*ActionData act;
-	bool result = Application::Instance().GetFileSystem()->Load(actPath.c_str(), act);
-	auto actdata = act.GetRawData();
-
-	std::string imgFilePath = "";
-	ActionData::BuildActionSet(act, *_actionSet, imgFilePath);
-	imgFilePath = GetFolderPath(actPath) + imgFilePath;
-
-	ImageData data;
-	Application::Instance().GetFileSystem()->Load(imgFilePath.c_str(), data);
-	_imgH = data.GetHandle();
-*/
-
 	int ActPath = FileRead_open(actPath.c_str());
-
 
 	float version;
 	FileRead_read(&version, sizeof(version), ActPath);
@@ -70,7 +57,6 @@ void Player::LoadAction(std::string & actPath)
 	Application::Instance().GetFileSystem()->Load(imgFilePath.c_str(), data);
 	_imgH = data.GetHandle();
 
-	int totalloop = 0;
 	int actionCount = 0;
 	FileRead_read(&actionCount, sizeof(actionCount), ActPath);
 	for (int i = 0; i < actionCount; ++i) {
@@ -80,51 +66,41 @@ void Player::LoadAction(std::string & actPath)
 		actionname.resize(actionnamesize);
 		FileRead_read(&actionname[0], actionnamesize, ActPath);
 
-		FileRead_read(&totalloop, sizeof(totalloop), ActPath);
-		int animcount = 0;
-		FileRead_read(&animcount, sizeof(animcount), ActPath);
-		std::vector<CutData> animcutinfoes(animcount);
-		for (int i = 0; i < animcount; ++i) {
-			FileRead_read(&animcutinfoes[i], sizeof(animcutinfoes[i]), ActPath);
+		char loop;
+		FileRead_read(&loop, sizeof(loop), ActPath);
+		_actionSet[actionname].isLoop = loop;
+		int cutdatacount = 0;
+		FileRead_read(&cutdatacount, sizeof(cutdatacount), ActPath);
+		for (int j = 0; j < cutdatacount; ++j)
+		{
+			CutData cd = {};
+			Rect cutrect;
+			Position2 center; 
+			int duration;
+
+			FileRead_read(&cd.cutrect, sizeof(cd.cutrect), ActPath);
+			FileRead_read(&cd.center, sizeof(cd.center), ActPath);
+			FileRead_read(&cd.duration, sizeof(cd.duration), ActPath);
+
+			int actcount = 0;
+			FileRead_read(&actcount, sizeof(actcount), ActPath);
+			if (actcount > 0) {
+				cd.actrects.resize(actcount);
+				for (auto& actrect : cd.actrects) {
+					FileRead_read(&actrect, sizeof(actrect), ActPath);
+				}
+			}
+			_actionSet[actionname].cutdata.emplace_back(cd);
+			_actionSet[actionname].totalDuration += cd.duration;
 		}
-		_actionSet[actionname].cutdata = animcutinfoes;
 	}
 	FileRead_close(ActPath);
-
-
-	/*int actioncnt = 0;
-	FileRead_read(&actioncnt, sizeof(actioncnt), ActPath);
-	for (int i = 0; 0 < actioncnt; i++)
-	{
-		CutData cd = {};
-		Rect cutrect;
-		Position2 center;
-		int duration;
-
-		int actionnamesize = 0;
-		FileRead_read(&actionnamesize, sizeof(actionnamesize), ActPath);
-		std::string actionname;
-		actionname.resize(actionnamesize);
-		FileRead_read(&actionname[0], actionnamesize, ActPath);
-		int cutdataCount = 0;
-		FileRead_read(&cutdataCount, sizeof(cutdataCount), ActPath);
-		if (cutdataCount > 0)
-		{
-
-		}
-		std::vector<CutData> animcutinfoes(actioncnt);
-		for (int i = 0; i < actioncnt; ++i)
-		{
-			FileRead_read(&animcutinfoes[i], sizeof(animcutinfoes[i]), ActPath);
-		}
-		_actionSet[actionname].cutdata = animcutinfoes;
-	}
-	FileRead_close(ActPath);*/
 }
 
 void Player::Update(const Input & input)
 {
 	++_frame;
+	_collider.GetRect().center = _pos.ToIntVec() + Position2(-50,-92);
 	(this->*_updateFunc)(input);
 	for (int i = 0; i < GetJoypadNum() + 1; ++i)
 	{
@@ -144,16 +120,16 @@ void Player::OnGround(float grad, float adjustY)
 
 void Player::Draw()
 {
+	if (_frame >= _actionSet[_currentActionName].totalDuration) _frame = 0;
 	Position2 offset = _camera.GetOffset();
-	DrawCircle(_pos.x - offset.x,_pos.y - offset.y,20,0xffffff,true,true);
-	DrawRectRotaGraph2(_pos.x - offset.x, _pos.y - offset.y,
-		_actionSet[_currentActionName].cutdata[_frame].cutrect.Left(),
-		_actionSet[_currentActionName].cutdata[_frame].cutrect.Top(),
-		_actionSet[_currentActionName].cutdata[_frame].cutrect.size.w,
-		_actionSet[_currentActionName].cutdata[_frame].cutrect.size.h,
-		_isLeft? 12:0,
+	DrawRectRotaGraph2(_collider.GetRect().center.x - offset.x, _collider.GetRect().center.y - offset.y,
+		_actionSet[_currentActionName].cutdata[(_frame / _actionSet[_currentActionName].cutdata[0].duration)].cutrect.Left(),
+		_actionSet[_currentActionName].cutdata[(_frame / _actionSet[_currentActionName].cutdata[0].duration)].cutrect.Top(),
+		_actionSet[_currentActionName].cutdata[(_frame / _actionSet[_currentActionName].cutdata[0].duration)].cutrect.size.w,
+		_actionSet[_currentActionName].cutdata[(_frame / _actionSet[_currentActionName].cutdata[0].duration)].cutrect.size.h,
+		_isLeft? 0:0,
 		0,
-		1.0f, 0.0f, _imgH, true,_isLeft);
+		4.0f, _angel, _imgH, true,_isLeft);
 }
 
 void Player::Move(const Vector2f& move)
@@ -168,7 +144,7 @@ const Vector2f & Player::GetPosition() const
 
 void Player::NeutralUpdate(const Input & input)
 {
-	
+	_currentActionName = "idle";
 	_vel *= 0.95f;
 	if (input.Ispressed(0, "left"))
 	{
@@ -180,11 +156,32 @@ void Player::NeutralUpdate(const Input & input)
 		_isLeft = false;
 		_updateFunc = &Player::RunUpdate;
 	}
-	
+
+	if (input.Ispressed(0, "jump"))
+	{
+		Jump();
+	}
+	if (abs(_pos.y - _ground->GetCurrentGroundY(_grad)) > 4)
+	{
+		_isAerial = true;
+		_updateFunc = &Player::JumpUpdate;
+	}
+	{
+		AdjustY(_grad, _ground->GetCurrentGroundY(_grad));
+	}
 }
 
 void Player::RunUpdate(const Input & input)
 {
+	if (abs(_pos.y - _ground->GetCurrentGroundY(_grad)) > 8)
+	{
+		_isAerial = true;
+		_updateFunc = &Player::JumpUpdate;
+	}
+	{
+		AdjustY(_grad, _ground->GetCurrentGroundY(_grad));
+	}
+	_currentActionName = "run";
 	if (input.Ispressed(0, "left"))
 	{
 		_isLeft = true;
@@ -195,6 +192,10 @@ void Player::RunUpdate(const Input & input)
 		_isLeft = false;
 		_vel.x += 0.1f;
 	}
+	else if (input.Ispressed(0, "jump"))
+	{
+		Jump();
+	}
 	else
 	{
 		_updateFunc = &Player::NeutralUpdate;
@@ -203,6 +204,7 @@ void Player::RunUpdate(const Input & input)
 
 void Player::JumpUpdate(const Input & input)
 {
+	_currentActionName = "jump";
 	Aerial();
 	if (_frameOfJumpButtonPressing > 0)
 	{
@@ -216,7 +218,7 @@ void Player::JumpUpdate(const Input & input)
 				_frameOfJumpButtonPressing = 0;
 		}
 	}
-	if (_pos.y <= _ground->GetCurrentGroundY(_grad))
+	if (abs(_pos.y - _ground->GetCurrentGroundY(_grad)) < 10)
 	{
 		_vel.y = 0;
 		_isAerial = false;
@@ -224,13 +226,9 @@ void Player::JumpUpdate(const Input & input)
 	}
 }
 
-void Player::GroundUpdate(const Input &input )
-{
-}
-
 void Player::DamageUpdate(const Input &input)
 {
-
+	_currentActionName = "damage";
 }
 
 void Player::JumpCheck(const Input & input)
@@ -245,6 +243,7 @@ void Player::JumpCheck(const Input & input)
 
 void Player::Jump()
 {
+	PlaySoundMem(_jumpSE, DX_PLAYTYPE_BACK);
 	if (!_isAerial)
 	{
 		_vel.y = jump_power;
@@ -273,7 +272,7 @@ void Player::GetGroundP(std::shared_ptr<Ground> gp)
 	_ground = gp;
 }
 
-const BoxCollider & Player::GetCollider() const
+ BoxCollider & Player::GetCollider() 
 {
 	return _collider;
 }

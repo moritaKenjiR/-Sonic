@@ -13,8 +13,8 @@ public:
 	EventType GetType()const override final;
 	void Update()override final;
 	void Draw()override final;
-	const BoxCollider& GetCollider();
-	void OnCollision(Actor& actor, const BoxCollider& col);
+	 BoxCollider& GetCollider();
+	void OnCollision(Actor* actor, const BoxCollider& col);
 private:
 	int _imgH;
 	const Camera& _camera;

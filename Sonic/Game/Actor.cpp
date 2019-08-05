@@ -29,6 +29,7 @@ void Actor::Move(float x, float y)
 
 void Actor::Move(const Vector2f & vec)
 {
+	_pos += vec;
 }
 
 void Actor::SetPosition(float x, float y)

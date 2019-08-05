@@ -15,7 +15,7 @@ Block::Block(Rect rect,const Camera& cam):_rect(rect),_camera(cam)
 	_blockH = data.GetHandle();
 }
 
-const BoxCollider & Block::GetCollider() const
+BoxCollider & Block::GetCollider()
 {
 	BoxCollider bc(_rect);
 	return bc;
@@ -39,7 +39,7 @@ std::unique_ptr<Block> BlockFactory::Create(BlockType type, const Position2 pos)
 	class Brick : public Block
 	{
 	public:
-		Brick(const Position2& pos, const Camera& cam) : Block(Rect(pos, Size(48, 48)),cam)
+		Brick(const Position2& pos, const Camera& cam) : Block(Rect(pos, Size(64, 64)),cam)
 		{
 		}
 

@@ -22,7 +22,7 @@ EventType ScoreUpper::GetType() const
 	return EventType::score;
 }
 
-const BoxCollider & ScoreUpper::GetCollider() const
+BoxCollider & ScoreUpper::GetCollider()
 {
 	BoxCollider bc(Rect(0, 0, 0, 0));
 	return bc;

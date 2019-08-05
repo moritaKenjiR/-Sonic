@@ -32,7 +32,7 @@ public:
 
 	virtual void OnCollision(Actor* actor, const BoxCollider& col) = 0;
 
-	const BoxCollider& GetCollider()const;
+	BoxCollider& GetCollider();
 };
 
 

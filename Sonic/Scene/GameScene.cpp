@@ -12,6 +12,7 @@
 #include "../Collision.h"
 #include "../Game/Enemy.h"
 #include "../Game/Ant.h"
+#include "../Game/Mantis.h"
 #include "../Game/OnetimeSpawner.h"
 #include "../Game/Spawner.h"
 #include "../Game/HUD.h"
@@ -35,11 +36,17 @@ GameScene::GameScene(SceneMng & mng) : BaseScene(mng)
 	_stage = std::make_unique<Stage>(*_camera, *_player,*_ground, *_eventQueue);
 	_stage->DataLoad("map/level1.fmf");
 	_stage->BuildGround(*_ground);
+/*
+	auto a = std::make_shared<Mantis>(*_camera, *_player, *_ground, *_eventQueue, 100, 100);
+	a->_isAvailable = true;
+	_actors.push_back(std::make_shared<Mantis>(*_camera,*_player, *_ground, *_eventQueue, 100, 100));*/
 
-	_bg->AddParts("img/bg-clouds.png",Position2(-300,0),1.0f,true,Background::LayoutType::repeat,Size(160*5,208*5),-1);
-	_bg->AddParts("img/bg-mountains.png", Position2(-300, 0), 1.5f, true, Background::LayoutType::repeat, Size(160*5, 208*5), -1);
-	_bg->AddParts("img/bg-trees.png", Position2(-300,0), 2.0f, true, Background::LayoutType::repeat, Size(160*5, 208*5), -1);
+	_bg->AddParts("img/bg-clouds.png",Position2(-300,0),0.5f,true,Background::LayoutType::repeat,Size(160*4,208*4),-1);
+	_bg->AddParts("img/bg-mountains.png", Position2(-300, 0), 0.7f, true, Background::LayoutType::repeat, Size(160*4, 208*4), -1);
+	_bg->AddParts("img/bg-trees.png", Position2(-300,0), 1.0f, true, Background::LayoutType::repeat, Size(160*4, 208*4), -1);
 	
+	_BgmH = LoadSoundMem("bgm/bgm.wav");
+	PlaySoundMem(_BgmH, DX_PLAYTYPE_LOOP);
 }
 
 GameScene::~GameScene()
@@ -49,24 +56,26 @@ GameScene::~GameScene()
 void GameScene::Update(const Input & input)
 {
 	
+	_spawners = _stage->GetSpawners();
+	_blocks = _stage->GetBlocks();
+	_events = _stage->GetEvents();
+
 	for (auto actor : _actors)
 	{
 		actor->Update(input);
 	}
+	for (auto spawner : _spawners)
+	{
+		spawner->Update(_actors);
+	}
 	_camera->Update();
-
-	if (input.Ispressed(0, "ok") && !input.IsTriggered(0, "ok"))
-	{
-		_mng.ChangeScene(std::make_unique<Playing3DScene>(_mng));
-	}
-	if (input.Ispressed(0, "pause") && !input.IsTriggered(0, "pause"))
-	{
-		_mng.PushScene(std::make_unique<PauseScene>(_mng));
-	}
+	_hud->Update();
 
 	auto viewrange = _camera->GetViewRange();
+	CheckPlayerAndActor();
+	//CheckPlayerAndBlock();
+	CheckPlayerAndEvent();
 	//ブロックとの当たり判定 
-	_blocks = _stage->GetBlocks();
 	for (auto& b : _blocks) {
 		auto& brect = b->GetCollider().GetRect();
 		//画面外は省く 
@@ -77,6 +86,15 @@ void GameScene::Update(const Input & input)
 			_player->OnDead();
 			_camera->RemovePlayer(_player);
 		}
+	}
+
+	if (input.Ispressed(0, "ok") && !input.IsTriggered(0, "ok"))
+	{
+		_mng.ChangeScene(std::make_unique<Playing3DScene>(_mng));
+	}
+	if (input.Ispressed(0, "pause") && !input.IsTriggered(0, "pause"))
+	{
+		_mng.PushScene(std::make_unique<PauseScene>(_mng));
 	}
 }
 
@@ -101,20 +119,37 @@ void GameScene::Draw()
 	{
 		event->Draw();
 	}
-
+	_hud->Draw();
 }
 
 void GameScene::CheckPlayerAndBlock(bool& isOn)
 {
+	if (_player->IsDie())return;
+	auto viewrange = _camera->GetViewRange();
 }
 
 void GameScene::CheckPlayerAndActor()
 {
+	if (_player->IsDie())return;
+	auto viewrange = _camera->GetViewRange();
 }
 
 void GameScene::CheckPlayerAndEvent()
 {
+	auto viewrange = _camera->GetViewRange();
 	if (_player->IsDie())return;
-
+	for (auto & e : _events)
+	{
+		if (!e->IsAvailable()) continue;
+		auto& brect = e->GetCollider().GetRect();
+		if (brect.Right() < viewrange.Left() || brect.Left() > viewrange.Right())
+		{
+			continue;
+		}
+		if (Collider::IsCollided(_player->GetCollider(), e->GetCollider()))
+		{
+			e->OnCollision(&(*_player), _player->GetCollider());
+		}
+	}
 }
 

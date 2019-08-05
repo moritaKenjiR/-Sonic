@@ -19,7 +19,7 @@ struct CutData {
 	Rect cutrect;
 	Position2 center;
 	int duration;
-	std::vector<ActionRect> actrect;
+	std::vector<ActionRect> actrects;
 };
 
 struct Action {

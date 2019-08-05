@@ -18,7 +18,7 @@ Playing3DScene::Playing3DScene(SceneMng& mng):BaseScene(mng)
 
 
 	_camera = std::make_shared<Camera3D>();
-	_camera->eye = VGet(0, 15, -100);
+	_camera->eye = VGet(0, 15, -60);
 	_camera->target = VGet(0, 25, 0);
 	_camera->viewray = VSub(_camera->target, _camera->eye);
 	_modelH = MV1LoadModel("model/Tda®‰‰¹ƒ~ƒNV4X.pmx");

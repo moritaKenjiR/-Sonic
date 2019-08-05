@@ -12,6 +12,10 @@ public:
 	void Draw()override final;
 private:
 	int _titleBackH;
+	int _logoH;
+	int _oH;
+	unsigned int _frame = 0;
+
 	void FadeinUpdate(const Input&);
 	void WaitUpdate(const Input&);
 	void FadeoutUpdate(const Input&);

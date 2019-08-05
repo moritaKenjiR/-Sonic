@@ -40,9 +40,12 @@ void Camera::Update()
 	{
 		pPos = p->GetPosition();
 	}
-	_initPos = Position2(pPos.ToIntVec().x,pPos.ToIntVec().y);
+	_initPos = pPos.ToIntVec();
 	_pos = _initPos;
-	
+	if (_pos.x < 512)
+	{
+		_pos.x = 512;
+	}
 }
 
 const Position2 & Camera::GetPosition() const
@@ -62,5 +65,5 @@ const Rect & Camera::GetViewRange() const
 const Position2 & Camera::GetOffset() const
 {
 	auto w = Application::Instance().GetConfig().GetScreenSize();
-	return  Position2((_pos.x - (w.w/2)),(_pos.y));
+	return  Position2((_pos.x - (w.w/2)),(_pos.y - (w.h / 2)));
 }
