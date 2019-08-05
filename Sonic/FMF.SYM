@@ -1,0 +1,11 @@
+#include "typedef.h"
+
+const DWORD	FILESIZE = GetFileSize();
+$BYTE sig[4];
+$DWORD size;
+$DWORD mapWidth;
+$DWORD mapHeight;
+$BYTE chipWidth;
+$BYTE chipHeight;
+$BYTE layerCount;
+$BYTE bitCount;

@@ -26,7 +26,7 @@ bool Application::Initialize(void)
 		return false;
 	}
 	SetDrawScreen(DX_SCREEN_BACK);
-	SetWindowText("sonic?");
+	SetWindowText("sonic?:1701333:êXìcåõéi");
 	SetGraphMode(1024, 576, 16);
 	ChangeWindowMode(true);
 
