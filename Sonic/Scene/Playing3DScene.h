@@ -11,6 +11,8 @@ public:
 
 	void Update(const Input& input)override final;
 	void Draw()override final;
+
+	void DrawCube();
 private:
 	int _modelH;
 	int _attachH;
